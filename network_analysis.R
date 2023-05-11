@@ -84,6 +84,8 @@ fivenum(road21data1$weight)
 graph_from_data_frame(d=road21data1, directed = FALSE)
 head(road21data1)
 
+write.csv(road21data1,file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/phd-chapter-1/forteddy_road21.csv")
+
 
 ###make igraph object 
 road21_igraph=graph_from_data_frame(d=road21data1,directed = FALSE)
@@ -316,7 +318,9 @@ setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/
 road21_igraph
 
 road21_matrix <- read.csv("adj_mat.csv", header = FALSE)
-road21_matrix <- as.matrix(road21_igraph)
+
+##use this one 
+road21_matrix <- as.matrix(as_adjacency_matrix(road21_igraph))
 
 road21_null <- nullmodel(road21_matrix, method="r2d")
 print(road21_null)
