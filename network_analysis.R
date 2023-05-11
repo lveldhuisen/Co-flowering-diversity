@@ -316,7 +316,7 @@ setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/
 road21_igraph
 
 road21_matrix <- read.csv("adj_mat.csv", header = FALSE)
-road21_matrix
+road21_matrix <- as.matrix(road21_igraph)
 
 road21_null <- nullmodel(road21_matrix, method="r2d")
 print(road21_null)
