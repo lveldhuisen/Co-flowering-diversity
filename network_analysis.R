@@ -92,6 +92,7 @@ road21_igraph=graph_from_data_frame(d=road21data1,directed = FALSE)
 head(road21_igraph)
 is_weighted(road21_igraph)
 print(road21_igraph)
+summary(road21_igraph)
 
 as_data_frame(road21_igraph)
 
@@ -318,6 +319,16 @@ setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/
 road21_igraph
 
 road21_matrix <- read.csv("adj_mat.csv", header = FALSE)
+
+road21_matrix <- as_adjacency_matrix(
+  road21_igraph,
+  type = c("upper"),
+  attr = NULL,
+  edges = FALSE,
+  names = TRUE,
+  sparse = igraph_opt("sparsematrices")
+)
+road21_matrix
 
 ##use this one 
 road21_matrix <- as.matrix(as_adjacency_matrix(road21_igraph))
