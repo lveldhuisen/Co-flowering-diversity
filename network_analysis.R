@@ -200,9 +200,12 @@ modularity(communitiesPBM)
 #Road 2022 network & modularity in igraph 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
-Road22data <- read.csv("Road22.csv", header = TRUE)
+Road22data <- read.csv("cleanRoad22.csv", header = TRUE)
 head(Road22data)
 
+#remove extra x column
+Road22data = subset(Road22data, select = -c(X) )
+head(Road22data)
 #rename SI column to weight
 colnames(Road22data)[3] ="weight"
 head(Road22data)
@@ -238,9 +241,11 @@ modularity(communitiesRoad22)
 #Pfeiler 2022 network and modularity with igraph 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
-Pfeiler22data <- read.csv("Pfeiler22.csv", header = TRUE)
+Pfeiler22data <- read.csv("cleanPfeiler22.csv", header = TRUE)
 head(Pfeiler22data)
 
+#remove x column 
+Pfeiler22data = subset(Pfeiler22data, select = -c(X) )
 #rename SI column to weight
 colnames(Pfeiler22data)[3] ="weight"
 head(Pfeiler22data)
@@ -276,9 +281,11 @@ modularity(communitiesPf22)
 #PBM 2022 network and modularity with igraph 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
-PBM22data <- read.csv("PBM22.csv", header = TRUE)
+PBM22data <- read.csv("cleanPBM22.csv", header = TRUE)
 head(PBM22data)
 
+#remove x column 
+PBM22data = subset(PBM22data, select = -c(X) )
 #rename SI column to weight
 colnames(PBM22data)[3] ="weight"
 head(PBM22data)
