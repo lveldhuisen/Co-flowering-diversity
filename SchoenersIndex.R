@@ -11,34 +11,9 @@ dat2 <- dat %>% group_by(Site, Species) %>%
   mutate(total_flowers = sum(Number_flowering_units),
          p_ik = Number_flowering_units/total_flowers)
 
-#make matrix 
-mat = data.matrix(dat2[1:286,1:9])
-
-#testing for loops 
-add = 0
-for (i in 1:286){
-  add = add + mat[i,9]
-}
-add
-
-#make matrices for each site with only week, site, species and proportion flowering
-wanted_columns = c(1,5,9)
-
-site1_mat = mat[which(mat[,3] %in% 1),wanted_columns]
-site2_mat = mat[which(mat[,3] %in% 2),wanted_columns]
-site3_mat = mat[which(mat[,3] %in% 3),wanted_columns]
 
 
-
-#make empty vectors 
-site1_species = c()
-site1_shoner = c()
-site2_species = c()
-site2_shoner = c()
-site3_species = c()
-site3_shoner = c()
-
-#testing for loops 
+#testing for loops, this doesn't work ----------------------------
 add = 0
 for (i in 1:max(site1_mat[,2])){
   spec_1 = which(site1_mat[,2] %in% i)
@@ -225,7 +200,7 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
  ggboxplot(Merged2021_fitness_nozeros, x = "site", y = "SI_f", 
            color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
            order = c("Road", "Pfeiler", "PBM"),
-           ylab = "Schoener's Index", xlab = "Site", title = "2021 fitness")
+           ylab = "Schoener's Index fitness", xlab = "Site", title = "2021 fitness")
 
  #2022 SI calculations, everything below here is 2022 data only---------------
  setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2022/data files")
