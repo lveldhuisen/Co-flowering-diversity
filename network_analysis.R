@@ -352,14 +352,6 @@ for (i in 1:length(null_matrices)) {
   print(null_matrices[[i]])
 }
 
-
-#turn null networks back into igraph graph objects 
-as.one.mode(road21_null, fill = 0, project="full", weighted=TRUE)
-
-graph_from_adj_list(road21_null)
-
-null_communities <- cluster_louvain(net.nulls.r2d, weights = NULL, resolution = 1)
-
 #run modularity on null models idea from Zurich message board 
 null.res <- unlist(sapply(road21_null, metaComputeModules, USE.NAMES = TRUE))
 head(null.res)
@@ -368,7 +360,8 @@ head(null.res)
 
 null.cz<-unlist(sapply(null.res, czvalues, level = "lower", USE.NAMES = TRUE
 ))
-warnings()
+
+
 null.cz
 
 

@@ -10,3 +10,4 @@ library(geiger)
 SBtree <- read.tree(file = "ALLMB.tre")
 write.tree(SBtree)
 is.rooted(SBtree)
+
