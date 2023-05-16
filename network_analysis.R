@@ -57,7 +57,8 @@ head(Road_21_melt)
 Merged2021 <- do.call("rbind", list(Road_21_melt, Pfeiler_21_melt, PBM_21_melt))
 print(Merged2021)
 
-##network analysis using igraph for Road 2021-----------------------------------
+##network analysis using igraph 
+#####Road 2021-----------------------------------
 install.packages("igraph")
 library(igraph)
 
@@ -116,7 +117,7 @@ library(dplyr)
 library(tidyr)
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
-p21data <- read.csv("pfeiler21.csv", header = TRUE)
+p21data <- read.csv("cleanpfeiler21.csv", header = TRUE)
 head(p21data)
 
 #remove X column 
@@ -148,9 +149,9 @@ plot(pfeiler21_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3,
 class(pfeiler21_igraph)
 
 #modularity 
-communities <- cluster_louvain(pfeiler21_igraph, weights = NULL, resolution = 1)
-membership(communities)
-modularity(communities)
+communitiesPF <- cluster_louvain(pfeiler21_igraph, weights = NULL, resolution = 1)
+membership(communitiesPF)
+modularity(communitiesPF)
 
 
 #PBM 2021 network and modularity 
