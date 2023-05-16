@@ -331,16 +331,9 @@ library(Matrix)
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 road21_igraph
 
-road21_matrix <- read.csv("adj_mat.csv", header = FALSE)
-
-road21_matrix <- as_adjacency_matrix(
+road21_matrix <- as.matrix(
   road21_igraph,
-  type = c("upper"),
-  attr = NULL,
-  edges = FALSE,
-  names = TRUE,
-  sparse = igraph_opt("sparsematrices")
-)
+  type = c("upper"))
 road21_matrix
 
 ##use this one 
@@ -349,6 +342,10 @@ road21_matrix <- as.matrix(as_adjacency_matrix(road21_igraph))
 road21_null <- nullmodel(road21_matrix, method="r2d")
 print(road21_null)
 class(road21_null)
+
+#other method for generating null models
+net.nulls.r2d <- lapply(road21_igraph, nullmodel, method = "r2dtable", N = 1000)
+
 
 #turn null networks back into igraph graph objects 
 as.one.mode(road21_null, fill = 0, project="full", weighted=TRUE)
@@ -364,4 +361,6 @@ head(null.res)
 null.cz<-unlist(sapply(null.res, czvalues, level = "lower", USE.NAMES = TRUE
 ))
 warnings()
+null.cz
+
 
