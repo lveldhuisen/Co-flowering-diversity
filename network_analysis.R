@@ -343,8 +343,14 @@ road21_null <- nullmodel(road21_matrix, method="r2d")
 print(road21_null)
 class(road21_null)
 
-#other method for generating null models
-net.nulls.r2d <- lapply(road21_igraph, nullmodel, method = "r2dtable", N = 1000)
+#messing around with chatgpt/online ideas 
+
+net.nulls.r2d <- lapply(road21_matrix, nullmodel, method = "r2dtable", N = 500)
+null_matrices <- lapply(road21_null, function(nullmodel) get.adjacency(road21_igraph))
+for (i in 1:length(null_matrices)) {
+  print(paste("Null Model", i))
+  print(null_matrices[[i]])
+}
 
 
 #turn null networks back into igraph graph objects 
@@ -352,10 +358,12 @@ as.one.mode(road21_null, fill = 0, project="full", weighted=TRUE)
 
 graph_from_adj_list(road21_null)
 
-null_communities <- cluster_louvain(road21_null, weights = NULL, resolution = 1)
+null_communities <- cluster_louvain(net.nulls.r2d, weights = NULL, resolution = 1)
 
-#run modularity on null models
+#run modularity on null models idea from Zurich message board 
 null.res <- unlist(sapply(road21_null, metaComputeModules, USE.NAMES = TRUE))
+head(null.res)
+class(null.res)
 head(null.res)
 
 null.cz<-unlist(sapply(null.res, czvalues, level = "lower", USE.NAMES = TRUE
@@ -364,3 +372,6 @@ warnings()
 null.cz
 
 
+null.cz1<- null.cz
+na.omit(null.cz1)
+class(null.cz1)
