@@ -57,15 +57,14 @@ head(Road_21_melt)
 Merged2021 <- do.call("rbind", list(Road_21_melt, Pfeiler_21_melt, PBM_21_melt))
 print(Merged2021)
 
-##network analysis using igraph for Road 2021
+##network analysis using igraph for Road 2021-----------------------------------
 install.packages("igraph")
 library(igraph)
 
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
+setwd("/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
-road21data <- read.csv("road21_edges.csv", header = TRUE)
+road21data <- read.csv("cleanroad21.csv", header = TRUE)
 head(road21data)
-hist(data_positive$weight)
 
 # Duplicate data frame
 data_positive <- road21data                     
@@ -73,11 +72,12 @@ data_positive <- road21data
 data_positive[data_positive < 4.46e-14] <- 0     
 data_positive 
 road21data <- data_positive
-
-
-
+#remove x column 
+road21data = subset(road21data, select = -c(X) )
+#rename SI column to weight
+colnames(road21data)[3] ="weight"
 #remove the species that only interacts with itself (floating point)
-road21data1 <- road21data %>% filter(V2 != "Mertensia.ciliata")
+road21data1 <- road21data %>% filter(species1 != "Mertensia.ciliata")
 road21data1 <- na.omit(road21data)
 fivenum(road21data1$weight)
 
@@ -156,12 +156,17 @@ modularity(communities)
 #PBM 2021 network and modularity 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
-PBM21data <- read.csv("PBM21.csv", header = TRUE)
+PBM21data <- read.csv("cleanPBM21.csv", header = TRUE)
 head(PBM21data)
 
+
+#remove extra x column
+PBM21data = subset(PBM21data, select = -c(X) )
+head(PBM21data)
 #rename SI column to weight
 colnames(PBM21data)[3] ="weight"
 head(PBM21data)
+
 
 # Duplicate data frame
 PBM_positive <- PBM21data                   
