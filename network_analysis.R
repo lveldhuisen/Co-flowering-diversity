@@ -343,10 +343,33 @@ road21_null <- nullmodel(road21_matrix, method="r2d")
 print(road21_null)
 class(road21_null)
 
+graph
+
+
+
+null_modularity = c()
+for (i in 1:length(road21_null)) {
+  current_model = road21_null[[i]]
+  igraphcurrent = graph_from_adjacency_matrix(current_model,mode = "undirected")
+  current_analysis = cluster_louvain(igraphcurrent, weights = NULL, resolution = 1)
+  current_modularity = modularity(current_analysis)
+  null_modularity = append(null_modularity,current_modularity)
+  
+}
+
+
+
+
+
+
+
+
+
 #messing around with chatgpt/online ideas 
 
 net.nulls.r2d <- lapply(road21_matrix, nullmodel, method = "r2dtable", N = 500)
 null_matrices <- lapply(road21_null, function(nullmodel) get.adjacency(road21_igraph))
+
 for (i in 1:length(null_matrices)) {
   print(paste("Null Model", i))
   print(null_matrices[[i]])
