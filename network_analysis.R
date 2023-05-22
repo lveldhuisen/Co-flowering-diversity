@@ -331,23 +331,19 @@ library(Matrix)
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 road21_igraph
 
-road21_matrix <- as.matrix(
-  road21_igraph,
-  type = c("upper"))
-road21_matrix
-
-##use this one 
+##null modularity for Road 2021 
+#turn igraph object back into matrix 
 road21_matrix <- as.matrix(as_adjacency_matrix(road21_igraph))
-
+#create nullnetworks 
 road21_null <- nullmodel(road21_matrix, method="r2d")
 print(road21_null)
 class(road21_null)
 
 graph
 
-
-
+#create empty vector
 null_modularity = c()
+#
 for (i in 1:length(road21_null)) {
   current_model = road21_null[[i]]
   igraphcurrent = graph_from_adjacency_matrix(current_model,mode = "undirected")
@@ -365,7 +361,11 @@ for (i in 1:length(road21_null)) {
 
 
 
-#messing around with chatgpt/online ideas 
+
+
+
+
+------#messing around with chatgpt/online ideas-------------------------------- 
 
 net.nulls.r2d <- lapply(road21_matrix, nullmodel, method = "r2dtable", N = 500)
 null_matrices <- lapply(road21_null, function(nullmodel) get.adjacency(road21_igraph))
