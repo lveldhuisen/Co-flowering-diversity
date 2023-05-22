@@ -57,7 +57,7 @@ head(Road_21_melt)
 Merged2021 <- do.call("rbind", list(Road_21_melt, Pfeiler_21_melt, PBM_21_melt))
 print(Merged2021)
 
-##network analysis using igraph 
+##network analysis using igraph################################################# 
 #####Road 2021-----------------------------------
 install.packages("igraph")
 library(igraph)
@@ -151,7 +151,7 @@ class(pfeiler21_igraph)
 #modularity 
 communitiesPF <- cluster_louvain(pfeiler21_igraph, weights = NULL, resolution = 1)
 membership(communitiesPF)
-modularity(communitiesPF)
+Pf21mod <- modularity(communitiesPF)
 
 
 #PBM 2021 network and modularity 
@@ -195,7 +195,7 @@ class(PBM21_igraph)
 #modularity 
 communitiesPBM <- cluster_louvain(PBM21_igraph, weights = NULL, resolution = 1)
 membership(communitiesPBM)
-modularity(communitiesPBM)
+PBM21mod <- modularity(communitiesPBM)
 
 #Road 2022 network & modularity in igraph 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
@@ -236,7 +236,7 @@ class(Road22_igraph)
 #modularity 
 communitiesRoad22 <- cluster_louvain(Road22_igraph, weights = NULL, resolution = 1)
 membership(communitiesRoad22)
-modularity(communitiesRoad22)
+R22mod <- modularity(communitiesRoad22)
 
 #Pfeiler 2022 network and modularity with igraph 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
@@ -259,7 +259,7 @@ Pfeiler22data <- Pfeiler_positive
 #remove all NAs
 Pfeiler22data <- na.omit(Pfeiler22data)
 fivenum(Pfeiler22data$weight)
-
+hist(Pfeiler22data$weight)
 
 graph_from_data_frame(d=Pfeiler22data, directed = FALSE)
 
@@ -276,7 +276,7 @@ class(Pfeiler22_igraph)
 #modularity 
 communitiesPf22 <- cluster_louvain(Pfeiler22_igraph, weights = NULL, resolution = 1)
 membership(communitiesPf22)
-modularity(communitiesPf22)
+Pf22mod <- modularity(communitiesPf22)
 
 #PBM 2022 network and modularity with igraph 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
@@ -316,10 +316,10 @@ class(PBM22_igraph)
 #modularity 
 communitiesPBM22 <- cluster_louvain(PBM22_igraph, weights = NULL, resolution = 1)
 membership(communitiesPBM22)
-modularity(communitiesPBM22)
+PBM22mod <- modularity(communitiesPBM22)
 
 
-#null models to compare modularity 
+#null models to compare modularity ------------------------------------------------
 install.packages("bipartite")
 library(bipartite)
 install.packages("vegan")
@@ -329,12 +329,11 @@ library(Matrix)
 
 #make matrix for Road 21 igraph object 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
-road21_igraph
 
 ##null modularity for Road 2021 
 #turn igraph object back into matrix 
 road21_matrix <- as.matrix(as_adjacency_matrix(road21_igraph))
-#create nullnetworks 
+#create null networks 
 road21_null <- nullmodel(road21_matrix, method="r2d")
 print(road21_null)
 class(road21_null)
@@ -357,37 +356,127 @@ for (i in 1:length(road21_null)) {
 R21Z <- (R21mod - mean(null_modularity))/sd(null_modularity)
 R21Z
 
+##null modularity for pfeiler 2021--------------------------------------------- 
+#turn igraph object back into matrix 
+pfeiler21_matrix <- as.matrix(as_adjacency_matrix(pfeiler21_igraph))
+#create nullnetworks 
+pfeiler21_null <- nullmodel(pfeiler21_matrix, method="r2d")
+print(pfeiler21_null)
+class(pfeiler21_null)
 
+graph
 
+#create empty vector
+PF21null_modularity = c()
+#create list with null network modularity values 
+for (i in 1:length(pfeiler21_null)) {
+  current_model = pfeiler21_null[[i]]
+  igraphcurrent = graph_from_adjacency_matrix(current_model,mode = "undirected")
+  current_analysis = cluster_louvain(igraphcurrent, weights = NULL, resolution = 1)
+  current_modularity = modularity(current_analysis)
+  PF21null_modularity = append(PF21null_modularity,current_modularity)
+  
+}
+#calculate z scores for pfeiler 21 nulls 
+PF21Z <- (Pf21mod - mean(PF21null_modularity))/sd(PF21null_modularity)
+PF21Z
 
+##null modularity for PBM 2021 -----------------------------------------------
+#turn igraph object back into matrix 
+PBM21_matrix <- as.matrix(as_adjacency_matrix(PBM21_igraph))
+#create nullnetworks 
+PBM21_null <- nullmodel(PBM21_matrix, method="r2d")
+print(PBM21_null)
+class(PBM21_null)
 
+graph
 
-
-
-
-------#messing around with chatgpt/online ideas-------------------------------- 
-
-net.nulls.r2d <- lapply(road21_matrix, nullmodel, method = "r2dtable", N = 500)
-null_matrices <- lapply(road21_null, function(nullmodel) get.adjacency(road21_igraph))
-
-for (i in 1:length(null_matrices)) {
-  print(paste("Null Model", i))
-  print(null_matrices[[i]])
+#create empty vector
+PBM21null_modularity = c()
+#create list with null network modularity values 
+for (i in 1:length(PBM21_null)) {
+  current_model = PBM21_null[[i]]
+  igraphcurrent = graph_from_adjacency_matrix(current_model,mode = "undirected")
+  current_analysis = cluster_louvain(igraphcurrent, weights = NULL, resolution = 1)
+  current_modularity = modularity(current_analysis)
+  PBM21null_modularity = append(PBM21null_modularity,current_modularity)
+  
 }
 
-#run modularity on null models idea from Zurich message board 
-null.res <- unlist(sapply(road21_null, metaComputeModules, USE.NAMES = TRUE))
-head(null.res)
-class(null.res)
-head(null.res)
-
-null.cz<-unlist(sapply(null.res, czvalues, level = "lower", USE.NAMES = TRUE
-))
+#calculate z scores for PBM 21 nulls 
+PBM21Z <- (PBM21mod - mean(PBM21null_modularity))/sd(PBM21null_modularity)
+PBM21Z
 
 
-null.cz
+#######2022 data######################
+##null modularity for Road 2022----------------------------------
+#turn igraph object back into matrix 
+road22_matrix <- as.matrix(as_adjacency_matrix(Road22_igraph))
+#create null networks 
+road22_null <- nullmodel(road22_matrix, method="r2d")
+print(road22_null)
+class(road22_null)
 
+#create empty vector
+R22null_modularity = c()
+#create list with null network modularity values 
+for (i in 1:length(road22_null)) {
+  current_model = road22_null[[i]]
+  igraphcurrent = graph_from_adjacency_matrix(current_model,mode = "undirected")
+  current_analysis = cluster_louvain(igraphcurrent, weights = NULL, resolution = 1)
+  current_modularity = modularity(current_analysis)
+  R22null_modularity = append(R22null_modularity,current_modularity)
+  
+}
 
-null.cz1<- null.cz
-na.omit(null.cz1)
-class(null.cz1)
+#calculate z scores for Road 21 nulls 
+R22Z <- (R22mod - mean(R22null_modularity))/sd(R22null_modularity)
+R22Z
+
+##null modularity for pfeiler 2022----------------------------------
+#turn igraph object back into matrix 
+pfeiler22_matrix <- as.matrix(as_adjacency_matrix(Pfeiler22_igraph))
+#create null networks 
+pfeiler22_null <- nullmodel(pfeiler22_matrix, method="r2d")
+print(pfeiler22_null)
+class(pfeiler22_null)
+
+#create empty vector
+Pf22null_modularity = c()
+#create list with null network modularity values 
+for (i in 1:length(pfeiler22_null)) {
+  current_model = pfeiler22_null[[i]]
+  igraphcurrent = graph_from_adjacency_matrix(current_model,mode = "undirected")
+  current_analysis = cluster_louvain(igraphcurrent, weights = NULL, resolution = 1)
+  current_modularity = modularity(current_analysis)
+  Pf22null_modularity = append(Pf22null_modularity,current_modularity)
+  
+}
+
+#calculate z scores for pfeiler 2022 nulls 
+Pf22Z <- (Pf22mod - mean(Pf22null_modularity))/sd(Pf22null_modularity)
+Pf22Z
+
+##null modularity for PBM 2022----------------------------------
+#turn igraph object back into matrix 
+PBM22_matrix <- as.matrix(as_adjacency_matrix(PBM22_igraph))
+#create null networks 
+PBM22_null <- nullmodel(PBM22_matrix, method="r2d")
+print(PBM22_null)
+class(PBM22_null)
+
+#create empty vector
+PBM22null_modularity = c()
+#create list with null network modularity values 
+for (i in 1:length(PBM22_null)) {
+  current_model = PBM22_null[[i]]
+  igraphcurrent = graph_from_adjacency_matrix(current_model,mode = "undirected")
+  current_analysis = cluster_louvain(igraphcurrent, weights = NULL, resolution = 1)
+  current_modularity = modularity(current_analysis)
+  PBM22null_modularity = append(PBM22null_modularity,current_modularity)
+  
+}
+
+#calculate z scores for pfeiler 2022 nulls 
+PBM22Z <- (PBM22mod - mean(PBM22null_modularity))/sd(PBM22null_modularity)
+PBM22Z
