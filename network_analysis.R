@@ -107,7 +107,7 @@ class(road21_igraph)
 #modularity analysis based on Blondel et al 2008, same as Arceo-Gomez et al 2018
 communitiesRoad <- cluster_louvain(road21_igraph, weights = NULL, resolution = 1)
 membership(communitiesRoad)
-modularity(communitiesRoad)
+R21mod <- modularity(communitiesRoad)
 
 class(road21_igraph)
 
@@ -343,7 +343,7 @@ graph
 
 #create empty vector
 null_modularity = c()
-#
+#create list with null network modularity values 
 for (i in 1:length(road21_null)) {
   current_model = road21_null[[i]]
   igraphcurrent = graph_from_adjacency_matrix(current_model,mode = "undirected")
@@ -353,9 +353,9 @@ for (i in 1:length(road21_null)) {
   
 }
 
-
-
-
+#calculate z scores for Road 21 nulls 
+R21Z <- (R21mod - mean(null_modularity))/sd(null_modularity)
+R21Z
 
 
 
