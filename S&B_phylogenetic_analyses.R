@@ -49,4 +49,29 @@ pruned.treeroad21
 plot(pruned.treeroad21)
 
 #Faith's index for Road 2021
-sum(pruned.treePf21$edge.length)
+sum(pruned.treeroad21$edge.length)
+
+#2022 community data -----------------------------------------------------------
+setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
+
+matrix2022 <- read.table("2022_community_matrix.txt", sep = "\t", header = T, row.names = 1)
+
+###PBM 2022##########################################################
+#prune tree to just these species for PBM
+pruned.treePBM22 <- treedata(SBtree, unlist(matrix2022[1,matrix2022[1,]>0]), warnings = F)$phy
+class(pruned.treePBM22)
+pruned.treePBM22
+plot(pruned.treePBM22)
+
+#Faith's index for PBM2022
+sum(pruned.treePBM22$edge.length)
+
+###Pfeiler 2022##########################################################
+#prune tree to just these species for Pfeiler
+pruned.treePf22 <- treedata(SBtree, unlist(matrix2022[2,matrix2022[2,]>0]), warnings = F)$phy
+class(pruned.treePf22)
+pruned.treePf22
+plot(pruned.treePf22)
+
+#Faith's index for pfeiler 2022
+sum(pruned.treePf22$edge.length)
