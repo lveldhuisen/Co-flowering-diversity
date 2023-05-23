@@ -10,8 +10,19 @@ library(geiger)
 SBtree <- read.tree(file = "ALLMB.tre")
 write.tree(SBtree)
 is.rooted(SBtree)
+plot(SBtree)
 
 ##2021 community matrix
+
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 matrix2021 <- read.table("2021_community_matrix.txt", sep = "\t", header = T, row.names = 1)
+
+#calculate pd of row 1 of matrix (PBM)
+
+matrix2021[1, matrix2021[1,]>0]
+
+#richness of PBM 2021
+richnessPBM21 = length(matrix2021[1, matrix2021[1,]>0])
+#prune tree to just these species 
+treedata(SBtree, names(matrix2021[1, matrix2021[1, ] > 0))

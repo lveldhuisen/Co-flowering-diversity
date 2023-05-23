@@ -353,6 +353,8 @@ for (i in 1:length(road21_null)) {
 }
 
 #calculate z scores for Road 21 nulls 
+hist(null_modularity)
+
 R21Z <- (R21mod - mean(null_modularity))/sd(null_modularity)
 R21Z
 
@@ -404,8 +406,11 @@ for (i in 1:length(PBM21_null)) {
 }
 
 #calculate z scores for PBM 21 nulls 
+
 PBM21Z <- (PBM21mod - mean(PBM21null_modularity))/sd(PBM21null_modularity)
 PBM21Z
+
+hist(PBM21null_modularity)
 
 
 #######2022 data######################
