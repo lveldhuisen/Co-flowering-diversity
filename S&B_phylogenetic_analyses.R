@@ -12,7 +12,7 @@ write.tree(SBtree)
 is.rooted(SBtree)
 plot(SBtree)
 
-##2021 community matrix----------------------------------------------------------
+##2021 community matrix for Faith's PD--------------------------------------------
 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
@@ -22,7 +22,7 @@ matrix2021 <- read.table("2021_community_matrix.txt", sep = "\t", header = T, ro
 
 matrix2021[1, matrix2021[1,]>0]
 
-######richness of PBM 2021###################################################
+######PBM 2021###################################################
 richnessPBM21 = length(matrix2021[1, matrix2021[1,]>0])
 #prune tree to just these species for PBM
 pruned.treePBM21 <- treedata(SBtree, unlist(matrix2021[1,matrix2021[1,]>0]), warnings = F)$phy
@@ -33,7 +33,8 @@ plot(pruned.treePBM21)
 #Faith's index for PBM2021
 sum(pruned.treePBM21$edge.length)
 
-###prune tree to just these species for Pfeiler###############################
+###Pfeiler 2021###############################
+#prune tree
 pruned.treePf21 <- treedata(SBtree, unlist(matrix2021[2,matrix2021[2,]>0]), warnings = F)$phy
 class(pruned.treePf21)
 pruned.treePf21
@@ -42,7 +43,8 @@ plot(pruned.treePf21)
 #Faith's index for Pfeiler2021
 sum(pruned.treePf21$edge.length)
 
-###prune tree to just these species for road 2021##############################
+###Road 2021##############################
+#prune tree 
 pruned.treeroad21 <- treedata(SBtree, unlist(matrix2021[3,matrix2021[3,]>0]), warnings = F)$phy
 class(pruned.treeroad21)
 pruned.treeroad21
@@ -51,7 +53,16 @@ plot(pruned.treeroad21)
 #Faith's index for Road 2021
 sum(pruned.treeroad21$edge.length)
 
-#2022 community data -----------------------------------------------------------
+###all sites in matrix with one code###############
+prune.sum.function <- function(x){
+  tmp.tree <- treedata(SBtree, x[x>0])$phy
+  sum(tmp.tree$edge.length)
+}
+
+PD21 <- apply(matrix2021, MARGIN = 1, prune.sum.function)
+print(PD21)
+
+#2022 community data for Faith's PD--------------------------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 matrix2022 <- read.table("2022_community_matrix.txt", sep = "\t", header = T, row.names = 1)
@@ -85,3 +96,45 @@ plot(pruned.treeroad22)
 
 #Faith's index for pfeiler 2022
 sum(pruned.treeroad22$edge.length)
+
+###all sites in matrix with one code###############
+prune.sum.function <- function(x){
+  tmp.tree <- treedata(SBtree, x[x>0])$phy
+  sum(tmp.tree$edge.length)
+}
+
+PD22 <- apply(matrix2022, MARGIN = 1, prune.sum.function)
+print(PD22)
+
+##2021 data for MPD-------------------------------------------------------------
+###Road 2021##############################################
+plot.phylo(pruned.treeroad21)
+dist.matR21 <- cophenetic(pruned.treeroad21)
+mpd_r21<- mean(as.dist(dist.matR21))
+###Pfeiler 2021##############################################
+plot.phylo(pruned.treePf21)
+dist.matPf21 <- cophenetic(pruned.treePf21)
+mpd_Pf21<- mean(as.dist(dist.matPf21))
+###PBM 2021##############################################
+plot.phylo(pruned.treePBM21)
+dist.matPBM21 <- cophenetic(pruned.treePBM21)
+mpd_PBM21<- mean(as.dist(dist.matPBM21))
+###all sites together################################
+
+#create distance matrix for all 2021 species
+pruned.tree2021 <- treedata(SBtree, unlist(matrix2021[matrix2021]), warnings = F)$phy
+class(pruned.tree2021)
+pruned.tree2021
+plot(pruned.tree2021)
+
+dist.mat2021 <- cophenetic(pruned.treeroad21)
+#function to do mpd for all sites 
+new.mpd.function <- function(x){
+  names.2021<- names(x[x>0])
+  mean(as.dist(INSERTHERE[com.names,com.names]))
+}
+
+##2022 data for MPD-------------------------------------------------------------
+###Road 2022##############################################
+###Pfeiler 2022##############################################
+###PBM 2022##############################################
