@@ -75,3 +75,13 @@ plot(pruned.treePf22)
 
 #Faith's index for pfeiler 2022
 sum(pruned.treePf22$edge.length)
+
+###Road 2022##########################################################
+#prune tree to just these species for road
+pruned.treeroad22 <- treedata(SBtree, unlist(matrix2022[3,matrix2022[3,]>0]), warnings = F)$phy
+class(pruned.treeroad22)
+pruned.treeroad22
+plot(pruned.treeroad22)
+
+#Faith's index for pfeiler 2022
+sum(pruned.treeroad22$edge.length)
