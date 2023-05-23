@@ -136,5 +136,14 @@ new.mpd.function <- function(x){
 
 ##2022 data for MPD-------------------------------------------------------------
 ###Road 2022##############################################
+plot.phylo(pruned.treeroad22)
+dist.matR22 <- cophenetic(pruned.treeroad22)
+mpd_r22<- mean(as.dist(dist.matR22))
 ###Pfeiler 2022##############################################
+plot.phylo(pruned.treePf22)
+dist.matPf22 <- cophenetic(pruned.treePf22)
+mpd_Pf22<- mean(as.dist(dist.matPf22))
 ###PBM 2022##############################################
+plot.phylo(pruned.treePBM22)
+dist.matPBM22 <- cophenetic(pruned.treePBM22)
+mpd_PBM22<- mean(as.dist(dist.matPBM22))
