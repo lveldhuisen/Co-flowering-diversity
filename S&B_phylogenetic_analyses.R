@@ -122,17 +122,20 @@ mpd_PBM21<- mean(as.dist(dist.matPBM21))
 ###all sites together################################
 
 #create distance matrix for all 2021 species
-pruned.tree2021 <- treedata(SBtree, unlist(matrix2021[matrix2021]), warnings = F)$phy
-class(pruned.tree2021)
-pruned.tree2021
-plot(pruned.tree2021)
+#need to figure out how to trim SB phylogeny but include all rows 
+pruned.tree21 <- treedata(SBtree, unlist(matrix2021[1,matrix2021[1,]>0]), warnings = F)$phy
+class(pruned.treePBM21)
+pruned.treePBM21
+plot(pruned.treePBM21)
 
-dist.mat2021 <- cophenetic(pruned.treeroad21)
+
 #function to do mpd for all sites 
 new.mpd.function <- function(x){
   names.2021<- names(x[x>0])
   mean(as.dist(INSERTHERE[com.names,com.names]))
 }
+
+mpd_2021 <- apply(ALL2021PphyINSERT, MARGIN = 1, new.mpd.function)
 
 ##2022 data for MPD-------------------------------------------------------------
 ###Road 2022##############################################
@@ -147,3 +150,20 @@ mpd_Pf22<- mean(as.dist(dist.matPf22))
 plot.phylo(pruned.treePBM22)
 dist.matPBM22 <- cophenetic(pruned.treePBM22)
 mpd_PBM22<- mean(as.dist(dist.matPBM22))
+
+##2021 MNTD---------------------------------------------------------------------
+install.packages("picante")
+library(picante)
+##road 2021################
+road21.sample <- matrix2021[1, matrix2021[1,]>0]
+
+mntd(road21.sample, cophenetic(pruned.treeroad21), abundance.weighted = F)
+
+#function for all sites 
+new.mntd.function <- function(x){
+  com.names <- names(x[x>0])
+  my.com.dist <- dist.mat[com.names,com.names]
+  diag(my.com.dist) <- NA
+  mean(apply(my.com.dist, MARGIN = 1, min),na.rm=T)
+}
+##2022 MNTD--------------------------------------------------------------------
