@@ -12,7 +12,7 @@ write.tree(SBtree)
 is.rooted(SBtree)
 plot(SBtree)
 
-##2021 community matrix
+##2021 community matrix----------------------------------------------------------
 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
@@ -24,11 +24,20 @@ matrix2021[1, matrix2021[1,]>0]
 
 #richness of PBM 2021
 richnessPBM21 = length(matrix2021[1, matrix2021[1,]>0])
-#prune tree to just these species
-pruned.tree <- treedata(SBtree, unlist(matrix2021[1,matrix2021[1,]>0]), warnings = F)$phy
-class(pruned.tree)
-pruned.tree
-plot(pruned.tree)
+#prune tree to just these species for PBM
+pruned.treePBM21 <- treedata(SBtree, unlist(matrix2021[1,matrix2021[1,]>0]), warnings = F)$phy
+class(pruned.treePBM21)
+pruned.treePBM21
+plot(pruned.treePBM21)
 
 #Faith's index for PBM2021
-sum(pruned.tree$edge.length)
+sum(pruned.treePBM21$edge.length)
+
+#prune tree to just these species for Pfeiler
+pruned.treePf21 <- treedata(SBtree, unlist(matrix2021[2,matrix2021[2,]>0]), warnings = F)$phy
+class(pruned.treePf21)
+pruned.treePf21
+plot(pruned.treePf21)
+
+#Faith's index for Pfeiler2021
+sum(pruned.treePBM21$edge.length)
