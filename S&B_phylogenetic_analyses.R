@@ -123,19 +123,19 @@ mpd_PBM21<- mean(as.dist(dist.matPBM21))
 
 #create distance matrix for all 2021 species
 #need to figure out how to trim SB phylogeny but include all rows 
-pruned.tree21 <- treedata(SBtree, unlist(matrix2021[1,matrix2021[1,]>0]), warnings = F)$phy
-class(pruned.treePBM21)
-pruned.treePBM21
-plot(pruned.treePBM21)
+setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
+pruned.tree2021 <- treedata(SBtree, unlist(matrix2021[4,matrix2021[4,]>0]), warnings = F)$phy
+
+dist.mat2021 <- cophenetic(pruned.tree2021)
 
 #function to do mpd for all sites 
 new.mpd.function <- function(x){
   names.2021<- names(x[x>0])
-  mean(as.dist(INSERTHERE[com.names,com.names]))
+  mean(as.dist(dist.mat2021[names.2021,names.2021]))
 }
 
-mpd_2021 <- apply(ALL2021PphyINSERT, MARGIN = 1, new.mpd.function)
+mpd_2021 <- apply(matrix2021, MARGIN = 1, new.mpd.function)
 
 ##2022 data for MPD-------------------------------------------------------------
 ###Road 2022##############################################
@@ -162,8 +162,10 @@ mntd(road21.sample, cophenetic(pruned.treeroad21), abundance.weighted = F)
 #function for all sites 
 new.mntd.function <- function(x){
   com.names <- names(x[x>0])
-  my.com.dist <- dist.mat[com.names,com.names]
+  my.com.dist <- dist.mat2021[com.names,com.names]
   diag(my.com.dist) <- NA
   mean(apply(my.com.dist, MARGIN = 1, min),na.rm=T)
 }
+
+apply(matrix2021, MARGIN = 1, new.mntd.function)
 ##2022 MNTD--------------------------------------------------------------------
