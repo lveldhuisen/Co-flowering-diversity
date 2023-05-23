@@ -24,5 +24,11 @@ matrix2021[1, matrix2021[1,]>0]
 
 #richness of PBM 2021
 richnessPBM21 = length(matrix2021[1, matrix2021[1,]>0])
-#prune tree to just these species 
-treedata(SBtree, names(matrix2021[1, matrix2021[1, ] > 0))
+#prune tree to just these species
+pruned.tree <- treedata(SBtree, unlist(matrix2021[1,matrix2021[1,]>0]), warnings = F)$phy
+class(pruned.tree)
+pruned.tree
+plot(pruned.tree)
+
+#Faith's index for PBM2021
+sum(pruned.tree$edge.length)
