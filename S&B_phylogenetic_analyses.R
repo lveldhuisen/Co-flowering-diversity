@@ -33,6 +33,11 @@ plot(pruned.treePBM21)
 #Faith's index for PBM2021
 sum(pruned.treePBM21$edge.length)
 
+#standard effect size using picante 
+library(picante)
+ses.pd(matrix2021, pruned.tree2021, null.model = c("sample.pool"),
+       runs = 1000, iterations = 1000, include.root=TRUE)
+
 ###Pfeiler 2021###############################
 #prune tree
 pruned.treePf21 <- treedata(SBtree, unlist(matrix2021[2,matrix2021[2,]>0]), warnings = F)$phy
@@ -116,6 +121,12 @@ plot.phylo(pruned.treePf21)
 dist.matPf21 <- cophenetic(pruned.treePf21)
 mpd_Pf21<- mean(as.dist(dist.matPf21))
 ###PBM 2021##############################################
+com.1 <- matrix2021[1, matrix2021[1,]>0]
+names(com.1)
+dist.mat.com.1<- dist.mat2021[names(com.1),names(com.1)]
+
+
+
 plot.phylo(pruned.treePBM21)
 dist.matPBM21 <- cophenetic(pruned.treePBM21)
 mpd_PBM21<- mean(as.dist(dist.matPBM21))
@@ -126,16 +137,18 @@ mpd_PBM21<- mean(as.dist(dist.matPBM21))
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 pruned.tree2021 <- treedata(SBtree, unlist(matrix2021[4,matrix2021[4,]>0]), warnings = F)$phy
-
+plot(pruned.tree2021)
 dist.mat2021 <- cophenetic(pruned.tree2021)
+dist.mat2021
 
 #function to do mpd for all sites 
 new.mpd.function <- function(x){
-  names.2021<- names(x[x>0])
-  mean(as.dist(dist.mat2021[names.2021,names.2021]))
+  com.names<- names(x[x>0])
+  mean(as.dist(dist.mat2021[com.names,com.names]))
 }
 
 mpd_2021 <- apply(matrix2021, MARGIN = 1, new.mpd.function)
+print(mpd_2021)
 
 ##2022 data for MPD-------------------------------------------------------------
 ###Road 2022##############################################
@@ -169,3 +182,6 @@ new.mntd.function <- function(x){
 
 apply(matrix2021, MARGIN = 1, new.mntd.function)
 ##2022 MNTD--------------------------------------------------------------------
+
+
+install.packages("phylotools")

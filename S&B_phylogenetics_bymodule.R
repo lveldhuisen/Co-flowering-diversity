@@ -36,3 +36,6 @@ prune.sum.function <- function(x){
 PD22.mod <- apply(matrix2022.mod, MARGIN = 1, prune.sum.function)
 print(PD22.mod)
 PD22.mod
+
+##MPD calculations--------------------------------------------------------------
+
