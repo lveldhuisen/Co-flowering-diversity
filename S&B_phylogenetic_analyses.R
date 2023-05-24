@@ -33,11 +33,6 @@ plot(pruned.treePBM21)
 #Faith's index for PBM2021
 sum(pruned.treePBM21$edge.length)
 
-#standard effect size using picante 
-library(picante)
-ses.pd(matrix2021, pruned.tree2021, null.model = c("sample.pool"),
-       runs = 1000, iterations = 1000, include.root=TRUE)
-
 ###Pfeiler 2021###############################
 #prune tree
 pruned.treePf21 <- treedata(SBtree, unlist(matrix2021[2,matrix2021[2,]>0]), warnings = F)$phy
@@ -66,6 +61,12 @@ prune.sum.function <- function(x){
 
 PD21 <- apply(matrix2021, MARGIN = 1, prune.sum.function)
 print(PD21)
+
+###standard effect sizes using picante ####################
+library(picante)
+ses.pd(matrix2021, pruned.tree2021, null.model = c("sample.pool"),
+       runs = 1000, iterations = 1000, include.root=TRUE)
+
 
 #2022 community data for Faith's PD--------------------------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
@@ -110,6 +111,21 @@ prune.sum.function <- function(x){
 
 PD22 <- apply(matrix2022, MARGIN = 1, prune.sum.function)
 print(PD22)
+
+###Standard effect sizes for 2022 using picante ###############################
+setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
+
+matrix2022 <- read.table("2022_community_matrix.txt", sep = "\t", header = T, row.names = 1)
+
+pruned.tree2022 <- treedata(SBtree, unlist(matrix2022[4,matrix2022[4,]>0]), warnings = F)$phy
+plot(pruned.tree2022)
+
+#standard effect size using picante 
+library(picante)
+
+ses.pd(matrix2022, pruned.tree2022, null.model = c("sample.pool"),
+       runs = 1000, iterations = 1000, include.root=TRUE)
+
 
 ##2021 data for MPD-------------------------------------------------------------
 ###Road 2021##############################################
