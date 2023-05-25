@@ -68,7 +68,7 @@ plot(pruned.tree2021)
 
 library(picante)
 ses.pd(matrix2021, pruned.tree2021, null.model = c("sample.pool"),
-       runs = 1000, iterations = 1000, include.root=TRUE)
+       runs = 5000, iterations = 5000, include.root=TRUE)
 
 
 #2022 community data for Faith's PD--------------------------------------------
@@ -127,7 +127,7 @@ plot(pruned.tree2022)
 library(picante)
 
 ses.pd(matrix2022, pruned.tree2022, null.model = c("sample.pool"),
-       runs = 1000, iterations = 1000, include.root=TRUE)
+       runs = 5000, iterations = 5000, include.root=TRUE)
 
 
 ##2021 data for MPD-------------------------------------------------------------
@@ -171,7 +171,7 @@ print(mpd_2021)
 
 ###Standard effect size for 2021 MPD########################
 ses.mpd(matrix2021, dist.mat2021, null.model = c("sample.pool"),
-        abundance.weighted = FALSE, runs = 999, iterations = 1000)
+        abundance.weighted = FALSE, runs = 5000, iterations = 5000)
 
 ##2022 data for MPD-------------------------------------------------------------
 ###Road 2022##############################################
@@ -187,11 +187,24 @@ plot.phylo(pruned.treePBM22)
 dist.matPBM22 <- cophenetic(pruned.treePBM22)
 mpd_PBM22<- mean(as.dist(dist.matPBM22))
 
+##all sites together##########
+new.mpd.function <- function(x){
+  com.names<- names(x[x>0])
+  mean(as.dist(dist.mat2021[com.names,com.names]))
+}
+
+mpd_2022 <- apply(matrix2022, MARGIN = 1, new.mpd.function)
+print(mpd_2022)
+##SES for mpd 2022
+ses.mpd(matrix2022, dist.mat2022, null.model = c("sample.pool"),
+        abundance.weighted = FALSE, runs = 5000, iterations = 5000)
+
+
 ##2021 MNTD---------------------------------------------------------------------
 install.packages("picante")
 library(picante)
 
-dist.mat2021 <- cophenetic.phylo(pruned.tree2021)
+dist.mat2021 <- cophenetic(pruned.tree2021)
 
 ##road 2021################
 road21.sample <- matrix2021[3, matrix2021[3,]>0]
@@ -201,19 +214,26 @@ mntd.R21 <- mntd(matrix2021[3, matrix2021[3,]>0], cophenetic(pruned.tree2021), a
 ###pfeiler 2021################
 pfeiler21.sample <- matrix2021[2, matrix2021[2, ]>0]
 
-mntd(pfeiler21.sample, cophenetic(pruned.tree2021), abundance.weighted = F)
+mntd.pf21 <- mntd(pfeiler21.sample, cophenetic(pruned.tree2021), abundance.weighted = FALSE)
+
 
 ###PBM 2021##############
+PBM21.sample <- matrix2021[1, matrix2021[1, ]>0]
+
+mntd.PBM21 <- mntd(PBM21.sample, cophenetic(pruned.tree2021), abundance.weighted = FALSE)
+
+
 
 #function for all sites 
 new.mntd.function <- function(x){
   com.names <- names(x[x>0])
   my.com.dist <- dist.mat2021[com.names,com.names]
   diag(my.com.dist) <- NA
-  mean(apply(my.com.dist, MARGIN = 3, min), na.rm=TRUE)
+  mean(apply(my.com.dist, MARGIN = 1, min), na.rm=TRUE)
 }
 
-apply(matrix2021, MARGIN = 1, new.mntd.function)
+mntd.2021 <- apply(matrix2021, MARGIN = 1, new.mntd.function)
+mntd.2021
 
 ##2022 MNTD--------------------------------------------------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
@@ -235,3 +255,5 @@ mntd.R22 <- mntd(matrix2022[3, matrix2021[3,]>0], cophenetic(pruned.tree2022), a
 pf22.sample <- matrix2022[2, matrix2021[2,]>0]
 
 mntd(matrix2022[3, matrix2021[3,]>0], cophenetic(pruned.tree2022), abundance.weighted = F)
+
+
