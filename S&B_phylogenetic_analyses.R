@@ -149,8 +149,8 @@ dist.mat.com.1<- dist.mat2021[names(com.1),names(com.1)]
 plot.phylo(pruned.treePBM21)
 dist.matPBM21 <- cophenetic(pruned.treePBM21)
 mpd_PBM21<- mean(as.dist(dist.matPBM21))
-###all sites together################################
 
+###all sites together################################
 #create distance matrix for all 2021 species
 #need to figure out how to trim SB phylogeny but include all rows 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
@@ -190,7 +190,7 @@ mpd_PBM22<- mean(as.dist(dist.matPBM22))
 ##all sites together##########
 new.mpd.function <- function(x){
   com.names<- names(x[x>0])
-  mean(as.dist(dist.mat2021[com.names,com.names]))
+  mean(as.dist(dist.mat2022[com.names,com.names]))
 }
 
 mpd_2022 <- apply(matrix2022, MARGIN = 1, new.mpd.function)
@@ -216,15 +216,12 @@ pfeiler21.sample <- matrix2021[2, matrix2021[2, ]>0]
 
 mntd.pf21 <- mntd(pfeiler21.sample, cophenetic(pruned.tree2021), abundance.weighted = FALSE)
 
-
 ###PBM 2021##############
 PBM21.sample <- matrix2021[1, matrix2021[1, ]>0]
 
 mntd.PBM21 <- mntd(PBM21.sample, cophenetic(pruned.tree2021), abundance.weighted = FALSE)
 
-
-
-#function for all sites 
+#function for all sites##########
 new.mntd.function <- function(x){
   com.names <- names(x[x>0])
   my.com.dist <- dist.mat2021[com.names,com.names]
@@ -235,6 +232,11 @@ new.mntd.function <- function(x){
 mntd.2021 <- apply(matrix2021, MARGIN = 1, new.mntd.function)
 mntd.2021
 
+
+###SES MNTD 2021#########
+ses.mntd(matrix2021, dist.mat2021, null.model = c("sample.pool"),
+         abundance.weighted=FALSE, runs = 5000, iterations = 5000)
+
 ##2022 MNTD--------------------------------------------------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
@@ -244,16 +246,34 @@ pruned.tree2022 <- treedata(SBtree, unlist(matrix2022[4,matrix2022[4,]>0]), warn
 plot(pruned.tree2022)
 
 
-dist.mat2022 <- cophenetic.phylo(pruned.tree2022)
+dist.mat2022 <- cophenetic(pruned.tree2022)
 
 ##road 2022################
-road22.sample <- matrix2022[3, matrix2021[3,]>0]
+road22.sample <- matrix2022[3, matrix2022[3,]>0]
 
-mntd.R22 <- mntd(matrix2022[3, matrix2021[3,]>0], cophenetic(pruned.tree2022), abundance.weighted = F)
+mntd.R22 <- mntd(matrix2022[3, matrix2022[3,]>0], cophenetic(pruned.tree2022), abundance.weighted = F)
 
 ##pfeiler 2022################
-pf22.sample <- matrix2022[2, matrix2021[2,]>0]
+pf22.sample <- matrix2022[2, matrix2022[2,]>0]
 
-mntd(matrix2022[3, matrix2021[3,]>0], cophenetic(pruned.tree2022), abundance.weighted = F)
+mntd.pf22 <- mntd(matrix2022[2, matrix2022[2,]>0], cophenetic(pruned.tree2022), abundance.weighted = F)
+
+##PBM 2022################
+PBM22.sample <- matrix2022[1, matrix2022[1,]>0]
+mntd.PB8M22 <- mntd(matrix2022[1, matrix2022[1,]>0], cophenetic(pruned.tree2022), abundance.weighted = F)
+#function all sites 2022
+new.mntd.function <- function(x){
+  com.names <- names(x[x>0])
+  my.com.dist <- dist.mat2022[com.names,com.names]
+  diag(my.com.dist) <- NA
+  mean(apply(my.com.dist, MARGIN = 1, min), na.rm=TRUE)
+}
+
+mntd.2022 <- apply(matrix2022, MARGIN = 1, new.mntd.function)
+mntd.2022
+
+###SES MNTD 2022#####
+ses.mntd(matrix2022, dist.mat2022, null.model = c("sample.pool"),
+         abundance.weighted=FALSE, runs = 5000, iterations = 5000)
 
 
