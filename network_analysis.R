@@ -141,11 +141,6 @@ graph_from_data_frame(d=p21data, directed = FALSE)
 pfeiler21_igraph=graph_from_data_frame(d=p21data,directed = FALSE)
 print(pfeiler21_igraph)
 head(pfeiler21_igraph)
-
-plot(pfeiler21_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3, 
-     vertex.frame.color="blue", vertex.label=V(pfeiler21_igraph)$species1, vertex.label.color="black", 
-     vertex.label.cex=.5, vertex.label.dist=2, edge.curved=0.5,edge.width=weights, layout=layout_with_lgl)
-
 class(pfeiler21_igraph)
 
 #modularity 
