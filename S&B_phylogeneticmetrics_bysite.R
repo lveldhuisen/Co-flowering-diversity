@@ -10,7 +10,6 @@ library(geiger)
 SBtree <- read.tree(file = "ALLMB.tre")
 write.tree(SBtree)
 is.rooted(SBtree)
-plot(SBtree)
 
 ##2021 community matrix for Faith's PD--------------------------------------------
 
@@ -275,5 +274,47 @@ mntd.2022
 ###SES MNTD 2022#####
 ses.mntd(matrix2022, dist.mat2022, null.model = c("sample.pool"),
          abundance.weighted=FALSE, runs = 5000, iterations = 5000)
+
+
+#make tables with species pairs and PD for each---------------------------------
+library(metagMisc)
+##2021############
+###Road 2021######
+class(dist.matR21)
+
+dist.matR21[lower.tri(dist.matR21, diag = TRUE)] <- ""
+Road21_PD <- as.data.frame(as.table(dist.matR21))
+
+Road21_PD["Freq"][Road21_PD["Freq"] == ''] <- NA
+na.omit(Road21_PD)
+print(Road21_PD)
+
+write.csv(Road21_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/Road21_PD.csv")
+
+###Pfeiler 2021#######
+
+dist.matPf21[lower.tri(dist.matPf21, diag = TRUE)] <- ""
+Pfeiler21_PD <- as.data.frame(as.table(dist.matPf21))
+
+Pfeiler21_PD["Freq"][Pfeiler21_PD["Freq"] == ''] <- NA
+na.omit(Pfeiler21_PD)
+print(Pfeiler21_PD)
+
+write.csv(Pfeiler21_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/Pfeiler21_PD.csv")
+
+###PBM 2021#######
+dist.matPBM21[lower.tri(dist.matPBM21, diag = TRUE)] <- ""
+PBM21_PD <- as.data.frame(as.table(dist.matPBM21))
+
+PBM21_PD["Freq"][PBM21_PD["Freq"] == ''] <- NA
+na.omit(PBM21_PD)
+print(PBM21_PD)
+
+write.csv(PBM21_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PBM21_PD.csv")
+
+##2022########
+###Road 2022#######
+###Pfeiler 2022#########
+###PBM 2022########
 
 
