@@ -312,6 +312,17 @@ print(PBM21_PD)
 
 write.csv(PBM21_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PBM21_PD.csv")
 
+###all 2021 PD together#########
+dist.mat2021[lower.tri(dist.mat2021, diag = TRUE)] <- ""
+PD_2021 <- as.data.frame(as.table(dist.mat2021))
+
+PD_2021["Freq"][PD_2021["Freq"] == ''] <- NA
+na.omit(PD_2021)
+print(PD_2021)
+
+write.csv(PD_2021, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2021.csv")
+
+
 ##2022########
 ###Road 2022#######
 dist.matR22[lower.tri(dist.matR22, diag = TRUE)] <- ""
@@ -342,4 +353,14 @@ na.omit(PBM22_PD)
 print(PBM22_PD)
 
 write.csv(PBM22_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PBM22_PD.csv")
+
+###all 2022 PD together###########
+dist.mat2022[lower.tri(dist.mat2022, diag = TRUE)] <- ""
+PD_2022 <- as.data.frame(as.table(dist.mat2022))
+
+PD_2022["Freq"][PD_2022["Freq"] == ''] <- NA
+na.omit(PD_2022)
+print(PD_2022)
+
+write.csv(PD_2022, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2022.csv")
 
