@@ -314,7 +314,32 @@ write.csv(PBM21_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-Un
 
 ##2022########
 ###Road 2022#######
-###Pfeiler 2022#########
-###PBM 2022########
+dist.matR22[lower.tri(dist.matR22, diag = TRUE)] <- ""
+Road22_PD <- as.data.frame(as.table(dist.matR22))
 
+Road22_PD["Freq"][Road22_PD["Freq"] == ''] <- NA
+na.omit(Road22_PD)
+print(Road22_PD)
+
+write.csv(Road22_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/Road22_PD.csv")
+
+###Pfeiler 2022#########
+dist.matPf22[lower.tri(dist.matPf22, diag = TRUE)] <- ""
+Pfeiler22_PD <- as.data.frame(as.table(dist.matPf22))
+
+Pfeiler22_PD["Freq"][Pfeiler22_PD["Freq"] == ''] <- NA
+na.omit(Pfeiler22_PD)
+print(Pfeiler22_PD)
+
+write.csv(Pfeiler22_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/Pfeiler22_PD.csv")
+
+###PBM 2022########
+dist.matPBM22[lower.tri(dist.matPBM22, diag = TRUE)] <- ""
+PBM22_PD <- as.data.frame(as.table(dist.matPBM22))
+
+PBM22_PD["Freq"][PBM22_PD["Freq"] == ''] <- NA
+na.omit(PBM22_PD)
+print(PBM22_PD)
+
+write.csv(PBM22_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PBM22_PD.csv")
 
