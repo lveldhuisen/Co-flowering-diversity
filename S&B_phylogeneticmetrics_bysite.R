@@ -320,7 +320,7 @@ PD_2021["Freq"][PD_2021["Freq"] == ''] <- NA
 na.omit(PD_2021)
 print(PD_2021)
 
-write.csv(PD_2021, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2021.csv")
+write.csv(PD_2021, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2021_all.csv")
 
 
 ##2022########
@@ -364,3 +364,20 @@ print(PD_2022)
 
 write.csv(PD_2022, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2022.csv")
 
+
+#All PD whole matrix for big dataset combined--------------------------------------------
+##2021######
+distmat21all <- cophenetic(pruned.tree2021)
+
+PD_2021_all <- as.data.frame(as.table(distmat21all))
+
+
+write.csv(PD_2021_all, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2021_all.csv")
+
+##2022#######
+distmat22all <- cophenetic(pruned.tree2022)
+
+PD_2022_all <- as.data.frame(as.table(distmat22all))
+
+
+write.csv(PD_2022_all, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2022_all.csv")

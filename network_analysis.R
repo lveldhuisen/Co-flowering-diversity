@@ -6,8 +6,9 @@ library(ggraph)
 library(tidygraph)
 library(tidyverse)
 library(spaa)
-library(reshape)
 library(reshape2)
+library(reshape)
+library(igraph)
 
 ###2021 SI calculations and turned into data tables -------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
