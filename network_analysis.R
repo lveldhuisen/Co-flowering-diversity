@@ -111,6 +111,7 @@ membership(communitiesRoad)
 R21mod <- modularity(communitiesRoad)
 
 class(road21_igraph)
+gsize(PBM22_igraph)
 
 #####Pfeiler 2021##############################
 
