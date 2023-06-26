@@ -481,3 +481,6 @@ for (i in 1:length(PBM22_null)) {
 #calculate z scores for pbm 2022 nulls 
 PBM22Z <- (PBM22mod - mean(PBM22null_modularity))/sd(PBM22null_modularity)
 PBM22Z
+
+
+#Network visualizations----------------------------------------------------------
