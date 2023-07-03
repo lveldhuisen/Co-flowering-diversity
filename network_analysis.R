@@ -264,9 +264,7 @@ Pfeiler22_igraph=graph_from_data_frame(d=Pfeiler22data,directed = FALSE)
 print(Pfeiler22_igraph)
 head(Pfeiler22_igraph)
 
-plot(Pfeiler22_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3, 
-     vertex.frame.color="blue", vertex.label=V(pfeiler21_igraph)$species1, vertex.label.color="black", 
-     vertex.label.cex=.5, vertex.label.dist=2, edge.curved=0.5,edge.width=weights, layout=layout_with_lgl)
+
 
 class(Pfeiler22_igraph)
 
@@ -303,10 +301,6 @@ graph_from_data_frame(d=PBM22data, directed = FALSE)
 PBM22_igraph=graph_from_data_frame(d=PBM22data,directed = FALSE)
 print(PBM22_igraph)
 head(PBM22_igraph)
-
-plot(PBM22_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3, 
-     vertex.frame.color="blue", vertex.label=V(pfeiler21_igraph)$species1, vertex.label.color="black", 
-     vertex.label.cex=.5, vertex.label.dist=2, edge.curved=0.5,edge.width=weights, layout=layout_with_lgl)
 
 class(PBM22_igraph)
 

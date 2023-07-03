@@ -17,7 +17,7 @@ dat2 <- dat %>% group_by(Site, Species) %>%
 #This is the code I've been using from here down -----------------------------
 #test spaa package------------------------------------------------------ 
 install.packages("spaa")
-library("spaa")
+library(spaa)
 library(reshape)
 library(reshape2)
 
@@ -71,7 +71,7 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
  ggboxplot(Merged2021, x = "site", y = "SI", 
            color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
            order = c("Road", "Pfeiler", "PBM"),
-           ylab = "Schoener's Index", xlab = "Site", title = "2021 phenology")
+           ylab = "Schoener's Index - phenology", xlab = "Site", title = "2021 phenology")
  ###remove zeros----------------------------
  Merged_2021_nozeros <- filter(Merged2021, SI > 1.1E-15)
  
@@ -235,8 +235,8 @@ Merged22_nozero <- filter(Merged2022, SI > 1.11E-15)
 head(Merged22_nozero)
 hist(Merged22_nozero$SI)
 
-kruskal.test(SI ~ site, data = Merged22_nozero)
-ggboxplot(Merged22_nozero, x = "site", y = "SI", 
+kruskal.test(SI ~ site, data = Merged2022)
+ggboxplot(Merged2022, x = "site", y = "SI", 
           color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
           order = c("Road", "Pfeiler", "PBM"),
           ylab = "Schoener's Index", xlab = "Site", title = "2022")
@@ -331,43 +331,12 @@ ggboxplot(Merged2022_fitness_nozero, x = "site", y = "SI",
           ylab = "Schoener's Index", xlab = "Site", title = "2022 fitness")
 
 
-# mae averaging coflowering cuz she insisted ------------------------------
+#test distributions of flowering
+kruskal.test(SI ~ site, data = Merged2021)
+kruskal.test(SI ~ site, data = Merged2022)
 
-
-write.csv(as.matrix(PBM_SI_22), file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/RMBL/Summer\ 2022/data\ files/cofloweringMatrix.csv")
-# average in excel cuz we're lazy
-pbm_av <- read.csv(file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/RMBL/Summer\ 2022/data\ files/cofloweringAverage_PBM2022.csv")
-
-write.csv(as.matrix(Road_SI_22), file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/RMBL/Summer\ 2022/data\ files/cofloweringMatrix_Road2022.csv")
-
-# average in excel cuz we're lazy
-Road_av <- read.csv(file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/RMBL/Summer\ 2022/data\ files/cofloweringAverages_Road2022.csv")
-
-write.csv(as.matrix(Pfeiler_SI_22), file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/RMBL/Summer\ 2022/data\ files/cofloweringMatrix_Pfeiler2022.csv")
-# average in excel cuz we're lazy
-Pfeiler_av <- read.csv(file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/RMBL/Summer\ 2022/data\ files/cofloweringAverage_Pfeiler2022.csv")
-
-# add site names
-pbm_av$site <- c("PBM")
-Road_av$site <- c("Road")
-Pfeiler_av$site <- c("Pfeiler")
-
-MergedAverages <- do.call("rbind", list(pbm_av, Road_av, Pfeiler_av))
-
-chisq.test(MergedAverages$site, MergedAverages$average)
-chisq.test(Merged$site,Merged$SI)
-
-kruskal.test(average ~ site, data = MergedAverages)
-
-install.packages("dplyr")
-library(dplyr)
-
-hist(MergedAverages$average)
-res.aov <- aov(average ~ site, data = MergedAverages)
-summary(res.aov)
-
-ggboxplot(MergedAverages, x = "site", y = "average", 
-          color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
-          order = c("Road", "Pfeiler", "PBM"),
-          ylab = "average SI", xlab = "site")
-  
+install.packages("FSA")
+library(FSA)
+dunnTest(SI ~ site,
+         data=Merged2022,
+         method="bonferroni")
