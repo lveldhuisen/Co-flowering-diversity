@@ -71,7 +71,7 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
  ggboxplot(Merged2021, x = "site", y = "SI", 
            color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
            order = c("Road", "Pfeiler", "PBM"),
-           ylab = "Schoener's Index - phenology", xlab = "Site", title = "2021 phenology")
+           ylab = "Schoener's Index - phenology", xlab = "Site", title = "2021") + theme(legend.position = "none") + scale_x_discrete(labels=c('Low', 'Middle', 'High'))
  ###remove zeros----------------------------
  Merged_2021_nozeros <- filter(Merged2021, SI > 1.1E-15)
  
@@ -239,7 +239,7 @@ kruskal.test(SI ~ site, data = Merged2022)
 ggboxplot(Merged2022, x = "site", y = "SI", 
           color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
           order = c("Road", "Pfeiler", "PBM"),
-          ylab = "Schoener's Index", xlab = "Site", title = "2022")
+          ylab = "Schoener's Index - phenology", xlab = "Site", title = "2022") + theme(legend.position = "none") + scale_x_discrete(labels=c('Low', 'Middle', 'High'))
 
 #SI for fitness data 2022--------------------------------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2022/data files")

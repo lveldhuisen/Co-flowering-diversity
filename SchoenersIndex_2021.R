@@ -67,8 +67,9 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
  ggboxplot(Merged2021, x = "site", y = "SI", 
            color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
            order = c("Road", "Pfeiler", "PBM"),
-           ylab = "Schoener's Index", xlab = "Site", title = "2021 phenology")
- #remove zeros
+           ylab = "Schoener's Index", xlab = "Site", title = "2021 phenology") + theme(legend.position = "none")
+
+  #remove zeros
  Merged_2021_nozeros <- filter(Merged2021, SI > 1.1E-15)
  
  kruskal.test(SI ~ site, data = Merged_2021_nozeros)
