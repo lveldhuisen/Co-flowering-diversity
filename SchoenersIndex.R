@@ -235,6 +235,7 @@ Merged22_nozero <- filter(Merged2022, SI > 1.11E-15)
 head(Merged22_nozero)
 hist(Merged22_nozero$SI)
 
+###figure and tests for Supplemental Info fig S1------------
 kruskal.test(SI ~ site, data = Merged2022)
 ggboxplot(Merged2022, x = "site", y = "SI", 
           color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
