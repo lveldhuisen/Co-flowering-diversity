@@ -14,7 +14,7 @@ matrix2021.mod <- read.table("2021_community_matrix_modules.txt", sep = "\t", he
 
 
 #Faith's PD-------------------------------------------------------------------
-###2021#################
+##2021#################
 prune.sum.function <- function(x){
   tmp.tree <- treedata(SBtree, x[x>0])$phy
   sum(tmp.tree$edge.length)
@@ -24,7 +24,7 @@ PD21.mod <- apply(matrix2021.mod, MARGIN = 1, prune.sum.function)
 print(PD21.mod)
 PD21.mod
 
-###SES 2021 using picante ###############################
+###SES###############################
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 pruned.tree2021 <- treedata(SBtree, unlist(matrix2021.mod[10,matrix2021.mod[10,]>0]), warnings = F)$phy
@@ -35,7 +35,7 @@ library(picante)
 ses.pd(matrix2021.mod, pruned.tree2021, null.model = c("sample.pool"),
        runs = 5000, iterations = 5000, include.root=TRUE)
 
-###2022#####################################
+##2022#####################################
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 matrix2022.mod <- read.table("2022_community_matrix_modules.txt", sep = "\t", header = T, row.names = 1)
 
@@ -62,7 +62,7 @@ ses.pd(matrix2022.mod, pruned.tree2022, null.model = c("sample.pool"),
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL phylogeny/Smith&Brown18")
 SBtree <- read.tree(file = "ALLMB.tre")
 
-###2021 MPD#########
+##2021#########
 
 pruned.tree2021 <- treedata(SBtree, unlist(matrix2021[4,matrix2021[4,]>0]), warnings = F)$phy
 plot(pruned.tree2021)
@@ -81,7 +81,7 @@ print(mpd_2021)
 ses.mpd(matrix2021.mod, dist.mat2021, null.model = c("sample.pool"),
         abundance.weighted = FALSE, runs = 5000, iterations = 5000)
 
-###2022 MPD#########
+##2022#########
 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 matrix2022.mod <- read.table("2022_community_matrix_modules.txt", sep = "\t", header = T, row.names = 1)
@@ -102,7 +102,7 @@ ses.mpd(matrix2022.mod, dist.mat2022, null.model = c("sample.pool"),
         abundance.weighted = FALSE, runs = 5000, iterations = 5000)
 
 #MNTD------------------------------------------------------------------------
-###2021###############
+##2021###############
 new.mntd.function <- function(x){
   com.names <- names(x[x>0])
   my.com.dist <- dist.mat2021[com.names,com.names]
@@ -116,7 +116,7 @@ mntd.2021.mod
 ses.mntd(matrix2021.mod, dist.mat2021, null.model = c("sample.pool"),
          abundance.weighted=FALSE, runs = 5000, iterations = 5000)
 
-###2022#############
+##2022#############
 new.mntd.function <- function(x){
   com.names <- names(x[x>0])
   my.com.dist <- dist.mat2022[com.names,com.names]

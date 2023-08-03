@@ -1,4 +1,3 @@
-####phylogenetic analyses for Ch 1 
 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL phylogeny/Smith&Brown18")
 
@@ -11,17 +10,19 @@ SBtree <- read.tree(file = "ALLMB.tre")
 write.tree(SBtree)
 is.rooted(SBtree)
 
-##2021 community matrix for Faith's PD--------------------------------------------
+#Faith's PD----------------------------------
+##2021 --------------------------------------------
 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
+#make community matrix 
 matrix2021 <- read.table("2021_community_matrix.txt", sep = "\t", header = T, row.names = 1)
 
 #calculate pd of row 1 of matrix (PBM)
 
 matrix2021[1, matrix2021[1,]>0]
 
-######PBM 2021###################################################
+###PBM 2021###################################################
 richnessPBM21 = length(matrix2021[1, matrix2021[1,]>0])
 #prune tree to just these species for PBM
 pruned.treePBM21 <- treedata(SBtree, unlist(matrix2021[1,matrix2021[1,]>0]), warnings = F)$phy
@@ -39,9 +40,6 @@ class(pruned.treePf21)
 pruned.treePf21
 plot(pruned.treePf21)
 
-#Faith's index for Pfeiler2021
-sum(pruned.treePf21$edge.length)
-
 ###Road 2021##############################
 #prune tree 
 pruned.treeroad21 <- treedata(SBtree, unlist(matrix2021[3,matrix2021[3,]>0]), warnings = F)$phy
@@ -49,10 +47,7 @@ class(pruned.treeroad21)
 pruned.treeroad21
 plot(pruned.treeroad21)
 
-#Faith's index for Road 2021
-sum(pruned.treeroad21$edge.length)
-
-###all sites in matrix with one code###############
+###all 2021 together###############
 prune.sum.function <- function(x){
   tmp.tree <- treedata(SBtree, x[x>0])$phy
   sum(tmp.tree$edge.length)
@@ -70,9 +65,10 @@ ses.pd(matrix2021, pruned.tree2021, null.model = c("sample.pool"),
        runs = 5000, iterations = 5000, include.root=TRUE)
 
 
-#2022 community data for Faith's PD--------------------------------------------
+##2022 --------------------------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
+#make community matrix 
 matrix2022 <- read.table("2022_community_matrix.txt", sep = "\t", header = T, row.names = 1)
 
 ###PBM 2022##########################################################
@@ -129,7 +125,8 @@ ses.pd(matrix2022, pruned.tree2022, null.model = c("sample.pool"),
        runs = 5000, iterations = 5000, include.root=TRUE)
 
 
-##2021 data for MPD-------------------------------------------------------------
+#MPD-------------------------------------------------------------
+##2021################
 ###Road 2021##############################################
 plot.phylo(pruned.treeroad21)
 dist.matR21 <- cophenetic(pruned.treeroad21)
@@ -172,7 +169,7 @@ print(mpd_2021)
 ses.mpd(matrix2021, dist.mat2021, null.model = c("sample.pool"),
         abundance.weighted = FALSE, runs = 5000, iterations = 5000)
 
-##2022 data for MPD-------------------------------------------------------------
+##2022-------------------------------------------------------------
 ###Road 2022##############################################
 plot.phylo(pruned.treeroad22)
 dist.matR22 <- cophenetic(pruned.treeroad22)
@@ -186,7 +183,7 @@ plot.phylo(pruned.treePBM22)
 dist.matPBM22 <- cophenetic(pruned.treePBM22)
 mpd_PBM22<- mean(as.dist(dist.matPBM22))
 
-##all sites together##########
+###all sites together##########
 new.mpd.function <- function(x){
   com.names<- names(x[x>0])
   mean(as.dist(dist.mat2022[com.names,com.names]))
@@ -194,23 +191,24 @@ new.mpd.function <- function(x){
 
 mpd_2022 <- apply(matrix2022, MARGIN = 1, new.mpd.function)
 print(mpd_2022)
-##SES for mpd 2022
+
+###SES for mpd 2022
 ses.mpd(matrix2022, dist.mat2022, null.model = c("sample.pool"),
         abundance.weighted = FALSE, runs = 5000, iterations = 5000)
 
-
-##2021 MNTD---------------------------------------------------------------------
+#MNTD-----------------------------------------
+##2021---------------------------------------------------------------------
 install.packages("picante")
 library(picante)
 
 dist.mat2021 <- cophenetic(pruned.tree2021)
 
-##road 2021################
+###Road 2021################
 road21.sample <- matrix2021[3, matrix2021[3,]>0]
 
 mntd.R21 <- mntd(matrix2021[3, matrix2021[3,]>0], cophenetic(pruned.tree2021), abundance.weighted = F)
 
-###pfeiler 2021################
+###Pfeiler 2021################
 pfeiler21.sample <- matrix2021[2, matrix2021[2, ]>0]
 
 mntd.pf21 <- mntd(pfeiler21.sample, cophenetic(pruned.tree2021), abundance.weighted = FALSE)
@@ -220,7 +218,7 @@ PBM21.sample <- matrix2021[1, matrix2021[1, ]>0]
 
 mntd.PBM21 <- mntd(PBM21.sample, cophenetic(pruned.tree2021), abundance.weighted = FALSE)
 
-#function for all sites##########
+###function for all sites##########
 new.mntd.function <- function(x){
   com.names <- names(x[x>0])
   my.com.dist <- dist.mat2021[com.names,com.names]
@@ -236,7 +234,7 @@ mntd.2021
 ses.mntd(matrix2021, dist.mat2021, null.model = c("sample.pool"),
          abundance.weighted=FALSE, runs = 5000, iterations = 5000)
 
-##2022 MNTD--------------------------------------------------------------------
+##2022--------------------------------------------------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 matrix2022 <- read.table("2022_community_matrix.txt", sep = "\t", header = T, row.names = 1)
@@ -247,20 +245,21 @@ plot(pruned.tree2022)
 
 dist.mat2022 <- cophenetic(pruned.tree2022)
 
-##road 2022################
+###Road 2022################
 road22.sample <- matrix2022[3, matrix2022[3,]>0]
 
 mntd.R22 <- mntd(matrix2022[3, matrix2022[3,]>0], cophenetic(pruned.tree2022), abundance.weighted = F)
 
-##pfeiler 2022################
+###Pfeiler 2022################
 pf22.sample <- matrix2022[2, matrix2022[2,]>0]
 
 mntd.pf22 <- mntd(matrix2022[2, matrix2022[2,]>0], cophenetic(pruned.tree2022), abundance.weighted = F)
 
-##PBM 2022################
+###PBM 2022################
 PBM22.sample <- matrix2022[1, matrix2022[1,]>0]
 mntd.PB8M22 <- mntd(matrix2022[1, matrix2022[1,]>0], cophenetic(pruned.tree2022), abundance.weighted = F)
-#function all sites 2022
+
+###function all sites 2022#######
 new.mntd.function <- function(x){
   com.names <- names(x[x>0])
   my.com.dist <- dist.mat2022[com.names,com.names]
