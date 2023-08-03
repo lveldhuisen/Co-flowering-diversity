@@ -1,30 +1,20 @@
-#calculate Schoener's Index by Site for only 2021 data
 install.packages("tidyverse")
 library(tidyverse)
 
+
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
 
-dat <- read.csv("Phenology_fitness_data_2021_trimmed.csv", header = TRUE)
-
-#create new column with proportion flowering 
-dat2 <- dat %>% group_by(Site, Species) %>%
-  mutate(total_flowers = sum(Number_flowering_units),
-         p_ik = Number_flowering_units/total_flowers)
-
-
-
-
-#This is the code I've been using from here down -----------------------------
 #test spaa package------------------------------------------------------ 
 install.packages("spaa")
 library(spaa)
 library(reshape)
 library(reshape2)
 
-#2021 SI calculations and turned into data tables -------------------------
+#2021-------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
 
-#PBM SI + dataframe 21
+#Schoener's Index for phenology----------------
+##PBM SI + dataframe 21########################
 mat_PBM_2021 <- read.csv("PBM_phenology_matrix_2021.csv", header = TRUE)
 PBM_SI_2021 <- niche.overlap(mat_PBM_2021, method = "schoener")
 hist(PBM_SI_2021)
@@ -35,7 +25,7 @@ colnames(PBM_21_melt) <- c("species1", "species2", "SI")
 PBM_21_melt$site <- c("PBM")
 print(PBM_21_melt)
 
-#Pfeiler SI + dataframe 21
+##Pfeiler SI + dataframe 21##################
 mat_Pfeiler_2021 <- read.csv("pfeiler_phenology_matrix_2021.csv", header = TRUE)
 Pfeiler_SI_2021 <- niche.overlap(mat_Pfeiler_2021, method = "schoener")
 hist(Pfeiler_SI_2021)
@@ -46,7 +36,7 @@ colnames(Pfeiler_21_melt) <- c("species1", "species2", "SI")
 Pfeiler_21_melt$site <- c("Pfeiler")
 print(Pfeiler_21_melt)
 
- #Road SI + dataframe 21
+##Road SI + dataframe 21#################
 mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)  
  Road_SI_2021<-niche.overlap(mat_Road_2021, method = "schoener")
  hist(Road_SI_2021)
@@ -60,7 +50,7 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
  Merged2021 <- do.call("rbind", list(Road_21_melt, Pfeiler_21_melt, PBM_21_melt))
  print(Merged2021)
  
- #compare distributions for SI between sites 2021 
+ ###compare distributions for SI between sites 2021##########################
  library(tidyverse)
  library(ggpubr)
  
@@ -72,25 +62,15 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
            color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
            order = c("Road", "Pfeiler", "PBM"),
            ylab = "Schoener's Index - phenology", xlab = "Site", title = "2021") + theme(legend.position = "none") + scale_x_discrete(labels=c('Low', 'Middle', 'High'))
- ###remove zeros----------------------------
- Merged_2021_nozeros <- filter(Merged2021, SI > 1.1E-15)
- 
- kruskal.test(SI ~ site, data = Merged_2021_nozeros)
  
  
- ggboxplot(Merged_2021_nozeros, x = "site", y = "SI", 
-           color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
-           order = c("Road", "Pfeiler", "PBM"),
-           ylab = "Schoener's Index", xlab = "Site", title = "2021 phenology")
- 
- 
- #SI for fitness data 2021--------------------------------------------------
+ ##SI for fitness data 2021--------------------------------------------------
  setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
  library(tidyverse)
  library(ggpubr)
  library(spaa)
  
-#SI for PBM fitness 2021
+###SI for PBM fitness 2021################
   mat_PBM_fitness_2021 <- read.csv("PBM_fitness_formatrix.csv", header = TRUE)
  PBM_SI_fitness_2021 <- niche.overlap(mat_PBM_fitness_2021, method = "schoener")
  hist(PBM_SI_fitness_2021)
@@ -101,7 +81,7 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
  PBM_21_fitness_melt$site <- c("PBM")
  print(PBM_21_fitness_melt)
  
- #SI for Pfeiler fitness 2021 
+ ###SI for Pfeiler fitness 2021#################
  mat_Pfeiler_fitness_2021 <- read.csv("Pfeiler_fitness_formatrix.csv", header = TRUE)
  Pfeiler_SI_fitness_2021 <- niche.overlap(mat_Pfeiler_fitness_2021, method = "schoener")
  hist(Pfeiler_SI_fitness_2021)
@@ -113,7 +93,7 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
  print(Pfeiler_21_fitness_melt)
  
  
- #SI for Road fitness 2021 
+###SI for Road fitness 2021###################### 
  mat_Road_fitness_2021 <-read.csv("road_fitness_formatrix.csv", header = TRUE)  
  Road_SI_fitness_2021<-niche.overlap(mat_Road_fitness_2021, method = "schoener")
  hist(Road_SI_fitness_2021)
@@ -126,12 +106,12 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
  print(Road_21_fitness_melt)
  
  
- #create merged dataframe for all sites fitness data 2021---------------------
+###create merged dataframe for all sites fitness data 2021---------------------
  Merged2021_fitness <- do.call("rbind", list(Road_21_fitness_melt, Pfeiler_21_fitness_melt, 
                                              PBM_21_fitness_melt))
  print(Merged2021_fitness)
  
- #compare distributions for fitness SI between sites 2021 
+###compare distributions for fitness SI between sites 2021#################
  library(tidyverse)
  library(ggpubr)
  
@@ -144,18 +124,11 @@ mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)
            order = c("Road", "Pfeiler", "PBM"),
            ylab = "Schoener's Index", xlab = "Site", title = "2021 fitness")
  
- ###remove 0s and compare fitness SI between sites 
- Merged2021_fitness_nozeros <- filter(Merged2021_fitness, SI_f > 1.1E-15)
- kruskal.test(SI_f ~ site, data = Merged2021_fitness_nozeros)
- 
- ggboxplot(Merged2021_fitness_nozeros, x = "site", y = "SI_f", 
-           color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
-           order = c("Road", "Pfeiler", "PBM"),
-           ylab = "Schoener's Index fitness", xlab = "Site", title = "2021 fitness")
 
- #2022 SI calculations, everything below here is 2022 data only---------------
+#2022 ---------------
  setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2022/data files")
- 
+
+##Schoener's Index phenology 2022------------------
  mat_PBM_2022 <- read.csv("PBM_phenology_matrix_2022.csv", header = TRUE)
  PBM_SI_22 <- niche.overlap(mat_PBM_2022, method = "schoener")
  hist(PBM_SI_22)
@@ -172,7 +145,7 @@ print(Road_SI_22)
 
 
 
-#turn SI matrices into data tables for 2022 data ------------------------------
+##turn SI phenology matrices into data tables------------------------------
 install.packages("reshape2")
 install.packages("tidyverse")
 library("reshape2")
@@ -180,8 +153,6 @@ library("tidyverse")
 
 Road_22_melt <- melt(as.matrix(Road_SI_22), varnames = c("species1"))
 colnames(Road_22_melt) <- c("species1", "species2", "SI")
-
-
 
 Road_22_melt$site <- c("Road")
 print(Road_22_melt)
@@ -205,8 +176,6 @@ PBM_22_melt <- melt(as.matrix(PBM_SI_22), varnames = c("species1"))
 colnames(PBM_22_melt) <- c("species1", "species2", "SI")
 print(PBM_22_melt)
 
-
-
 PBM_22_melt$site <- NA
 PBM_22_melt$site <- c("PBM")
 
@@ -214,7 +183,7 @@ keeps <- c("species1","species2","SI","site")
 PBM_22_melt = PBM_22_melt[keeps]
 print(PBM_22_melt)
 
-#combine all three sites into 1 dataframe-------------------------------------
+####combine all three sites into 1 dataframe-------------------------------------
 install.packages("reshape")
 library("reshape")
 
@@ -223,17 +192,13 @@ print(Merged2022)
 
 write.csv(as.matrix(Merged), file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/RMBL/Summer\ 2022/data\ files/SI_allsites_2022.csv")
 
-#compare distributions for 2022 phenology 
+###compare distributions for 2022 phenology##################
 unique(Merged2022$site)
 
 library(dplyr)
 library(ggpubr)
 library(ggplot2)
 
-#remove zeros 
-Merged22_nozero <- filter(Merged2022, SI > 1.11E-15)
-head(Merged22_nozero)
-hist(Merged22_nozero$SI)
 
 ###figure and tests for Supplemental Info fig S1------------
 kruskal.test(SI ~ site, data = Merged2022)
@@ -242,13 +207,13 @@ ggboxplot(Merged2022, x = "site", y = "SI",
           order = c("Road", "Pfeiler", "PBM"),
           ylab = "Schoener's Index - phenology", xlab = "Site", title = "2022") + theme(legend.position = "none") + scale_x_discrete(labels=c('Low', 'Middle', 'High'))
 
-#SI for fitness data 2022--------------------------------------------------
+##SI for fitness data 2022--------------------------------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2022/data files")
 library(tidyverse)
 library(ggpubr)
 library(spaa)
 
-#SI for PBM fitness 2022
+###SI for PBM fitness 2022######
 mat_PBM_fitness_2022 <- read.csv("fitness_correlation_PBM_22.csv", header = TRUE)
 PBM_SI_fitness_2022 <- niche.overlap(mat_PBM_fitness_2022, method = "schoener")
 hist(PBM_SI_fitness_2022)
@@ -259,7 +224,7 @@ colnames(PBM_22_fitness_melt) <- c("species1", "species2", "SI")
 PBM_22_fitness_melt$site <- c("PBM")
 print(PBM_22_fitness_melt)
 
-#SI for Pfeiler fitness 2022 
+###SI for Pfeiler fitness 2022################
 mat_Pfeiler_fitness_2022 <- read.csv("fitness_correlation_Pfeiler_22.csv", header = TRUE)
 Pfeiler_SI_fitness_2022 <- niche.overlap(mat_Pfeiler_fitness_2022, method = "schoener")
 hist(Pfeiler_SI_fitness_2022)
@@ -271,7 +236,7 @@ Pfeiler_22_fitness_melt$site <- c("Pfeiler")
 print(Pfeiler_22_fitness_melt)
 
 
-#SI for Road fitness 2022 
+###SI for Road fitness 2022#################
 mat_Road_fitness_2022 <-read.csv("fitness_correlation_Road_22.csv", header = TRUE)  
 Road_SI_fitness_2022<-niche.overlap(mat_Road_fitness_2022, method = "schoener")
 hist(Road_SI_fitness_2022)
@@ -284,7 +249,7 @@ Road_22_fitness_melt$site <- c("Road")
 print(Road_22_fitness_melt)
 
 
-#create merged dataframe for all sites fitness data 2022---------------------
+###create merged dataframe for all sites fitness data 2022---------------------
 Merged2022_fitness <- do.call("rbind", list(Road_22_fitness_melt, Pfeiler_22_fitness_melt, 
                                             PBM_22_fitness_melt))
 head(Merged2022_fitness)
@@ -303,33 +268,6 @@ library("reshape")
 
 Merged2022_both <- do.call("rbind", list(Merged2022, Merged2022_fitness))
 print(Merged2022_both)
-
-
-
-#compare distributions for fitness SI between sites 2022
-library(tidyverse)
-library(ggpubr)
-
-kruskal.test(SI_f ~ site, data = Merged2022_fitness)
-
-chisq.test(Merged2022_fitness$site,Merged2022_fitness$SI_f)
-
-ggboxplot(Merged2022_fitness, x = "site", y = "SI_f", 
-          color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
-          order = c("Road", "Pfeiler", "PBM"),
-          ylab = "Schoener's Index", xlab = "Site", title = "2022 fitness")
-
-#remove zeros 
-Merged2022_fitness_nozero <- filter(Merged2022_fitness, SI > 1.11E-15)
-head(Merged2022_fitness_nozero)
-hist(Merged2022_fitness_nozero$SI)
-
-kruskal.test(SI ~ site, data = Merged2022_fitness_nozero)
-
-ggboxplot(Merged2022_fitness_nozero, x = "site", y = "SI", 
-          color = "site", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
-          order = c("Road", "Pfeiler", "PBM"),
-          ylab = "Schoener's Index", xlab = "Site", title = "2022 fitness")
 
 
 #test distributions of flowering
