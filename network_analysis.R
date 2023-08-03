@@ -10,10 +10,10 @@ library(reshape2)
 library(reshape)
 library(igraph)
 
-###2021 SI calculations and turned into data tables -------------------------
+#2021 SI calculations and turned into data tables -------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
 
-#PBM SI + dataframe 21
+##PBM 2021 SI + dataframe########
 mat_PBM_2021 <- read.csv("PBM_phenology_matrix_2021.csv", header = TRUE)
 PBM_SI_2021 <- niche.overlap(mat_PBM_2021, method = "schoener")
 hist(PBM_SI_2021)
@@ -33,7 +33,7 @@ head(forGephi_PBM)
 
 write.csv(as.matrix(forGephi_PBM), file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/RMBL/Summer\ 2021/data\ files/forgephi_PBM.csv")
 
-#Pfeiler SI + dataframe 21
+##Pfeiler 2021 SI + dataframe##########
 mat_Pfeiler_2021 <- read.csv("pfeiler_phenology_matrix_2021.csv", header = TRUE)
 Pfeiler_SI_2021 <- niche.overlap(mat_Pfeiler_2021, method = "schoener")
 hist(Pfeiler_SI_2021)
@@ -45,7 +45,7 @@ head(Pfeiler_21_melt)
 write.csv(as.matrix(forGephi_PBM), file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/network analyses/pfeiler21.csv")
 
 
-#Road SI + dataframe 21
+##Road 2021 SI + dataframe#########
 mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)  
 Road_SI_2021<-niche.overlap(mat_Road_2021, method = "schoener")
 hist(Road_SI_2021)
@@ -58,8 +58,8 @@ head(Road_21_melt)
 Merged2021 <- do.call("rbind", list(Road_21_melt, Pfeiler_21_melt, PBM_21_melt))
 print(Merged2021)
 
-#network analysis using igraph-------------------------------------------------- 
-#####Road 2021##############################
+#network modularity analysis using igraph-------------------------------------------------- 
+##Road 2021##############################
 install.packages("igraph")
 library(igraph)
 
@@ -105,7 +105,8 @@ plot(road21_igraph,edge.arrow.size=.5, vertex.color=communitiesRoad, vertex.size
 
 class(road21_igraph)
 
-#modularity analysis based on Blondel et al 2008, same as Arceo-Gomez et al 2018
+###modularity###########
+#analysis based on Blondel et al 2008, same as Arceo-Gomez et al 2018
 communitiesRoad <- cluster_louvain(road21_igraph, weights = NULL, resolution = 1)
 membership(communitiesRoad)
 R21mod <- modularity(communitiesRoad)
@@ -113,7 +114,7 @@ R21mod <- modularity(communitiesRoad)
 class(road21_igraph)
 gsize(PBM22_igraph)
 
-#####Pfeiler 2021##############################
+##Pfeiler 2021##############################
 
 library(dplyr)
 library(tidyr)
@@ -145,13 +146,13 @@ print(pfeiler21_igraph)
 head(pfeiler21_igraph)
 class(pfeiler21_igraph)
 
-#modularity 
+###modularity############# 
 communitiesPF <- cluster_louvain(pfeiler21_igraph, weights = NULL, resolution = 1)
 membership(communitiesPF)
 Pf21mod <- modularity(communitiesPF)
 
 
-#####PBM 2021##############################
+##PBM 2021##############################
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
 PBM21data <- read.csv("cleanPBM21.csv", header = TRUE)
@@ -189,12 +190,12 @@ plot(PBM21_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3,
 
 class(PBM21_igraph)
 
-#modularity 
+###modularity############
 communitiesPBM <- cluster_louvain(PBM21_igraph, weights = NULL, resolution = 1)
 membership(communitiesPBM)
 PBM21mod <- modularity(communitiesPBM)
 
-#####Road 2022##############################
+##Road 2022##############################
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
 Road22data <- read.csv("cleanRoad22.csv", header = TRUE)
@@ -230,12 +231,12 @@ plot(Road22_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3,
 
 class(Road22_igraph)
 
-#modularity 
+###modularity##########
 communitiesRoad22 <- cluster_louvain(Road22_igraph, weights = NULL, resolution = 1)
 membership(communitiesRoad22)
 R22mod <- modularity(communitiesRoad22)
 
-#####Pfeiler 2022##############################
+##Pfeiler 2022##############################
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
 Pfeiler22data <- read.csv("cleanPfeiler22.csv", header = TRUE)
@@ -268,12 +269,12 @@ head(Pfeiler22_igraph)
 
 class(Pfeiler22_igraph)
 
-#modularity 
+###modularity################ 
 communitiesPf22 <- cluster_louvain(Pfeiler22_igraph, weights = NULL, resolution = 1)
 membership(communitiesPf22)
 Pf22mod <- modularity(communitiesPf22)
 
-#####Pfeiler 2022##############################
+##PBM 2022##############################
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
 PBM22data <- read.csv("cleanPBM22.csv", header = TRUE)
@@ -304,7 +305,7 @@ head(PBM22_igraph)
 
 class(PBM22_igraph)
 
-#modularity 
+###modularity#############
 communitiesPBM22 <- cluster_louvain(PBM22_igraph, weights = NULL, resolution = 1)
 membership(communitiesPBM22)
 PBM22mod <- modularity(communitiesPBM22)
@@ -320,7 +321,7 @@ library(Matrix)
 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
-#####Road 2021##############################
+##Road 2021##############################
 #turn igraph object from above back into matrix 
 road21_matrix <- as.matrix(as_adjacency_matrix(road21_igraph))
 #create null networks 
@@ -348,7 +349,7 @@ hist(null_modularity)
 R21Z <- (R21mod - mean(null_modularity))/sd(null_modularity)
 R21Z
 
-#####Pfeiler 2021############################## 
+##Pfeiler 2021############################## 
 #turn igraph object back into matrix 
 pfeiler21_matrix <- as.matrix(as_adjacency_matrix(pfeiler21_igraph))
 #create nullnetworks 
@@ -373,7 +374,7 @@ for (i in 1:length(pfeiler21_null)) {
 PF21Z <- (Pf21mod - mean(PF21null_modularity))/sd(PF21null_modularity)
 PF21Z
 
-#####PBM 2021##############################
+##PBM 2021##############################
 #turn igraph object back into matrix 
 PBM21_matrix <- as.matrix(as_adjacency_matrix(PBM21_igraph))
 #create nullnetworks 
@@ -402,9 +403,7 @@ PBM21Z
 
 hist(PBM21null_modularity)
 
-
-####2022 data######################
-#####Road 2022##############################
+##Road 2022##############################
 #turn igraph object back into matrix 
 road22_matrix <- as.matrix(as_adjacency_matrix(Road22_igraph))
 #create null networks 
@@ -428,7 +427,7 @@ for (i in 1:length(road22_null)) {
 R22Z <- (R22mod - mean(R22null_modularity))/sd(R22null_modularity)
 R22Z
 
-#####Pfeiler 2022##############################
+##Pfeiler 2022##############################
 #turn igraph object back into matrix 
 pfeiler22_matrix <- as.matrix(as_adjacency_matrix(Pfeiler22_igraph))
 #create null networks 
@@ -452,7 +451,7 @@ for (i in 1:length(pfeiler22_null)) {
 Pf22Z <- (Pf22mod - mean(Pf22null_modularity))/sd(Pf22null_modularity)
 Pf22Z
 
-#####PBM 2022##############################
+##PBM 2022##############################
 #turn igraph object back into matrix 
 PBM22_matrix <- as.matrix(as_adjacency_matrix(PBM22_igraph))
 #create null networks 
@@ -475,6 +474,3 @@ for (i in 1:length(PBM22_null)) {
 #calculate z scores for pbm 2022 nulls 
 PBM22Z <- (PBM22mod - mean(PBM22null_modularity))/sd(PBM22null_modularity)
 PBM22Z
-
-
-#Network visualizations----------------------------------------------------------
