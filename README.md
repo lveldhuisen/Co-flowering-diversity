@@ -6,3 +6,4 @@ The file titled "network_analysis.R" contains code for the network analyses (mod
 
 The files titled "S&B_phylogeneticmetrics_bymodule" and "S&B_phylogeneticmetrics_bysite" contain the code for community phylogenetic metrics based on the Smith & Brown 2018 phylogeny. The "by_module" file contains code for MPD, MNTD and PD for beginning, middle and end of season flowering modules, and SES calculations. The "by_site" file contains code for the same metrics, but groups by elevational site and not module. 
 
+The file "fitnessinfo_supplemental.R" contains all the fitness data and calculations for Supplemental Materials Table S1.
