@@ -1,4 +1,4 @@
-#Contains: code for all figures. All files for this code are in "files_Figures" Zip file.
+#Contains: code for all figures. All files for this code are in "files_Figures" folder.
 install.packages("ggplot2")
 install.packages("dplyr")
 install.packages("ggpubr")
@@ -108,72 +108,72 @@ ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('Beginning','Midd
   ylab("Number of flowering units") + xlab("Flowering module") + theme_light() + ggtitle("PBM 2022") + ylim(0,1050)
 
 #Figure 2: phenology and fitness correlations-------------------------------------------
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/results_specieslevel")
+#i generated a figure for each site and year, and combined them to make Fig 2 in Adobe Illustrator 
+#just for me, this file is available in the emailed folder "AllData_AmNat"
+setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/AllData_AmNat/files_Figures")
 
+#bring in data, this file is in the "files_Figures" folder
 df_all <- read_csv("results_ALL.csv")
 
-##subset data for regressions############
 ###road 2021#######
 subDataR21 <- subset(df_all, 
-                     Site %in% c("Road") & Year == "2021")
+                     Site %in% c("Road") & Year == "2021") #subset data by site and year 
 
-R21_reg <- lm(SI_fitness ~ SI, data = subDataR21)
-summary(R21_reg)
-plot(R21_reg$residuals)
+R21_reg <- lm(SI_fitness ~ SI, data = subDataR21) #linear regression
+summary(R21_reg)  
+plot(R21_reg$residuals) #check residuals 
 
-ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2021")
+ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2021") #plot regression 
+
 ###pfeiler 2021#######
 subDataPf21 <- subset(df_all, 
-                      Site %in% c("Pfeiler") & Year == "2021")
+                      Site %in% c("Pfeiler") & Year == "2021") #subset data by site and year 
 
-Pf21_reg <- lm(SI_fitness ~ SI, data = subDataPf21)
+Pf21_reg <- lm(SI_fitness ~ SI, data = subDataPf21) #linear regression
 summary(Pf21_reg)
 plot(Pf21_reg$residuals)
 
-ggplot(subDataPf21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20,size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2021")
+ggplot(subDataPf21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20,size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2021") #plot regression 
 
 ###PBM 2021#######
 subDataPBM21 <- subset(df_all, 
-                       Site %in% c("PBM") & Year == "2021")
+                       Site %in% c("PBM") & Year == "2021") #subset data by site and year 
 
-PBM21_reg <- lm(SI_fitness ~ SI, data = subDataPBM21)
+PBM21_reg <- lm(SI_fitness ~ SI, data = subDataPBM21) #linear regression
 summary(PBM21_reg)
 plot(PBM21_reg$residuals)
 
-ggplot(subDataPBM21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2021")
+ggplot(subDataPBM21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2021") #plot regression 
 
 ###road 2022#######
 subDataR22 <- subset(df_all, 
-                     Site %in% c("Road") & Year == "2022")
+                     Site %in% c("Road") & Year == "2022") #subset data by site and year 
 
-R22_reg <- lm(SI_fitness ~ SI, data = subDataR22)
+R22_reg <- lm(SI_fitness ~ SI, data = subDataR22) #linear regression
 summary(R22_reg)
 plot(R22_reg$residuals)
 
-ggplot(subDataR22, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2022")
+ggplot(subDataR22, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2022") #plot regression 
 
 ###pfeiler 2022#######
 subDataPf22 <- subset(df_all, 
-                      Site %in% c("Pfeiler") & Year == "2022")
+                      Site %in% c("Pfeiler") & Year == "2022") #subset data by site and year 
 
-Pf22_reg <- lm(SI_fitness ~ SI, data = subDataPf22)
+Pf22_reg <- lm(SI_fitness ~ SI, data = subDataPf22) #linear regression
 summary(Pf22_reg)
 plot(Pf22_reg$residuals)
 
-ggplot(subDataPf22, aes(x=SI, y=SI_fitness)) + geom_point(shape=20,size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2022")
+ggplot(subDataPf22, aes(x=SI, y=SI_fitness)) + geom_point(shape=20,size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2022") #plot regression 
 
 ###PBM 2022#######
 subDataPBM22 <- subset(df_all, 
-                       Site %in% c("PBM") & Year == "2022")
+                       Site %in% c("PBM") & Year == "2022") #subset data by site and year 
 
-PBM22_reg <- lm(SI_fitness ~ SI, data = subDataPBM22)
+PBM22_reg <- lm(SI_fitness ~ SI, data = subDataPBM22) #linear regression
 summary(PBM22_reg)
 plot(PBM22_reg$residuals)
 
-ggplot(subDataPBM22, aes(x=SI, y=SI_fitness)) + geom_point(shape=20,size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2022")
-
-###facet figure with all sites and years########
-ggplot(df_all, aes(x=SI, y=SI_fitness)) + geom_point(shape=20) + facet_grid(Year~ Site) + xlab("Schoener's Index") + ylab("Schoeners Index fitness")
+ggplot(subDataPBM22, aes(x=SI, y=SI_fitness)) + geom_point(shape=20,size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2022") #plot regression 
 
 ###test big faceted graph with regression lines########## 
 df_all %>%
@@ -183,23 +183,19 @@ df_all %>%
   geom_smooth(method = "lm") +
   facet_grid(Year ~ Site) +
   theme_light() +
-  stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label")
+  stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label") #same data but different layout from final Fig 2
 
-
-###bin data--------------
-test<-df_all%>%mutate(SI_bin = cut(SI, breaks = c(0,0.1,0.5,1)))
-test <- test%>%mutate(SI_f_bin = cut(SI_fitness, breaks = c(0,0.1,0.5,1)))
-test <- test%>%mutate(PD_bin = cut(PD, breaks = c(0,50,100,150,200,250,300)))
-
-ggplot(test, aes(x=SI_f_bin, y=PD)) + 
-  geom_boxplot() 
-
+#Figure 3: networks, I generated all network figures individually in Gephi, and combined them using Adobe Illustrator------------------------------
 
 #Figure 4: phylogenetic SES values by modules--------------------------------------
+#like other figures, I generated figures for each site and year and combined them to make the final figure 4 in Adobe Illustrator 
+
+#find this file in "files_Figures" folder 
 df_mod_figs <- read.csv("results_modules_combined.csv")
+
 ##road 2021#######
 sub_mod_r21 <- subset(df_mod_figs, 
-                        Site %in% c("Road") & Year == "2021")
+                        Site %in% c("Road") & Year == "2021") #subset data by site and year 
 
 road21_SES <- ggplot(sub_mod_r21, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
          geom_bar(position = "dodge",stat = "identity") +
@@ -208,12 +204,12 @@ road21_SES <- ggplot(sub_mod_r21, aes(fill=Type, y=SES, x=fct_relevel(Module, c(
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("Road 2021") + ylim(-5,2)
+                             "#4ea6c4")) + ggtitle("Road 2021") + ylim(-5,2) #plot figure 
 
 print(road21_SES)
 ##pfeiler 2021#######
 sub_mod_pf21 <- subset(df_mod_figs, 
-                      Site %in% c("Pfeiler") & Year == "2021")
+                      Site %in% c("Pfeiler") & Year == "2021") #subset data by site and year 
 
 pfeiler21_SES <- ggplot(sub_mod_pf21, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
   geom_bar(position = "dodge",stat = "identity") +
@@ -222,10 +218,10 @@ pfeiler21_SES <- ggplot(sub_mod_pf21, aes(fill=Type, y=SES, x=fct_relevel(Module
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("Pfeiler 2021")+ ylim(-5,2)
+                             "#4ea6c4")) + ggtitle("Pfeiler 2021")+ ylim(-5,2) #plot figure
 ##PBM 2021#######
 sub_mod_pbm21 <- subset(df_mod_figs, 
-                       Site %in% c("PBM") & Year == "2021")
+                       Site %in% c("PBM") & Year == "2021") #subset data by site and year 
 
 PBM2021_SES <- ggplot(sub_mod_pbm21, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
   geom_bar(position = "dodge",stat = "identity") +
@@ -234,7 +230,7 @@ PBM2021_SES <- ggplot(sub_mod_pbm21, aes(fill=Type, y=SES, x=fct_relevel(Module,
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("PBM 2021")+ ylim(-5,2)
+                             "#4ea6c4")) + ggtitle("PBM 2021")+ ylim(-5,2) #plot figure
 
 print(PBM2021_SES)
 
@@ -243,12 +239,12 @@ p<-ggplot(data=sub_mod_pbm21, aes(x=Module, y=SES, fill=Type)) +
   theme_light()+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("PBM 2021")+ ylim(-5,2)
+                             "#4ea6c4")) + ggtitle("PBM 2021")+ ylim(-5,2) #plot figure
   
 p
 ##road 2022#######
 sub_mod_r22 <- subset(df_mod_figs, 
-                      Site %in% c("Road") & Year == "2022")
+                      Site %in% c("Road") & Year == "2022") #subset data by site and year 
 
 road2022_SES <- ggplot(sub_mod_r22, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle",
                                                                   "middle2", "end")))) + 
@@ -258,10 +254,10 @@ road2022_SES <- ggplot(sub_mod_r22, aes(fill=Type, y=SES, x=fct_relevel(Module, 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("Road 2022")+ ylim(-5,2)
+                             "#4ea6c4")) + ggtitle("Road 2022")+ ylim(-5,2) #plot figure
 ##pfeiler 2022#######
 sub_mod_pf22 <- subset(df_mod_figs, 
-                       Site %in% c("Pfeiler") & Year == "2022")
+                       Site %in% c("Pfeiler") & Year == "2022") #subset data by site and year 
 
 pfeiler2022 <- ggplot(sub_mod_pf22, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
   geom_bar(position = "dodge",stat = "identity") +
@@ -270,10 +266,10 @@ pfeiler2022 <- ggplot(sub_mod_pf22, aes(fill=Type, y=SES, x=fct_relevel(Module, 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("Pfeiler 2022")+ ylim(-5,2)
+                             "#4ea6c4")) + ggtitle("Pfeiler 2022")+ ylim(-5,2) #plot figure
 ##PBM 2022#######
 sub_mod_pbm22 <- subset(df_mod_figs, 
-                        Site %in% c("PBM") & Year == "2022")
+                        Site %in% c("PBM") & Year == "2022") #subset data by site and year 
 
 PBM2022_SES <- ggplot(sub_mod_pbm22, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
   geom_bar(position = "dodge",stat = "identity") +
@@ -282,7 +278,9 @@ PBM2022_SES <- ggplot(sub_mod_pbm22, aes(fill=Type, y=SES, x=fct_relevel(Module,
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("PBM 2022")+ ylim(-5,2)
+                             "#4ea6c4")) + ggtitle("PBM 2022")+ ylim(-5,2) #plot figure
+
+
 
 #species counts for results intro paragraph--------------------
 species_all <- length(unique(df_all$species1))
