@@ -1,62 +1,57 @@
-#Contains: code for all figures 
+#Contains: code for all figures. All files for this code are in "files_Figures" Zip file.
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("ggpubr")
+install.packages("viridis")  
+install.packages("pals")
+install.packages("Polychrome")
+
 library(ggplot2)
 library(dplyr)
 library(ggpubr)
+library(viridis)
+library(pals)
+library(Polychrome)
 
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
+#for my own use, all these files are also in the "files_Figures" folder in the "AllData_AmNat" folder
+setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1") 
+
+#dataframes for figures 
 df_site <- read.csv("results_bysite.csv")
 df_mod <- read.csv("results_bymodule.csv")
 
 #Figure 1: histogram of families by module----------------------------
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
-df_pheno <- read.csv("combined_raw_phenology.csv")
 
-install.packages("viridis")  
-library(viridis)
-install.packages("pals")
-library(pals)
-install.packages("Polychrome")
-library(Polychrome)
+#this data file is in the "files_Figures" folder 
+df_pheno <- read.csv("combined_raw_phenology.csv")
 
 pal.bands(stepped, show.names=TRUE)
 
-manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','tomato3','seagreen1',
-                'moccasin','#7CE3D8','purple','darkolivegreen1','Indianred1','plum3','pink3','lightsalmon',
-                'yellowgreen','darkblue','darkgray','cadetblue1','#DDAD4B','seagreen','mediumorchid4','orange','yellow')
-
-df_pheno2 <- df_pheno
-df_pheno2$Module <- factor(df_pheno2$Module)
-ggplot(data=datn2, aes(x=dose, y=length, group=supp, colour=supp)) +
-  geom_line() +
-  geom_point()
-
-
-ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),y=Number_flowering, fill=Family)) + 
-  geom_bar(stat="identity") + facet_grid(Year ~ Site) +
-  theme(legend.position = "right") + scale_fill_manual(values=manualcolors) + 
-  ylab("Number of flowering units") + xlab("Flowering module") + theme_light()
-
 
 ##make individual histograms by site -------------------------------------
-###road 2021#######
-sub_pheno_r21 <- subset(df_pheno, 
-                       Site %in% c("Road") & Year == "2021")
+#I combined each individual histogram to make Figure 1 in Adobe Illustrator
 
-manualcolors<-c('cornflowerblue','tomato3','seagreen1',
+###road 2021#######
+
+sub_pheno_r21 <- subset(df_pheno, 
+                       Site %in% c("Road") & Year == "2021") #subset data for site and year
+
+manualcolors<-c('cornflowerblue','grey','tomato3','seagreen1',
                 '#7CE3D8','plum3','lightsalmon',
-                'darkgray','cadetblue1','#DDAD4B','seagreen','mediumorchid4','orange')
+                'darkgray','cadetblue1','#DDAD4B','seagreen','mediumorchid4','orange') #manually set colors for families 
 
 ggplot(data = sub_pheno_r21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity") +
   theme(legend.position = "right") + scale_fill_manual(values=manualcolors) + 
-  ylab("Number of flowering units") + xlab("Flowering module") + theme_light() +ggtitle("Road 2021") + ylim(0,1050)
+  ylab("Number of flowering units") + xlab("Flowering module") + theme_light() +ggtitle("Road 2021") + ylim(0,1050) #plot 
+
 ###pfeiler 2021#######
 sub_pheno_pf21 <- subset(df_pheno, 
-                        Site %in% c("Pfeiler") & Year == "2021")
+                        Site %in% c("Pfeiler") & Year == "2021") #subset data for site and year
 
 manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','seagreen1',
                 'darkolivegreen1','pink3',
-                'yellowgreen','cadetblue1','mediumorchid4','orange','yellow')
+                'yellowgreen','cadetblue1','mediumorchid4','orange','yellow') #manually set colors for families 
 
 ggplot(data = sub_pheno_pf21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity") +
@@ -65,11 +60,11 @@ ggplot(data = sub_pheno_pf21, aes(x=factor(Module, levels = c('Beginning','Middl
 
 ###PBM 2021#######
 sub_pheno_pbm21 <- subset(df_pheno, 
-                         Site %in% c("PBM") & Year == "2021")
+                         Site %in% c("PBM") & Year == "2021") #subset data for site and year
 
 manualcolors<-c('cornflowerblue', 'black','wheat4',
                 'moccasin','#7CE3D8','Indianred1','plum3','pink3',
-                'darkblue','#DDAD4B','mediumorchid4','orange','yellow','purple')
+                'darkblue','#DDAD4B','mediumorchid4','orange','yellow','purple') #manually set colors for families 
 
 ggplot(data = sub_pheno_pbm21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity") +
@@ -78,11 +73,11 @@ ggplot(data = sub_pheno_pbm21, aes(x=factor(Module, levels = c('Beginning','Midd
 
 ###road 2022##########
 sub_pheno_r22 <- subset(df_pheno, 
-                        Site %in% c("Road") & Year == "2022")
+                        Site %in% c("Road") & Year == "2022") #subset data for site and year
 
 manualcolors<-c('cornflowerblue', 'black','wheat4','tomato3','seagreen1',
                 '#7CE3D8','lightsalmon',
-                'cadetblue1','seagreen','mediumorchid4','orange','yellow')
+                'cadetblue1','seagreen','mediumorchid4','orange','yellow') #manually set colors for families 
 
 ggplot(data = sub_pheno_r22, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity") +
@@ -91,10 +86,10 @@ ggplot(data = sub_pheno_r22, aes(x=factor(Module, levels = c('Beginning','Middle
 
 ###pfeiler 2022#######
 sub_pheno_pf22 <- subset(df_pheno, 
-                         Site %in% c("Pfeiler") & Year == "2022")
+                         Site %in% c("Pfeiler") & Year == "2022") #subset data for site and year
 
 manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','seagreen1','purple','darkolivegreen1','Indianred1','pink3',
-                'yellowgreen','mediumorchid4','orange','yellow')
+                'yellowgreen','mediumorchid4','orange','yellow','grey') #manually set colors for families 
 
 ggplot(data = sub_pheno_pf22, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity") +
@@ -103,8 +98,9 @@ ggplot(data = sub_pheno_pf22, aes(x=factor(Module, levels = c('Beginning','Middl
 
 ###PBM 2022#######
 sub_pheno_pbm22 <- subset(df_pheno, 
-                          Site %in% c("PBM") & Year == "2022")
-manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen','mediumorchid4','orange','yellow','grey')
+                          Site %in% c("PBM") & Year == "2022") #subset data for site and year
+
+manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen','mediumorchid4','orange','yellow','grey') #manually set colors for families 
 
 ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity") +
