@@ -1,3 +1,8 @@
+#this file contains calculations for Schoener's Index for phenology and fitness, 
+#and for supplemental figure S1.
+#all files necessary for this script are store in GitHub 
+
+
 install.packages("tidyverse")
 install.packages("spaa")
 install.packages("reshape")
