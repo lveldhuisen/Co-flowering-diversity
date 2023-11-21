@@ -1,7 +1,11 @@
+#code for all the network analyses. results from these analyses determine modules for the later phylogenetic analyses. necessary files are in the "files_networkanalysis" folder. 
+
 ##network analysis with SI co-flowering values
  
 install.packages("ggraph")
 install.packages("tidygraph")
+install.packages("tidyverse")
+install.packages("igraph")
 library(ggraph)
 library(tidygraph)
 library(tidyverse)
@@ -9,73 +13,29 @@ library(spaa)
 library(reshape2)
 library(reshape)
 library(igraph)
+library(dplyr)
+library(tidyr)
 
-#2021 SI calculations and turned into data tables -------------------------
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
-
-##PBM 2021 SI + dataframe########
-mat_PBM_2021 <- read.csv("PBM_phenology_matrix_2021.csv", header = TRUE)
-PBM_SI_2021 <- niche.overlap(mat_PBM_2021, method = "schoener")
-hist(PBM_SI_2021)
-
-PBM_21_melt <- melt(as.matrix(PBM_SI_2021), varnames = c("species1"))
-colnames(PBM_21_melt) <- c("species1", "species2", "SI")
-
-PBM_21_melt$site <- c("PBM")
-print(PBM_21_melt)
-
-keeps <- c("species1","species2","SI")
-PBM_21 = PBM_21_melt[keeps]
-print(PBM_21)
-
-forGephi_PBM <- PBM_21
-head(forGephi_PBM)
-
-write.csv(as.matrix(forGephi_PBM), file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/RMBL/Summer\ 2021/data\ files/forgephi_PBM.csv")
-
-##Pfeiler 2021 SI + dataframe##########
-mat_Pfeiler_2021 <- read.csv("pfeiler_phenology_matrix_2021.csv", header = TRUE)
-Pfeiler_SI_2021 <- niche.overlap(mat_Pfeiler_2021, method = "schoener")
-hist(Pfeiler_SI_2021)
-
-Pfeiler_21_melt <- melt(as.matrix(Pfeiler_SI_2021), varnames = c("species1"))
-colnames(Pfeiler_21_melt) <- c("species1", "species2", "SI")
-head(Pfeiler_21_melt)
-
-write.csv(as.matrix(forGephi_PBM), file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/network analyses/pfeiler21.csv")
-
-
-##Road 2021 SI + dataframe#########
-mat_Road_2021 <-read.csv("road_phenology_matrix_2021.csv", header = TRUE)  
-Road_SI_2021<-niche.overlap(mat_Road_2021, method = "schoener")
-hist(Road_SI_2021)
-
-Road_21_melt <- melt(as.matrix(Road_SI_2021), varnames = c("species1"))
-colnames(Road_21_melt) <- c("species1", "species2", "SI")
-
-head(Road_21_melt)
-
-Merged2021 <- do.call("rbind", list(Road_21_melt, Pfeiler_21_melt, PBM_21_melt))
-print(Merged2021)
 
 #network modularity analysis using igraph-------------------------------------------------- 
-##Road 2021##############################
-install.packages("igraph")
-library(igraph)
+#code is for each network analysis, separated by site and year
 
+##Road 2021##############################
+
+#setwd() is just for my own work, ignore for review 
 setwd("/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
+#file is in the "files_networkanalysis" folder 
 road21data <- read.csv("cleanroad21.csv", header = TRUE)
 head(road21data)
 
+#format data for network analyses
 # Duplicate data frame
 data_positive <- road21data                     
 # Set negative values to 0
 data_positive[data_positive < 4.46e-14] <- 0     
 data_positive 
 road21data <- data_positive
-#remove x column 
-road21data = subset(road21data, select = -c(X) )
 #rename SI column to weight
 colnames(road21data)[3] ="weight"
 #remove the species that only interacts with itself (floating point)
@@ -86,18 +46,17 @@ fivenum(road21data1$weight)
 graph_from_data_frame(d=road21data1, directed = FALSE)
 head(road21data1)
 
-write.csv(road21data1,file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/phd-chapter-1/forteddy_road21.csv")
 
-
-###make igraph object 
+#make igraph object
 road21_igraph=graph_from_data_frame(d=road21data1,directed = FALSE)
 head(road21_igraph)
 is_weighted(road21_igraph)
 print(road21_igraph)
 summary(road21_igraph)
 
-as_data_frame(road21_igraph)
+as_data_frame(road21_igraph) #turn into dataframe 
 
+#test plotting network analysis 
 plot(road21_igraph,edge.arrow.size=.5, vertex.color=communitiesRoad, vertex.size=3,
      vertex.frame.color="blue", vertex.label.color="black", 
      vertex.label.cex=.5, vertex.label.dist=2, edge.curved=0.5, layout=layout_with_lgl)
@@ -105,24 +64,20 @@ plot(road21_igraph,edge.arrow.size=.5, vertex.color=communitiesRoad, vertex.size
 
 class(road21_igraph)
 
-###modularity###########
+###calculate modularity###########
 #analysis based on Blondel et al 2008, same as Arceo-Gomez et al 2018
-communitiesRoad <- cluster_louvain(road21_igraph, weights = NULL, resolution = 1)
-membership(communitiesRoad)
-R21mod <- modularity(communitiesRoad)
+communitiesRoad <- cluster_louvain(road21_igraph, weights = NULL, resolution = 1) #calculate modularity
+membership(communitiesRoad) #view species in each module 
+R21mod <- modularity(communitiesRoad) #make object with modularity score 
 
 class(road21_igraph)
-gsize(PBM22_igraph)
 
 ##Pfeiler 2021##############################
-
-library(dplyr)
-library(tidyr)
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
 p21data <- read.csv("cleanpfeiler21.csv", header = TRUE)
 head(p21data)
 
+#format data for network analysis
 #remove X column 
 p21data = subset(p21data, select = -c(X) )
 #rename SI column to weight
@@ -141,23 +96,22 @@ fivenum(p21data$weight)
 
 graph_from_data_frame(d=p21data, directed = FALSE)
 
+#make igraph object 
 pfeiler21_igraph=graph_from_data_frame(d=p21data,directed = FALSE)
 print(pfeiler21_igraph)
 head(pfeiler21_igraph)
 class(pfeiler21_igraph)
 
-###modularity############# 
-communitiesPF <- cluster_louvain(pfeiler21_igraph, weights = NULL, resolution = 1)
-membership(communitiesPF)
-Pf21mod <- modularity(communitiesPF)
+### calculate modularity############# 
+communitiesPF <- cluster_louvain(pfeiler21_igraph, weights = NULL, resolution = 1) #calculate modularity
+membership(communitiesPF) #see which species are in which module
+Pf21mod <- modularity(communitiesPF) #save modularity value
 
 
 ##PBM 2021##############################
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
-
+#bring in and format data
 PBM21data <- read.csv("cleanPBM21.csv", header = TRUE)
 head(PBM21data)
-
 
 #remove extra x column
 PBM21data = subset(PBM21data, select = -c(X) )
@@ -165,8 +119,6 @@ head(PBM21data)
 #rename SI column to weight
 colnames(PBM21data)[3] ="weight"
 head(PBM21data)
-
-
 # Duplicate data frame
 PBM_positive <- PBM21data                   
 # Set negative values to 0
@@ -175,29 +127,28 @@ PBM_positive
 PBM21data <- PBM_positive
 #remove all NAs
 PBM21data <- na.omit(PBM21data)
-fivenum(PBM21data$weight)
+fivenum(PBM21data$weight) #check NAs were removed
 
-
+#make igraph object 
 graph_from_data_frame(d=PBM21data, directed = FALSE)
-
 PBM21_igraph=graph_from_data_frame(d=PBM21data,directed = FALSE)
 print(PBM21_igraph)
 head(PBM21_igraph)
 
+#test plotting network 
 plot(PBM21_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3, 
      vertex.frame.color="blue", vertex.label=V(pfeiler21_igraph)$species1, vertex.label.color="black", 
      vertex.label.cex=.5, vertex.label.dist=2, edge.curved=0.5,edge.width=weights, layout=layout_with_lgl)
 
 class(PBM21_igraph)
 
-###modularity############
+###calcualte modularity############
 communitiesPBM <- cluster_louvain(PBM21_igraph, weights = NULL, resolution = 1)
-membership(communitiesPBM)
-PBM21mod <- modularity(communitiesPBM)
+membership(communitiesPBM) #see which species are in which module 
+PBM21mod <- modularity(communitiesPBM)#save modularity value
 
 ##Road 2022##############################
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
-
+#bring in and format data
 Road22data <- read.csv("cleanRoad22.csv", header = TRUE)
 head(Road22data)
 
@@ -216,29 +167,29 @@ Road_positive
 Road22data <- Road_positive
 #remove all NAs
 Road22data <- na.omit(Road22data)
-fivenum(Road22data$weight)
+fivenum(Road22data$weight) #check data
 
-
+#make igraph object
 graph_from_data_frame(d=Road22data, directed = FALSE)
 
 Road22_igraph=graph_from_data_frame(d=Road22data,directed = FALSE)
 print(Road22_igraph)
 head(Road22_igraph)
 
+#check network plot 
 plot(Road22_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3, 
      vertex.frame.color="blue", vertex.label=V(pfeiler21_igraph)$species1, vertex.label.color="black", 
      vertex.label.cex=.5, vertex.label.dist=2, edge.curved=0.5,edge.width=weights, layout=layout_with_lgl)
 
 class(Road22_igraph)
 
-###modularity##########
+###calcualte modularity##########
 communitiesRoad22 <- cluster_louvain(Road22_igraph, weights = NULL, resolution = 1)
-membership(communitiesRoad22)
-R22mod <- modularity(communitiesRoad22)
+membership(communitiesRoad22) #see species in each module
+R22mod <- modularity(communitiesRoad22) #save modularity value
 
 ##Pfeiler 2022##############################
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
-
+#bring in and format data 
 Pfeiler22data <- read.csv("cleanPfeiler22.csv", header = TRUE)
 head(Pfeiler22data)
 
@@ -256,9 +207,9 @@ Pfeiler_positive
 Pfeiler22data <- Pfeiler_positive
 #remove all NAs
 Pfeiler22data <- na.omit(Pfeiler22data)
-fivenum(Pfeiler22data$weight)
-hist(Pfeiler22data$weight)
+fivenum(Pfeiler22data$weight)#check data 
 
+#make igraph object 
 graph_from_data_frame(d=Pfeiler22data, directed = FALSE)
 
 Pfeiler22_igraph=graph_from_data_frame(d=Pfeiler22data,directed = FALSE)
@@ -269,14 +220,13 @@ head(Pfeiler22_igraph)
 
 class(Pfeiler22_igraph)
 
-###modularity################ 
+###calculate modularity################ 
 communitiesPf22 <- cluster_louvain(Pfeiler22_igraph, weights = NULL, resolution = 1)
-membership(communitiesPf22)
-Pf22mod <- modularity(communitiesPf22)
+membership(communitiesPf22) #see species in each module
+Pf22mod <- modularity(communitiesPf22)#save modularity value
 
 ##PBM 2022##############################
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
-
+#bring in and format data
 PBM22data <- read.csv("cleanPBM22.csv", header = TRUE)
 head(PBM22data)
 
@@ -294,21 +244,20 @@ PBM_positive
 PBM22data <- PBM_positive
 #remove all NAs
 PBM22data <- na.omit(PBM22data)
-fivenum(PBM22data$weight)
+fivenum(PBM22data$weight)#check data
 
-
+#make igraph object
 graph_from_data_frame(d=PBM22data, directed = FALSE)
 
 PBM22_igraph=graph_from_data_frame(d=PBM22data,directed = FALSE)
 print(PBM22_igraph)
 head(PBM22_igraph)
-
 class(PBM22_igraph)
 
-###modularity#############
+### calcualte modularity#############
 communitiesPBM22 <- cluster_louvain(PBM22_igraph, weights = NULL, resolution = 1)
-membership(communitiesPBM22)
-PBM22mod <- modularity(communitiesPBM22)
+membership(communitiesPBM22) #see species in each module 
+PBM22mod <- modularity(communitiesPBM22)#save modularity value
 
 
 #Null models for all sites and years--------------------------------------------
@@ -318,8 +267,7 @@ install.packages("vegan")
 library(vegan)
 install.packages("Matrix")
 library(Matrix)
-
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
+library(igraph)
 
 ##Road 2021##############################
 #turn igraph object from above back into matrix 
@@ -328,8 +276,6 @@ road21_matrix <- as.matrix(as_adjacency_matrix(road21_igraph))
 road21_null <- nullmodel(road21_matrix, method="r2d")
 print(road21_null)
 class(road21_null)
-
-graph
 
 #create empty vector
 null_modularity = c()
@@ -347,7 +293,7 @@ for (i in 1:length(road21_null)) {
 hist(null_modularity)
 
 R21Z <- (R21mod - mean(null_modularity))/sd(null_modularity)
-R21Z
+R21Z #save z score for modularity value
 
 ##Pfeiler 2021############################## 
 #turn igraph object back into matrix 
@@ -356,8 +302,6 @@ pfeiler21_matrix <- as.matrix(as_adjacency_matrix(pfeiler21_igraph))
 pfeiler21_null <- nullmodel(pfeiler21_matrix, method="r2d")
 print(pfeiler21_null)
 class(pfeiler21_null)
-
-graph
 
 #create empty vector
 PF21null_modularity = c()
@@ -372,7 +316,7 @@ for (i in 1:length(pfeiler21_null)) {
 }
 #calculate z scores for pfeiler 21 nulls 
 PF21Z <- (Pf21mod - mean(PF21null_modularity))/sd(PF21null_modularity)
-PF21Z
+PF21Z #z score value for modularity
 
 ##PBM 2021##############################
 #turn igraph object back into matrix 
@@ -381,8 +325,6 @@ PBM21_matrix <- as.matrix(as_adjacency_matrix(PBM21_igraph))
 PBM21_null <- nullmodel(PBM21_matrix, method="r2d")
 print(PBM21_null)
 class(PBM21_null)
-
-graph
 
 #create empty vector
 PBM21null_modularity = c()
@@ -399,7 +341,7 @@ for (i in 1:length(PBM21_null)) {
 #calculate z scores for PBM 21 nulls 
 
 PBM21Z <- (PBM21mod - mean(PBM21null_modularity))/sd(PBM21null_modularity)
-PBM21Z
+PBM21Z #z score value for modularity
 
 hist(PBM21null_modularity)
 
@@ -425,7 +367,7 @@ for (i in 1:length(road22_null)) {
 
 #calculate z scores for Road 22 nulls 
 R22Z <- (R22mod - mean(R22null_modularity))/sd(R22null_modularity)
-R22Z
+R22Z #z score value for modularity
 
 ##Pfeiler 2022##############################
 #turn igraph object back into matrix 
@@ -449,7 +391,7 @@ for (i in 1:length(pfeiler22_null)) {
 
 #calculate z scores for pfeiler 2022 nulls 
 Pf22Z <- (Pf22mod - mean(Pf22null_modularity))/sd(Pf22null_modularity)
-Pf22Z
+Pf22Z #z score value for modularity
 
 ##PBM 2022##############################
 #turn igraph object back into matrix 
@@ -473,4 +415,4 @@ for (i in 1:length(PBM22_null)) {
 
 #calculate z scores for pbm 2022 nulls 
 PBM22Z <- (PBM22mod - mean(PBM22null_modularity))/sd(PBM22null_modularity)
-PBM22Z
+PBM22Z #z score value for modularity
