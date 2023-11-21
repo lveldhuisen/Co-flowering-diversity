@@ -1,26 +1,29 @@
+#contains: community phylogenetic metrics group by elevational site. all necessary files are in the "files_phylogeneticmetrics_bysite" folder. 
 
+#packages
+install.packages("ape")
+install.packages("geiger")
+install.packages("picante")
+library(ape)
+library(geiger)
+library(picante)
+
+#just for me, ignore for review
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL phylogeny/Smith&Brown18")
 
-library(ape)
-install.packages("geiger")
-library(geiger)
-
-#import S&B18 tree and check data 
+#import Smith & Brown 2018 tree and check data 
 SBtree <- read.tree(file = "ALLMB.tre")
-write.tree(SBtree)
-is.rooted(SBtree)
+write.tree(SBtree) #test if imported correctly, can take a long time though 
+is.rooted(SBtree) #check tree, should say true 
 
 #Faith's PD----------------------------------
 ##2021 --------------------------------------------
 
+#ignore for review
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 #make community matrix 
 matrix2021 <- read.table("2021_community_matrix.txt", sep = "\t", header = T, row.names = 1)
-
-#calculate pd of row 1 of matrix (PBM)
-
-matrix2021[1, matrix2021[1,]>0]
 
 ###PBM 2021###################################################
 richnessPBM21 = length(matrix2021[1, matrix2021[1,]>0])
@@ -28,7 +31,7 @@ richnessPBM21 = length(matrix2021[1, matrix2021[1,]>0])
 pruned.treePBM21 <- treedata(SBtree, unlist(matrix2021[1,matrix2021[1,]>0]), warnings = F)$phy
 class(pruned.treePBM21)
 pruned.treePBM21
-plot(pruned.treePBM21)
+plot(pruned.treePBM21)#check tree 
 
 #Faith's index for PBM2021
 sum(pruned.treePBM21$edge.length)
@@ -38,14 +41,14 @@ sum(pruned.treePBM21$edge.length)
 pruned.treePf21 <- treedata(SBtree, unlist(matrix2021[2,matrix2021[2,]>0]), warnings = F)$phy
 class(pruned.treePf21)
 pruned.treePf21
-plot(pruned.treePf21)
+plot(pruned.treePf21) #check tree
 
 ###Road 2021##############################
 #prune tree 
 pruned.treeroad21 <- treedata(SBtree, unlist(matrix2021[3,matrix2021[3,]>0]), warnings = F)$phy
 class(pruned.treeroad21)
 pruned.treeroad21
-plot(pruned.treeroad21)
+plot(pruned.treeroad21)#check tree 
 
 ###all 2021 together###############
 prune.sum.function <- function(x){
@@ -58,14 +61,14 @@ print(PD21)
 
 ###standard effect sizes using picante ####################
 pruned.tree2021 <- treedata(SBtree, unlist(matrix2021[4,matrix2021[4,]>0]), warnings = F)$phy
-plot(pruned.tree2021)
+plot(pruned.tree2021)#check tree 
 
-library(picante)
 ses.pd(matrix2021, pruned.tree2021, null.model = c("sample.pool"),
-       runs = 5000, iterations = 5000, include.root=TRUE)
+       runs = 5000, iterations = 5000, include.root=TRUE) #output shows standard effect size and absolute value of PD
 
 
 ##2022 --------------------------------------------
+#ignore for review, this file is available in "files_phylogeneticmetrics_bysite" folder 
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 #make community matrix 
@@ -76,7 +79,7 @@ matrix2022 <- read.table("2022_community_matrix.txt", sep = "\t", header = T, ro
 pruned.treePBM22 <- treedata(SBtree, unlist(matrix2022[1,matrix2022[1,]>0]), warnings = F)$phy
 class(pruned.treePBM22)
 pruned.treePBM22
-plot(pruned.treePBM22)
+plot(pruned.treePBM22) #check tree
 
 #Faith's index for PBM2022
 sum(pruned.treePBM22$edge.length)
@@ -86,7 +89,7 @@ sum(pruned.treePBM22$edge.length)
 pruned.treePf22 <- treedata(SBtree, unlist(matrix2022[2,matrix2022[2,]>0]), warnings = F)$phy
 class(pruned.treePf22)
 pruned.treePf22
-plot(pruned.treePf22)
+plot(pruned.treePf22) #check tree
 
 #Faith's index for pfeiler 2022
 sum(pruned.treePf22$edge.length)
@@ -111,15 +114,11 @@ PD22 <- apply(matrix2022, MARGIN = 1, prune.sum.function)
 print(PD22)
 
 ###Standard effect sizes for 2022 using picante ###############################
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
-
-matrix2022 <- read.table("2022_community_matrix.txt", sep = "\t", header = T, row.names = 1)
 
 pruned.tree2022 <- treedata(SBtree, unlist(matrix2022[4,matrix2022[4,]>0]), warnings = F)$phy
 plot(pruned.tree2022)
 
 #standard effect size using picante 
-library(picante)
 
 ses.pd(matrix2022, pruned.tree2022, null.model = c("sample.pool"),
        runs = 5000, iterations = 5000, include.root=TRUE)

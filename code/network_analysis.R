@@ -1,6 +1,5 @@
 #code for all the network analyses. results from these analyses determine modules for the later phylogenetic analyses. necessary files are in the "files_networkanalysis" folder. 
 
-##network analysis with SI co-flowering values
  
 install.packages("ggraph")
 install.packages("tidygraph")
