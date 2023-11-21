@@ -1,14 +1,14 @@
 install.packages("tidyverse")
-library(tidyverse)
-
-
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
-
-#test spaa package------------------------------------------------------ 
 install.packages("spaa")
+install.packages("reshape")
+install.packages("reshape2")
+library(tidyverse)
 library(spaa)
 library(reshape)
 library(reshape2)
+
+
+setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
 
 #2021-------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL/Summer 2021/Data files")
