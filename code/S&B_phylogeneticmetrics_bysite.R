@@ -64,6 +64,7 @@ plot(pruned.tree2021)#check tree
 
 ses.pd(matrix2021, pruned.tree2021, null.model = c("sample.pool"),
        runs = 5000, iterations = 5000, include.root=TRUE) #output shows standard effect size and absolute value of PD
+#these values are in Table 1 in the manuscript and the "Phylogenetic Dispersion" section of Results in the manuscript
 
 
 ##2022 --------------------------------------------
@@ -121,7 +122,7 @@ plot(pruned.tree2022) #check tree
 
 ses.pd(matrix2022, pruned.tree2022, null.model = c("sample.pool"),
        runs = 5000, iterations = 5000, include.root=TRUE) #output includes absolute values and SES for all sites in 2022 
-
+#these values are in Table 1 in the manuscript and the "Phylogenetic Dispersion" section of Results in the manuscript
 
 #MPD-------------------------------------------------------------
 ##2021################
@@ -164,6 +165,7 @@ print(mpd_2021) #view MPD values for all sites
 ###Standard effect size for 2021 MPD########################
 ses.mpd(matrix2021, dist.mat2021, null.model = c("sample.pool"),
         abundance.weighted = FALSE, runs = 5000, iterations = 5000) #output shows MPD and SES for all 2021 sites 
+#these values are in Table 1 in the manuscript and the "Phylogenetic Dispersion" section of Results in the manuscript
 
 ##2022-------------------------------------------------------------
 ###Road 2022##############################################
@@ -191,6 +193,7 @@ print(mpd_2022) #view MPD values
 ###SES for mpd 2022
 ses.mpd(matrix2022, dist.mat2022, null.model = c("sample.pool"),
         abundance.weighted = FALSE, runs = 5000, iterations = 5000) #output shows MPD values and SES for all 2022 sites 
+#these values are in Table 1 in the manuscript and the "Phylogenetic Dispersion" section of Results in the manuscript
 
 #MNTD-----------------------------------------
 ##2021---------------------------------------------------------------------
@@ -230,6 +233,7 @@ mntd.2021 #view MNTD values
 ###SES MNTD 2021#########
 ses.mntd(matrix2021, dist.mat2021, null.model = c("sample.pool"),
          abundance.weighted=FALSE, runs = 5000, iterations = 5000) #output shows MNTD and SES for all 2021 sites 
+#these values are in Table 1 in the manuscript and the "Phylogenetic Dispersion" section of Results in the manuscript
 
 ##2022--------------------------------------------------------------------
 setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
@@ -272,7 +276,7 @@ mntd.2022 #view MNTD values
 ###SES MNTD 2022#####
 ses.mntd(matrix2022, dist.mat2022, null.model = c("sample.pool"),
          abundance.weighted=FALSE, runs = 5000, iterations = 5000) #output shows MNTD and SES for all 2022 sites 
-
+#these values are in Table 1 in the manuscript and the "Phylogenetic Dispersion" section of Results in the manuscript
 
 #make tables with species pairs and phylogenetic distance between each---------------------------------
 install.packages("metagMisc")

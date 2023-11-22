@@ -1,4 +1,5 @@
 ##Phylogenetic metrics by module (network analysis output), all necessary files are in the "files_phylogeneticmetrics_bymodule" folder
+#this code corresponds to Figure 4 and the "Phylogenetic Dispersion" section of Results in the manuscript
 
 
 install.packages("ape")
