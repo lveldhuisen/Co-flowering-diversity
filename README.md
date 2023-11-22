@@ -34,5 +34,6 @@ SOFTWARE VERSIONS
 [provide the version numbers of software (R, Julia, Python, Mathematica, etc) and loaded packages that you used to analyze your data files or run your simulations. If you used software that does not provide scripts (e.g. some popular statistical applications), please provide detailed information on the steps you used to perform the analyses and obtain the results reported in your paper]
 
 REFERENCES
-Smith, S. A., and J. W. Brown. 2018. Constructing a broadly inclusive seed plant phylogeny. American journal of Botany 105:302–314.
+
+Smith, S. A., and J. W. Brown. 2018. Constructing a broadly inclusive seed plant phylogeny. American Journal of Botany 105:302–314.
 
