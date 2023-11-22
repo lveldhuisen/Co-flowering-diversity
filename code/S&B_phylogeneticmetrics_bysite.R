@@ -274,7 +274,8 @@ ses.mntd(matrix2022, dist.mat2022, null.model = c("sample.pool"),
          abundance.weighted=FALSE, runs = 5000, iterations = 5000) #output shows MNTD and SES for all 2022 sites 
 
 
-#make tables with species pairs and PD for each---------------------------------
+#make tables with species pairs and phylogenetic distance between each---------------------------------
+install.packages("metagMisc")
 library(metagMisc)
 
 ##2021############
