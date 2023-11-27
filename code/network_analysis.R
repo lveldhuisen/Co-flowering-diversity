@@ -1,4 +1,5 @@
 #code for all the network analyses. results from these analyses determine modules for the later phylogenetic analyses. necessary files are in the "files_networkanalysis" folder. 
+#modularity values and Z scores calculated from the null networks here are in Table 1 and "Network modularity" section of Results. 
 
  
 install.packages("ggraph")
@@ -20,9 +21,6 @@ library(tidyr)
 #code is for each network analysis, separated by site and year
 
 ##Road 2021##############################
-
-#setwd() is just for my own work, ignore for review 
-setwd("/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/network analyses")
 
 #file is in the "files_networkanalysis" folder 
 road21data <- read.csv("cleanroad21.csv", header = TRUE)
@@ -91,7 +89,6 @@ p21data <- pfeiler_positive
 
 p21data <- na.omit(p21data)
 fivenum(p21data$weight)
-
 
 graph_from_data_frame(d=p21data, directed = FALSE)
 
@@ -214,8 +211,6 @@ graph_from_data_frame(d=Pfeiler22data, directed = FALSE)
 Pfeiler22_igraph=graph_from_data_frame(d=Pfeiler22data,directed = FALSE)
 print(Pfeiler22_igraph)
 head(Pfeiler22_igraph)
-
-
 
 class(Pfeiler22_igraph)
 

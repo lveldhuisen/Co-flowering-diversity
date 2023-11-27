@@ -1,6 +1,7 @@
 #this file contains calculations for Schoener's Index for phenology and fitness, 
 #and for supplemental figure S1.
 #all files necessary for this script are store in GitHub 
+#Schoener's Index values are later used in the network analysis code 
 
 
 install.packages("tidyverse")

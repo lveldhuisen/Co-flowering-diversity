@@ -13,9 +13,6 @@ library(viridis)
 library(pals)
 library(Polychrome)
 
-#for my own use, all these files are also in the "files_Figures" folder in the "AllData_AmNat" folder
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1") 
-
 #dataframes for figures 
 df_site <- read.csv("results_bysite.csv")
 df_mod <- read.csv("results_bymodule.csv")
@@ -109,8 +106,6 @@ ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('Beginning','Midd
 
 #Figure 2: phenology and fitness correlations-------------------------------------------
 #i generated a figure for each site and year, and combined them to make Fig 2 in Adobe Illustrator 
-#just for me, this file is available in the emailed folder "AllData_AmNat"
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/AllData_AmNat/files_Figures")
 
 #bring in data, this file is in the "files_Figures" folder
 df_all <- read_csv("results_ALL.csv")
@@ -282,7 +277,7 @@ PBM2022_SES <- ggplot(sub_mod_pbm22, aes(fill=Type, y=SES, x=fct_relevel(Module,
 
 
 
-#species counts for results intro paragraph--------------------
+#species counts for "Flowering" section in Results--------------------
 species_all <- length(unique(df_all$species1))
 df_all %>% filter(Site == "PBM") %>% summarise(n = n_distinct(species1)) 
 median(df_all$SI)

@@ -15,7 +15,6 @@ library(picante)
 SBtree <- read.tree(file = "ALLMB.tre")
 
 #community matrix with my data 
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 matrix2021.mod <- read.table("2021_community_matrix_modules.txt", sep = "\t", header = T, row.names = 1)
 
 #Faith's PD-------------------------------------------------------------------
