@@ -8,9 +8,6 @@ library(ape)
 library(geiger)
 library(picante)
 
-#just for me, ignore for review
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/RMBL phylogeny/Smith&Brown18")
-
 #import Smith & Brown 2018 tree and check data 
 SBtree <- read.tree(file = "ALLMB.tre")
 write.tree(SBtree) #test if imported correctly, can take a long time though 
@@ -19,8 +16,6 @@ is.rooted(SBtree) #check tree, should say true
 #Faith's Phylogenetic diversity----------------------------------
 ##2021 --------------------------------------------
 
-#ignore for review
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 #make community matrix 
 matrix2021 <- read.table("2021_community_matrix.txt", sep = "\t", header = T, row.names = 1)
@@ -68,8 +63,6 @@ ses.pd(matrix2021, pruned.tree2021, null.model = c("sample.pool"),
 
 
 ##2022 --------------------------------------------
-#ignore for review, this file is available in "files_phylogeneticmetrics_bysite" folder 
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 #make community matrix 
 matrix2022 <- read.table("2022_community_matrix.txt", sep = "\t", header = T, row.names = 1)
@@ -236,7 +229,6 @@ ses.mntd(matrix2021, dist.mat2021, null.model = c("sample.pool"),
 #these values are in Table 1 in the manuscript and the "Phylogenetic Dispersion" section of Results in the manuscript
 
 ##2022--------------------------------------------------------------------
-setwd("~/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1")
 
 matrix2022 <- read.table("2022_community_matrix.txt", sep = "\t", header = T, row.names = 1) #make matrix for 2022 community data 
 
@@ -293,8 +285,6 @@ Road21_PD["Freq"][Road21_PD["Freq"] == ''] <- NA
 na.omit(Road21_PD)
 print(Road21_PD)
 
-write.csv(Road21_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/Road21_PD.csv")
-
 ###Pfeiler 2021#######
 
 dist.matPf21[lower.tri(dist.matPf21, diag = TRUE)] <- "" #get rid of half of the matrix
@@ -304,8 +294,6 @@ Pfeiler21_PD["Freq"][Pfeiler21_PD["Freq"] == ''] <- NA
 na.omit(Pfeiler21_PD)
 print(Pfeiler21_PD)
 
-write.csv(Pfeiler21_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/Pfeiler21_PD.csv")
-
 ###PBM 2021#######
 dist.matPBM21[lower.tri(dist.matPBM21, diag = TRUE)] <- "" #get rid half of matrix
 PBM21_PD <- as.data.frame(as.table(dist.matPBM21)) #turn back into dataframe
@@ -314,7 +302,6 @@ PBM21_PD["Freq"][PBM21_PD["Freq"] == ''] <- NA
 na.omit(PBM21_PD)
 print(PBM21_PD)
 
-write.csv(PBM21_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PBM21_PD.csv")
 
 ###all 2021 PD together#########
 dist.mat2021[lower.tri(dist.mat2021, diag = TRUE)] <- "" #get rid of half of matrix 
@@ -323,8 +310,6 @@ PD_2021 <- as.data.frame(as.table(dist.mat2021)) #turn back into dataframe
 PD_2021["Freq"][PD_2021["Freq"] == ''] <- NA
 na.omit(PD_2021)
 print(PD_2021)
-
-write.csv(PD_2021, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2021_all.csv")
 
 
 ##2022########
@@ -336,7 +321,6 @@ Road22_PD["Freq"][Road22_PD["Freq"] == ''] <- NA
 na.omit(Road22_PD)
 print(Road22_PD)
 
-write.csv(Road22_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/Road22_PD.csv")
 
 ###Pfeiler 2022#########
 dist.matPf22[lower.tri(dist.matPf22, diag = TRUE)] <- "" #get rid of half of matrix 
@@ -346,7 +330,6 @@ Pfeiler22_PD["Freq"][Pfeiler22_PD["Freq"] == ''] <- NA
 na.omit(Pfeiler22_PD)
 print(Pfeiler22_PD)
 
-write.csv(Pfeiler22_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/Pfeiler22_PD.csv")
 
 ###PBM 2022########
 dist.matPBM22[lower.tri(dist.matPBM22, diag = TRUE)] <- "" #get rid of half of matrix 
@@ -356,7 +339,6 @@ PBM22_PD["Freq"][PBM22_PD["Freq"] == ''] <- NA
 na.omit(PBM22_PD)
 print(PBM22_PD)
 
-write.csv(PBM22_PD, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PBM22_PD.csv")
 
 ###all 2022 PD together###########
 dist.mat2022[lower.tri(dist.mat2022, diag = TRUE)] <- "" #get rid of half of matrix 
@@ -366,8 +348,6 @@ PD_2022["Freq"][PD_2022["Freq"] == ''] <- NA
 na.omit(PD_2022)
 print(PD_2022)
 
-write.csv(PD_2022, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2022.csv")
-
 
 # make PD dataset into files for 2021 and 2022--------------------------------------------
 ##2021######
@@ -376,12 +356,7 @@ distmat21all <- cophenetic(pruned.tree2021) #turn phylogeny into matrix
 PD_2021_all <- as.data.frame(as.table(distmat21all)) #turn back into dataframe 
 
 
-write.csv(PD_2021_all, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2021_all.csv")
-
 ##2022#######
 distmat22all <- cophenetic(pruned.tree2022) #turn phylogeny into matrix
 
 PD_2022_all <- as.data.frame(as.table(distmat22all))#turn back into dataframe
-
-
-write.csv(PD_2022_all, file="/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona\ PhD/Research/Chapter 1/results_specieslevel/PD_2022_all.csv")
