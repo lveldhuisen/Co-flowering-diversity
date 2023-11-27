@@ -1,10 +1,8 @@
 ACCESS INFORMATION
-1. Licenses/restrictions placed on the data or code
-[EXAMPLE] CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
-2. Data derived from other sources
-xxxxx
+1. MIT License
+2. Data derived from other sources: phylogeny from Smith & Brown 2018
 3. Recommended citation for this data/code archive
-xxx
+
 
 DATA & CODE FILE OVERVIEW
 
