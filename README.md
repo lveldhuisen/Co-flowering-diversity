@@ -1,17 +1,3 @@
-# Code for all ch 1 analyses, includes Schoener's Index, network analyses & phylogenetic analyses
-
-The file titled "SchoenersIndex.R" contains the code for phenology and fitness Schoener's Index calculations. This file also contains the code for the Kruskal-Wallis test and figure in Supplemental Material Figure S1.
-
-The file titled "network_analysis.R" contains code for the network analyses (modularity and null models), but not code for the network analysis figures (this was done in Gephi). 
-
-The files titled "S&B_phylogeneticmetrics_bymodule" and "S&B_phylogeneticmetrics_bysite" contain the code for community phylogenetic metrics based on the Smith & Brown 2018 phylogeny. The "by_module" file contains code for MPD, MNTD and PD for beginning, middle and end of season flowering modules, and SES calculations. The "by_site" file contains code for the same metrics, but groups by elevational site and not module. 
-
-The file "fitnessinfo_supplemental.R" contains all the fitness data and calculations for Supplemental Materials Table S1.
-
-The file "figures.R" contains code for all individual figures. Final figure editing and putting all sites and years together was done in Adobe Illustrator. 
-
-
-
 ACCESS INFORMATION
 1. Licenses/restrictions placed on the data or code
 [EXAMPLE] CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
@@ -21,14 +7,21 @@ xxxxx
 xxx
 
 DATA & CODE FILE OVERVIEW
-This data repository consist of xxxx data files, yyy code scripts, and this README document, with the following data and code filenames and variables
-Data files and variables
-[describe each column (variable) in each of your data files]
-    1. [data file name] [list of variable anmes and descriptions]
-    2. [data file name] [list of variable anmes and descriptions]
-Code scripts and workflow
-[file names and brief descriptions. Also describe the workflow if there are several scripts that need to be run in order]
-    1. yyyy
+This data repository consist of 14 data files (divided by year of data collection, 1 folder for 2021 and 1 for 2022), 6 code scripts, and this README document, with the following data and code filenames and variables
+
+Data files and variables - all files are formatted to calculate Schoener's Index with the spaa R package. 
+    1. sitename_phenology_matrix_year: one column for each species, rows for the number of open flowering units by week.  
+    2. sitename_fitness_matrix_year: one column for each species, rows for the number of flowering units with fruit from the original flowering week
+
+Code scripts and workflow - code should be run in order listed here. 
+    1. SchoenersIndex.R: code to calculate Schoener's Index for phenology and fitness data for all sites and years. This file also contains the code for the Kruskal-Wallis test and figure in Supplemental Material Figure S1. All files for this code are in "files_SchoenersIndex" folder. 
+    2. network_analysis.R: contains code for the network analyses (modularity and null models), but not code for the network analysis figures (this was done in Gephi). All files to run this code are in the "files_network analysis" folder. 
+    3. S&B_phylogeneticmetrics_bysite.R: code for community phylogenetic metrics based on the Smith & Brown 2018 phylogeny. Metrics calculated are MPD, MNTD and PD for beginning and SES calculations grouped by elevational site. Files to run this code are in the "files_phylogeneticmetrics_bysite" folder. 
+    4. S&B_phylogeneticmetrics_bymodule.R: code for community phylogenetic metrics based on the Smith & Brown 2018 phylogeny. Metrics calculated are MPD, MNTD and PD for beginning and SES calculations grouped by modules from the network analysis. Files to run this code are in the "files_phylogeneticmetrics_bymodule" folder. 
+    5. figures.R: contains code for all individual figures. Final figure editing and putting all sites and years together was done in Adobe Illustrator. Files for this code are in the "files_Figures" fodler.
+    6. fitnessinfo_supplemental.R" contains all the fitness data and calculations for Supplemental Materials Table S1.
+
+
 
 SOFTWARE VERSIONS
 
