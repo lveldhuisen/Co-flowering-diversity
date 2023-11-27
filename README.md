@@ -31,7 +31,28 @@ Code scripts and workflow
     1. yyyy
 
 SOFTWARE VERSIONS
-[provide the version numbers of software (R, Julia, Python, Mathematica, etc) and loaded packages that you used to analyze your data files or run your simulations. If you used software that does not provide scripts (e.g. some popular statistical applications), please provide detailed information on the steps you used to perform the analyses and obtain the results reported in your paper]
+R: 4.2.3
+bipartite: 2.18
+ape: 5.7-1
+geiger: 2.0.11
+picante: 1.8.2
+ggplot2: 3.4.4
+ggraph:
+tidyverse: 2.0.0
+spaa: 0.2.2
+reshape: 0.8.9
+reshape2: 1.4.4
+readr: 2.1.4
+ggpubr: 0.6.0
+igraph: 1.5.1
+dplyr: 1.1.3
+tidyr: 1.3.0
+vegan: 2.6-4
+Matrix: 1.5-4.1
+pals: 1.7
+viridis: 0.6.4
+polychrome: 1.5.1
+
 
 REFERENCES
 
