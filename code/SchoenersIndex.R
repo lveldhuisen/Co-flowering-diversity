@@ -81,7 +81,7 @@ ggboxplot(Merged2021, x = "site", y = "SI",
 #Schoener's Index for fitness--------------------------------------------------
  
 ##PBM (high site) ################
-mat_PBM_fitness_2021 <- read_csv("files for code/2021/PBM_fitness_matrix_2021.csv")
+mat_PBM_fitness_2021 <- read_csv("files for Schoener's Index/2021/PBM_fitness_matrix_2021.csv")
 PBM_SI_fitness_2021 <- niche.overlap(mat_PBM_fitness_2021, method = "schoener") #calculate Schoener's Index for all pairs
 hist(PBM_SI_fitness_2021)
 

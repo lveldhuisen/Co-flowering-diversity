@@ -158,7 +158,7 @@ head(Road22data)
 # Duplicate data frame
 Road_positive <- Road22data                   
 # Set negative values to 0
-Road_positive[Road_positive < 4.46e-14] <- 0     
+Road_positive[Road_positive < 0.01] <- 0  
 Road_positive
 Road22data <- Road_positive
 #remove all NAs
@@ -173,10 +173,12 @@ print(Road22_igraph)
 head(Road22_igraph)
 
 #check network plot 
-plot(Road22_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3, 
-     vertex.frame.color="blue", vertex.label=V(pfeiler21_igraph)$species1, vertex.label.color="black", 
-     vertex.label.cex=.5, vertex.label.dist=2, edge.curved=0.5,edge.width=weights, layout=layout_with_lgl)
+co<-layout_with_fr(Road22_igraph) 
 
+
+plot(Road22_igraph,edge.arrow.size=.5, vertex.color="gold", vertex.size=3, 
+     vertex.frame.color="blue", vertex.label=V(Road22_igraph)$species1, vertex.label.color="black", 
+     vertex.label.cex=.5, vertex.label.dist=2, edge.curved=0.5,edge.width=weights, layout.fruchterman.reingold()) 
 class(Road22_igraph)
 
 ###calcualte modularity##########
