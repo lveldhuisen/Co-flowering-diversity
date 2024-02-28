@@ -120,7 +120,9 @@ plot(R21_reg$residuals) #check residuals
 
 ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2021") #plot regression 
 
-###pfeiler 2021#######
+ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2021") 
+
+###pfeiler 2021##########pfeiler 2021#######geom_point()
 subDataPf21 <- subset(df_all, 
                       Site %in% c("Pfeiler") & Year == "2021") #subset data by site and year 
 
@@ -128,7 +130,7 @@ Pf21_reg <- lm(SI_fitness ~ SI, data = subDataPf21) #linear regression
 summary(Pf21_reg)
 plot(Pf21_reg$residuals)
 
-ggplot(subDataPf21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20,size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2021") #plot regression 
+ggplot(subDataPf21, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20,size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2021") #plot regression 
 
 ###PBM 2021#######
 subDataPBM21 <- subset(df_all, 
@@ -138,7 +140,7 @@ PBM21_reg <- lm(SI_fitness ~ SI, data = subDataPBM21) #linear regression
 summary(PBM21_reg)
 plot(PBM21_reg$residuals)
 
-ggplot(subDataPBM21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2021") #plot regression 
+ggplot(subDataPBM21, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2021") #plot regression 
 
 ###road 2022#######
 subDataR22 <- subset(df_all, 
