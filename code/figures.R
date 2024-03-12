@@ -150,7 +150,7 @@ R22_reg <- lm(SI_fitness ~ SI, data = subDataR22) #linear regression
 summary(R22_reg)
 plot(R22_reg$residuals)
 
-ggplot(subDataR22, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2022") #plot regression 
+ggplot(subDataR22, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2022") #plot regression 
 
 ###pfeiler 2022#######
 subDataPf22 <- subset(df_all, 
@@ -160,7 +160,7 @@ Pf22_reg <- lm(SI_fitness ~ SI, data = subDataPf22) #linear regression
 summary(Pf22_reg)
 plot(Pf22_reg$residuals)
 
-ggplot(subDataPf22, aes(x=SI, y=SI_fitness)) + geom_point(shape=20,size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2022") #plot regression 
+ggplot(subDataPf22, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20,size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2022") #plot regression 
 
 ###PBM 2022#######
 subDataPBM22 <- subset(df_all, 
@@ -170,7 +170,7 @@ PBM22_reg <- lm(SI_fitness ~ SI, data = subDataPBM22) #linear regression
 summary(PBM22_reg)
 plot(PBM22_reg$residuals)
 
-ggplot(subDataPBM22, aes(x=SI, y=SI_fitness)) + geom_point(shape=20,size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2022") #plot regression 
+ggplot(subDataPBM22, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20,size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2022") #plot regression 
 
 ###test big faceted graph with regression lines########## 
 df_all %>%
