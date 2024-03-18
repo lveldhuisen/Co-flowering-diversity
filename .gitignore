@@ -2,9 +2,15 @@
 .Rhistory
 .RData
 .Ruserdata
-.RDS
-.PDF
-.JPEG
-.csv
-.png
+*.rds
+*.csv
+*.zip
+*.pdf
+*.JPEG
+*.img
+*.txt
+*.xlsx
+*.ai
+*.png
+*.pptx
 
