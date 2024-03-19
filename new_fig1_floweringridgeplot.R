@@ -1,7 +1,10 @@
 install.packages("ggridges")
+install.packages("hrbrthemes")
 library(ggridges)
 library(ggplot2)
 library(tidyverse)
+library(hrbrthemes)
+library(viridis)
 
 #bring in data
 data <- read.csv("combined_raw_phenology.csv")
@@ -66,11 +69,17 @@ all_sites_density <- ggplot(data, aes(x = Week, y = reorder(Species, Week, decre
 
 plot(all_sites_density)
 
+###fill area under curve with semi-transparent grey, outline w solid vs dashed for years and different colors for lines, try to make middle and middle2 similar colors 
+## average flowering units per week over 7 days, use this for density plot
+##divide #flowering per week by 7, google how to expand dataset from weeks to days 
+
 #Val trying something out here----
 
 dat1 <- data %>% group_by(Species, Site) %>%
   count() %>%
   filter( n == 1)
+
+dat2 <- left_join(dat1, data, by = c("Species", "Site"))
 
 # End Val's test -
 
@@ -80,3 +89,9 @@ all_sites_histo <- ggplot(data, aes(x = Week, y = Species, Group= Species, fill 
   scale_x_continuous(expand = c(0, 0), name = "Week")+
   facet_wrap(~Site)
 print(all_sites_histo)
+
+ggplot(data, aes(Week, reorder(Species, Week, decreasing = T), fill= Number_flowering)) + 
+  geom_tile() +
+  scale_fill_viridis(discrete=FALSE) +
+  theme_ipsum() +
+  ylab("Species")
