@@ -86,19 +86,19 @@ data_days$Year <- as.factor(data_days$Year)
 #reorder modules
 data_days$Module <- factor(data_days$Module, levels = c("Beginning", "Middle", "Middle2", "End"))
 
-ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing = T),
+#plot
+new_fig1<- ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing = T),
                       Group = Species,linetype = Year, color = factor(Module))) +
-  geom_density_ridges(scale = 1.5, show.legend = TRUE, alpha = 0.2, rel_min_height =0.008 ) +
+  geom_density_ridges(scale = 1, show.legend = TRUE, alpha = 0.2, rel_min_height = 0.005) +
   scale_y_discrete(expand = c(0, 0), name = "Species") +
   facet_wrap(~Site, labeller = as_labeller(site_names)) +
   theme_bw() +
   theme(axis.text.y = element_text(face = "italic"))+
   scale_fill_manual( values = c("grey"))+
   scale_colour_manual(values = c("magenta4", "orange", "turquoise2","forestgreen"), name ="Module")+
-  scale_x_continuous(breaks = c(7,35,70),labels = c("1", "5", "10"), name = 'Week') 
+  scale_x_continuous(limits = c(0,75),breaks = c(0,35,70),labels = c("1", "5", "10"), name = 'Week')
 
-scale_x_continuous(expand = c(0.00001, 0), name = "Week")
-
+plot(new_fig1)
 vignette("ggplot2-specs")
 
 ###fill area under curve with semi-transparent grey, outline w solid vs dashed for years and different colors for lines, try to make middle and middle2 similar colors 
