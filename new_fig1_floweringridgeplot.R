@@ -69,6 +69,33 @@ all_sites_density <- ggplot(data, aes(x = Week, y = reorder(Species, Week, decre
 
 plot(all_sites_density)
 
+#test w days instead of weeks to include species w 1 week only of flowering
+data_days <- read.csv("combined_raw_phenology_days_updates.csv")
+
+#create object to rename sites 
+site_names <- c(
+  `Road` = "Low (2815 m)",
+  `Pfeiler` = "Middle (3165 m)",
+  `PBM` = "High (3380 m)"
+)
+
+
+
+ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing = T),
+                      Group = Species,linetype = factor(Year), color = factor(Module))) +
+  geom_density_ridges(scale = 1, show.legend = TRUE, alpha = 0.3) +
+  scale_y_discrete(expand = c(0, 0), name = "Species") +
+  facet_wrap(~Site, labeller = as_labeller(site_names)) +
+  theme_bw() +
+  theme(axis.text.y = element_text(face = "italic"))+
+  scale_fill_manual( values = c("grey"))+
+  scale_colour_manual(values = c("magenta4", "forestgreen", "orange","turquoise1"), name ="Module")+
+  scale_x_discrete(labels=c(), name = 'Week') 
+
+scale_x_continuous(expand = c(0.00001, 0), name = "Week")
+
+vignette("ggplot2-specs")
+
 ###fill area under curve with semi-transparent grey, outline w solid vs dashed for years and different colors for lines, try to make middle and middle2 similar colors 
 ## average flowering units per week over 7 days, use this for density plot
 ##divide #flowering per week by 7, google how to expand dataset from weeks to days 
