@@ -1,11 +1,12 @@
 library(tidyverse)
+library(dplyr)
 
 
 #bring in data to combine
 phenology <- read.csv("phenology.csv")
 fitness <- read.csv("fitness.csv")
 
-#switch from date to year
+#switch from date to year ##dont need this with updated spreadsheet
 fitness <- fitness %>% mutate(Year = ifelse(substr(Date, nchar(Date) - 1, nchar(Date)) == "21", 2021, 2022)) %>% dplyr::select(Site, Species, Number_units_w_fruit, Flowering_week, Year)
 
 fitness$Year <- as.integer(fitness$Year)
@@ -18,8 +19,8 @@ phenology = subset(phenology, select = -c(2,7))
 #remove underscores from species names in fitness df 
 fitness$Species<-gsub("_", " ", fitness$Species)
 
+#fix viola typo
 phenology$Species<-gsub("Viola nuttalli", "Viola nuttallii", phenology$Species)
-
 
 #combine into one dataframe
 
@@ -32,5 +33,9 @@ combined_df$Species<-gsub("Lupinus spp", "Lupinus bakeri", combined_df$Species)
 combined_df <- combined_df %>%
   group_by(Flowering_week, Year, Site, Species, Plot, Number_flowering_units) %>%
   summarise(across(c(Number_units_w_fruit), sum))
+
+#add column with proportion of flowering units producing fruit
+combined_df <- combined_df %>%
+  mutate(Proportion_fruiting = Number_units_w_fruit / Number_flowering_units)
 
 
