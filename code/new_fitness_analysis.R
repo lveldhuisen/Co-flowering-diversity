@@ -27,21 +27,11 @@ write_csv(combined_phenology, file = "combined_phenology.csv")
 combined_phenology <- read.csv("combined_phenology.csv")
 
 #clean up "fitness.csv"
+fitness = subset(fitness, select = -c(1,6,7,8,9,10) )
 fitness$Year <- as.integer(fitness$Year)
 fitness$Flowering_week <- as.integer(fitness$Flowering_week)
-#remove unnecessary columns 
-fitness = subset(fitness, select = -c(1,6,7,8,9,10) )
 #remove underscores from species names in fitness df 
 fitness$Species<-gsub("_", " ", fitness$Species)
-
-#fix typos
-phenology$Species<-gsub("Viola nuttalliii", "Viola nuttallii", phenology$Species)
-combined_df$Species<-gsub("Senecio interrigrimus", "Senecio integerrimus",combined_df$Species)
-combined_df$Species<-gsub("Lupinus spp", "Lupinus bakeri", combined_df$Species)
-combined_df$Species<-gsub("Dasiphora fruticosa ", "Dasiphora fruticosa", combined_df$Species)
-combined_df$Species<-gsub("Eriogonum umbellatum var. Porteri", "Eriogonum umbellatum", combined_df$Species)
-combined_df$Species<-gsub("Aquilegia caerulea", "Aquilegia coerulea", combined_df$Species)
-combined_df$Species<-gsub("Gayophytum spp", "Gayophytum diffusum", combined_df$Species)
 
 #combine into one dataframe
 
@@ -60,13 +50,43 @@ combined_df <- combined_df %>%
 #relpace NAs with 0
 combined_df[is.na(combined_df)] <- 0
 
+#split into separate dataframes for 2021 and 2022
+alldata_2021 <- subset(combined_df, Year == '2021')
+PBM2021 <- subset(alldata_2021, Site == 'PBM')
+Pfeiler2021 <- subset(alldata_2021, Site == 'Pfeiler')
+Road2021 <- subset(alldata_2021, Site == 'Road')
+
+
+alldata_2022 <- subset(combined_df, Year == '2022')
+
 
 #scatter plots for flowers and proportion fruiting
-ggplot(combined_df, aes(x=Number_flowering_units, y=Proportion_fruiting)) + 
+regressions2021 <- ggplot(alldata_2021, aes(x=Number_flowering_units, y=Proportion_fruiting)) + 
   geom_point() + 
   facet_wrap(~Species, scales = "free_x") + 
   ylim(0,1)+
   geom_smooth(method=lm)+
   stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label")
 
+plot(regressions2021)
 
+pbm2021fig <- ggplot(PBM2021, aes(x=Number_flowering_units, y=Proportion_fruiting)) + 
+  geom_point() + 
+  facet_wrap(~Species, scales = "free_x") + 
+  ylim(0,1)+
+  geom_smooth(method=lm)+
+  stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label")
+
+plot(pbm2021fig)
+
+
+
+
+regressions2022 <- ggplot(alldata_2022, aes(x=Number_flowering_units, y=Proportion_fruiting)) + 
+  geom_point() + 
+  facet_wrap(~Species, scales = "free_x") + 
+  ylim(0,1)+
+  geom_smooth(method=lm)+
+  stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label")
+
+plot(regressions2022)
