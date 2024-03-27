@@ -1,5 +1,6 @@
 library(tidyverse)
 library(dplyr)
+library(ggpubr)
 
 
 #bring in data to combine
@@ -26,8 +27,13 @@ phenology$Species<-gsub("Viola nuttalli", "Viola nuttallii", phenology$Species)
 
 combined_df <- left_join(phenology, fitness, by=c('Flowering_week', 'Site','Species', "Year",'Plot'))
 
+#fix species names typos
 combined_df$Species<-gsub("Senecio interrigrimus", "Senecio integerrimus",combined_df$Species)
 combined_df$Species<-gsub("Lupinus spp", "Lupinus bakeri", combined_df$Species)
+combined_df$Species<-gsub("Dasiphora fruticosa ", "Dasiphora fruticosa", combined_df$Species)
+combined_df$Species<-gsub("Eriogonum umbellatum var. Porteri", "Eriogonum umbellatum", combined_df$Species)
+combined_df$Species<-gsub("Aquilegia caerulea", "Aquilegia coerulea", combined_df$Species)
+combined_df$Species<-gsub("Gayophytum spp", "Gayophytum diffusum", combined_df$Species)
 
 #merging rows to combine fruit counts 
 combined_df <- combined_df %>%
@@ -37,5 +43,17 @@ combined_df <- combined_df %>%
 #add column with proportion of flowering units producing fruit
 combined_df <- combined_df %>%
   mutate(Proportion_fruiting = Number_units_w_fruit / Number_flowering_units)
+
+#relpace NAs with 0
+combined_df[is.na(combined_df)] <- 0
+
+
+#scatter plots for flowers and proportion fruiting
+ggplot(combined_df, aes(x=Number_flowering_units, y=Proportion_fruiting)) + 
+  geom_point() + 
+  facet_wrap(~Species, scales = "free_x") + 
+  ylim(0,1)+
+  geom_smooth(method=lm)+
+  stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label")
 
 
