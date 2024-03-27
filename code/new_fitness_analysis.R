@@ -5,11 +5,14 @@ library(ggpubr)
 
 #bring in data to combine
 phenology <- read.csv("phenology.csv")
+phenology_wmodules <- read.csv("combined_raw_phenology.csv")
 fitness <- read.csv("fitness.csv")
 
-#switch from date to year ##dont need this with updated spreadsheet
-fitness <- fitness %>% mutate(Year = ifelse(substr(Date, nchar(Date) - 1, nchar(Date)) == "21", 2021, 2022)) %>% dplyr::select(Site, Species, Number_units_w_fruit, Flowering_week, Year)
+#bring modules into phenology df
+names(phenology_wmodules)[3] <- "Flowering_week"
+test2 <- left_join(phenology, phenology_wmodules, by=c('Flowering_week', 'Site','Species', "Year"))
 
+#fix column categories 
 fitness$Year <- as.integer(fitness$Year)
 fitness$Flowering_week <- as.integer(fitness$Flowering_week)
 
@@ -21,19 +24,18 @@ phenology = subset(phenology, select = -c(2,7))
 fitness$Species<-gsub("_", " ", fitness$Species)
 
 #fix viola typo
-phenology$Species<-gsub("Viola nuttalli", "Viola nuttallii", phenology$Species)
-
-#combine into one dataframe
-
-combined_df <- left_join(phenology, fitness, by=c('Flowering_week', 'Site','Species', "Year",'Plot'))
-
-#fix species names typos
+phenology$Species<-gsub("Viola nuttalliii", "Viola nuttallii", phenology$Species)
 combined_df$Species<-gsub("Senecio interrigrimus", "Senecio integerrimus",combined_df$Species)
 combined_df$Species<-gsub("Lupinus spp", "Lupinus bakeri", combined_df$Species)
 combined_df$Species<-gsub("Dasiphora fruticosa ", "Dasiphora fruticosa", combined_df$Species)
 combined_df$Species<-gsub("Eriogonum umbellatum var. Porteri", "Eriogonum umbellatum", combined_df$Species)
 combined_df$Species<-gsub("Aquilegia caerulea", "Aquilegia coerulea", combined_df$Species)
 combined_df$Species<-gsub("Gayophytum spp", "Gayophytum diffusum", combined_df$Species)
+
+#combine into one dataframe
+
+combined_df <- left_join(phenology, fitness, by=c('Flowering_week', 'Site','Species', "Year",'Plot'))
+
 
 #merging rows to combine fruit counts 
 combined_df <- combined_df %>%
