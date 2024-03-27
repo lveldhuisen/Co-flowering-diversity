@@ -8,22 +8,42 @@ phenology <- read.csv("phenology.csv")
 phenology_wmodules <- read.csv("combined_raw_phenology.csv")
 fitness <- read.csv("fitness.csv")
 
-#bring modules into phenology df
-names(phenology_wmodules)[3] <- "Flowering_week"
-test2 <- left_join(phenology, phenology_wmodules, by=c('Flowering_week', 'Site','Species', "Year"))
+#cleaning up "phenology.csv"
+phenology$Species<-gsub("Eriogonum umbellatum var. Porteri", "Eriogonum umbellatum", phenology$Species)
+phenology$Species<-gsub("Lupinus spp", "Lupinus bakeri", phenology$Species)
+phenology$Species<-gsub("Aquilegia caerulea", "Aquilegia coerulea", phenology$Species)
+phenology$Species<-gsub("Gayophytum spp", "Gayophytum diffusum", phenology$Species)
+phenology$Species<-gsub("Senecio interrigrimus", "Senecio integerrimus",phenology$Species)
+phenology$Species<-gsub("Dasiphora fruticosa ", "Dasiphora fruticosa",phenology$Species)
 
-#fix column categories 
+
+unique(phenology$Species)
+
+#cleaning up "combined_raw_phenology.csv"
+phenology_wmodules = subset(phenology_wmodules, select = -c(2))
+names(phenology_wmodules)[2] <- "Flowering_week"
+names(phenology_wmodules)[3] <- "Number_flowering_units"
+phenology_wmodules$Species<-gsub("Cirsium arvense ", "Cirsium arvense", phenology_wmodules$Species)
+phenology_wmodules$Species<-gsub("Claytonia lanceolata ", "Claytonia lanceolata", phenology_wmodules$Species)
+phenology_wmodules$Species<-gsub("Taraxacum officinales", "Taraxacum officinale", phenology_wmodules$Species)
+phenology_wmodules$Species<-gsub("Senecio crassulus ", "Senecio crassulus", phenology_wmodules$Species)
+
+unique(phenology_wmodules$Species)
+
+#combined both phenology datasets
+combined_phenology <- left_join(phenology, phenology_wmodules, by=c('Flowering_week', 'Site','Species', "Year","Number_flowering_units"))
+
+write_csv(combined_phenology, file = "combined_phenology.csv")
+
+#clean up "fitness.csv"
 fitness$Year <- as.integer(fitness$Year)
 fitness$Flowering_week <- as.integer(fitness$Flowering_week)
-
 #remove unnecessary columns 
 fitness = subset(fitness, select = -c(1,6,7,8,9,10) )
-phenology = subset(phenology, select = -c(2,7))
-
 #remove underscores from species names in fitness df 
 fitness$Species<-gsub("_", " ", fitness$Species)
 
-#fix viola typo
+#fix typos
 phenology$Species<-gsub("Viola nuttalliii", "Viola nuttallii", phenology$Species)
 combined_df$Species<-gsub("Senecio interrigrimus", "Senecio integerrimus",combined_df$Species)
 combined_df$Species<-gsub("Lupinus spp", "Lupinus bakeri", combined_df$Species)
