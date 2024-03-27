@@ -8,14 +8,6 @@ phenology <- read.csv("phenology.csv")
 phenology_wmodules <- read.csv("combined_raw_phenology.csv")
 fitness <- read.csv("fitness.csv")
 
-#cleaning up "phenology.csv"
-phenology$Species<-gsub("Eriogonum umbellatum var. Porteri", "Eriogonum umbellatum", phenology$Species)
-phenology$Species<-gsub("Lupinus spp", "Lupinus bakeri", phenology$Species)
-phenology$Species<-gsub("Aquilegia caerulea", "Aquilegia coerulea", phenology$Species)
-phenology$Species<-gsub("Gayophytum spp", "Gayophytum diffusum", phenology$Species)
-phenology$Species<-gsub("Senecio interrigrimus", "Senecio integerrimus",phenology$Species)
-phenology$Species<-gsub("Dasiphora fruticosa ", "Dasiphora fruticosa",phenology$Species)
-
 
 unique(phenology$Species)
 
@@ -23,17 +15,16 @@ unique(phenology$Species)
 phenology_wmodules = subset(phenology_wmodules, select = -c(2))
 names(phenology_wmodules)[2] <- "Flowering_week"
 names(phenology_wmodules)[3] <- "Number_flowering_units"
-phenology_wmodules$Species<-gsub("Cirsium arvense ", "Cirsium arvense", phenology_wmodules$Species)
-phenology_wmodules$Species<-gsub("Claytonia lanceolata ", "Claytonia lanceolata", phenology_wmodules$Species)
-phenology_wmodules$Species<-gsub("Taraxacum officinales", "Taraxacum officinale", phenology_wmodules$Species)
-phenology_wmodules$Species<-gsub("Senecio crassulus ", "Senecio crassulus", phenology_wmodules$Species)
 
 unique(phenology_wmodules$Species)
 
 #combined both phenology datasets
 combined_phenology <- left_join(phenology, phenology_wmodules, by=c('Flowering_week', 'Site','Species', "Year","Number_flowering_units"))
 
+#export to excel to fix few module errors by hand 
 write_csv(combined_phenology, file = "combined_phenology.csv")
+#bring back in with all module errors fixed
+combined_phenology <- read.csv("combined_phenology.csv")
 
 #clean up "fitness.csv"
 fitness$Year <- as.integer(fitness$Year)
@@ -54,7 +45,7 @@ combined_df$Species<-gsub("Gayophytum spp", "Gayophytum diffusum", combined_df$S
 
 #combine into one dataframe
 
-combined_df <- left_join(phenology, fitness, by=c('Flowering_week', 'Site','Species', "Year",'Plot'))
+combined_df <- left_join(combined_phenology, fitness, by=c('Flowering_week', 'Site','Species', "Year",'Plot'))
 
 
 #merging rows to combine fruit counts 
