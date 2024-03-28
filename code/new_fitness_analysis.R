@@ -79,6 +79,13 @@ pbm2021fig <- ggplot(PBM2021, aes(x=Number_flowering_units, y=Proportion_fruitin
 
 plot(pbm2021fig)
 
+ggscatter(
+  alldata_2022, x = "Number_flowering_units", y = "Proportion_fruiting",
+  add = "reg.line"
+) +
+  facet_wrap(~Species) +
+  stat_cor(label.y = 4.4) +
+  stat_regline_equation(label.y = 4.2)
 
 
 
