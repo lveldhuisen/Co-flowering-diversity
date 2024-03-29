@@ -86,11 +86,13 @@ ggscatter(
   PBM2021, x = "Number_flowering_units", y = "Proportion_fruiting",
   add = "reg.line"
 ) +
-  facet_wrap(~Species) +
+  facet_wrap(~Species) 
   stat_cor(label.y = 4.4) +
   stat_regline_equation(label.y = 4.2)
 
 #histograms of flowering correlation values
 
 species_correlations_df <- read.csv("dataset_for_new_fitness_analysis2024.csv")
+
+ggplot(species_correlations_df, aes(x=R2)) + geom_histogram() + facet_wrap(Module~Site)
 
