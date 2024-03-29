@@ -90,13 +90,7 @@ ggscatter(
   stat_cor(label.y = 4.4) +
   stat_regline_equation(label.y = 4.2)
 
+#histograms of flowering correlation values
 
+species_correlations_df <- read.csv("dataset_for_new_fitness_analysis2024.csv")
 
-regressions2022 <- ggplot(alldata_2022, aes(x=Number_flowering_units, y=Proportion_fruiting)) + 
-  geom_point() + 
-  facet_wrap(~Species, scales = "free_x") + 
-  ylim(0,1)+
-  geom_smooth(method=lm)+
-  stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label")
-
-plot(regressions2022)
