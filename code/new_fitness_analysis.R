@@ -58,6 +58,9 @@ Road2021 <- subset(alldata_2021, Site == 'Road')
 
 
 alldata_2022 <- subset(combined_df, Year == '2022')
+PBM2022 <- subset(alldata_2022, Site == 'PBM')
+Pfeiler2022 <- subset(alldata_2022, Site == 'Pfeiler')
+Road2022 <- subset(alldata_2022, Site == 'Road')
 
 
 #scatter plots for flowers and proportion fruiting
@@ -80,7 +83,7 @@ pbm2021fig <- ggplot(PBM2021, aes(x=Number_flowering_units, y=Proportion_fruitin
 plot(pbm2021fig)
 
 ggscatter(
-  alldata_2022, x = "Number_flowering_units", y = "Proportion_fruiting",
+  PBM2021, x = "Number_flowering_units", y = "Proportion_fruiting",
   add = "reg.line"
 ) +
   facet_wrap(~Species) +
