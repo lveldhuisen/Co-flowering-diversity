@@ -94,5 +94,5 @@ ggscatter(
 
 species_correlations_df <- read.csv("dataset_for_new_fitness_analysis2024.csv")
 
-ggplot(species_correlations_df, aes(x=R2)) + geom_histogram() + facet_wrap(Module~Site)
+ggplot(species_correlations_df, aes(x=Slope)) + geom_histogram(stat = "count") + facet_wrap(Module~Site) 
 
