@@ -171,11 +171,12 @@ fig_pd_weeks <- ggplot(all_weeks_pd, aes(fill = Type, y=SES, x=fct_relevel(Week,
   geom_bar(position = "dodge",stat = "identity") +
   xlab("Week") + 
   ylab("Standard effect size")+
-  theme_light() + 
+  theme_light(base_size = 20) + 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
                              "#4ea6c4"))+
   ylim(-5.9,2) +
   facet_grid(Year~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
+
 plot(fig_pd_weeks)
