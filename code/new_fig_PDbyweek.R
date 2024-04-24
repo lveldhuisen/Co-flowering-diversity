@@ -14,3 +14,4 @@ library(picante)
 SBtree <- read.tree(file = "ALLMB.tre")
 write.tree(SBtree) #test if imported correctly, can take a long time though 
 is.rooted(SBtree) #check tree, should say true 
+
