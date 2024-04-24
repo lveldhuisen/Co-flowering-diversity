@@ -3,6 +3,7 @@
 
 
 library(ggplot2)
+library(tidyverse)
 library(dplyr)
 library(ggpubr)
 library(viridis)
@@ -41,6 +42,7 @@ pd_weeks <- pd_weeks %>%
 pd_weeks$Type <- c("PD") #add column for metric type 
 pd_weeks$Site <- c("High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","Middle elevation (3165 m)","Middle elevation (3165 m)","Middle elevation (3165 m)","Middle elevation (3165 m)","Middle elevation (3165 m)","Middle elevation (3165 m)","Middle elevation (3165 m)","Middle elevation (3165 m)", "Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","all") #add column for site name 
 pd_weeks$Week <- c("1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10","all")
+
 
 ##MPD#####
 mpd_weeks <- ses.mpd(matrix_weeks_2021, cophenetic(pruned.tree21), null.model = c("sample.pool"),
