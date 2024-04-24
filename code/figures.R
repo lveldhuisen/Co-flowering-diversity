@@ -182,7 +182,7 @@ df_all %>%
   theme_light() +
   stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label") #same data but different layout from final Fig 2
 
-#Figure 3: networks, I generated all network figures individually in Gephi, and combined them using Adobe Illustrator------------------------------
+#Figure 3: networks, generated all network figures individually in Gephi, and combined them using Adobe Illustrator------------------------------
 
 #Figure 4: phylogenetic SES values by modules--------------------------------------
 #like other figures, I generated figures for each site and year and combined them to make the final figure 4 in Adobe Illustrator 
