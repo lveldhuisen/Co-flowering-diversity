@@ -73,3 +73,18 @@ mntd_weeks21$Week <- c("1","2","3","4","5","6","7","8","9","10","1","2","3","4",
 
 ##combine all metrics into one dataset####
 all2021 <- rbind(pd_weeks21, mpd_weeks21, mntd_weeks21)
+all2021 <- all2021[-c(91),]
+
+#make 2021 figure---------------------------------
+fig_pd_weeks21 <- ggplot(all2021, aes(fill = Type, y=SES, x=fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) + 
+  geom_bar(position = "dodge",stat = "identity") +
+  xlab("Week") + 
+  ylab("Standard effect size")+
+  theme_light() + 
+  guides(fill=guide_legend(title="Phylogenetic metric"))+
+  scale_fill_manual(values=c("#c385b3",
+                             "#cdd870",
+                             "#4ea6c4"))+
+  ylim(-5.9,2) +
+  facet_grid(~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
+plot(fig_pd_weeks21)
