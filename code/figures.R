@@ -22,7 +22,11 @@ df_mod <- read.csv("results_bymodule.csv")
 #this data file is in the "files_Figures" folder 
 df_pheno <- read.csv("combined_raw_phenology.csv")
 
-pal.bands(stepped, show.names=TRUE)
+#change site names in data
+df_pheno["Site"][df_pheno["Site"] == "Road"] <- "Low elevation (2815 m)" 
+df_pheno["Site"][df_pheno["Site"] == "Pfeiler"] <- "Middle elevation (3165 m)" 
+df_pheno["Site"][df_pheno["Site"] == "PBM"] <- "High elevation (3380 m)" 
+df_pheno["Family"][df_pheno["Family"] == "Fabaceae\n"] <- "Fabaceae"
 
 
 ##make individual histograms by site -------------------------------------
@@ -103,6 +107,19 @@ ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('Beginning','Midd
   geom_bar(stat="identity") +
   theme(legend.position = "right") + scale_fill_manual(values=manualcolors) + 
   ylab("Number of flowering units") + xlab("Flowering module") + theme_light() + ggtitle("PBM 2022") + ylim(0,1050)
+
+###do all sites and years together#####
+manualcolors_test<-c('mediumvioletred','cornflowerblue', 'black','wheat4','#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen','mediumorchid4','darksalmon','yellow','grey','moccasin','yellow1','purple','brown','turquoise','turquoise4','brown1','deeppink','darkgoldenrod1','darkolivegreen3') #manually set colors for families
+
+ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),y=Number_flowering, fill=Family)) + 
+  geom_bar(stat="identity") +
+  theme(legend.position = "right") + 
+  scale_fill_manual(values=manualcolors_test) + 
+  ylab("Number of flowering units") + 
+  xlab("Flowering module") + 
+  theme_light(base_size = 20) + 
+  ylim(0,1050)+
+  facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
 #Figure 2: phenology and fitness correlations-------------------------------------------
 #i generated a figure for each site and year, and combined them to make Fig 2 in Adobe Illustrator 
