@@ -70,6 +70,17 @@ print(PD22.mod) #view values
 pd_mod22<- ses.pd(matrix2022.mod, pruned.tree2022, null.model = c("sample.pool"),
        runs = 5000, iterations = 5000, include.root=TRUE) #output shows PD and SES for all modules for 2022
 
+#format data table
+pd_mod22 = subset(pd_mod22, select = -c(ntaxa,pd.obs,pd.rand.mean,pd.rand.sd,pd.obs.rank,runs) ) #remove unnecessary columns
+names(pd_mod22)[names(pd_mod22) == "pd.obs.z"] <- "SES"
+names(pd_mod22)[names(pd_mod22) == "pd.obs.p"] <- "P_values" #rename columns to match other datasets 
+
+pd_mod22<- pd_mod22[-c(11),]
+
+pd_mod22$Type <- c("PD") #add column for metric type 
+pd_mod22$Site <- c("Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Middle elevation (3165 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)") #add column for site name 
+pd_mod22$Year <- c("2022")
+pd_mod22$Module <- c("Beginning","Middle1","Middle2","End","Beginning","Middle","End","Beginning","Middle","End")
 
 #MPD--------------------------------------------------------------
 ##2021#########
@@ -88,8 +99,22 @@ mpd_2021 <- apply(matrix2021.mod, MARGIN = 1, new.mpd.function) #save MPD values
 print(mpd_2021) #view MPD values
 
 ###SES MPD 2021#########
-ses.mpd(matrix2021.mod, dist.mat2021, null.model = c("sample.pool"),
-        abundance.weighted = FALSE, runs = 5000, iterations = 5000) #output shows MPD values and SES for all modules in all 2021 sites 
+mpd_mod21<-ses.mpd(matrix2021.mod, dist.mat2021, null.model = c("sample.pool"),
+                   abundance.weighted = FALSE, runs = 5000, iterations = 5000) #output shows MPD values and SES for all modules in all 2021 sites 
+
+#format data table
+mpd_mod21 = subset(mpd_mod21, select = -c(ntaxa,mpd.obs,mpd.rand.mean,mpd.rand.sd,mpd.obs.rank,runs) ) #remove unnecessary columns
+
+names(mpd_mod21)[names(mpd_mod21) == "mpd.obs.z"] <- "SES"
+names(mpd_mod21)[names(mpd_mod21) == "mpd.obs.p"] <- "P_values" #rename columns to match other datasets 
+
+mpd_mod21<- mpd_mod21[-c(10),]
+
+mpd_mod21$Type <- c("MPD") #add column for metric type 
+mpd_mod21$Site <- c("Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Middle elevation (3165 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)") #add column for site name 
+mpd_mod21$Year <- c("2021")
+mpd_mod21$Module <- c("Beginning","Middle","End","Beginning","Middle","End","Beginning","Middle","End")
+
 
 ##2022#########
 
