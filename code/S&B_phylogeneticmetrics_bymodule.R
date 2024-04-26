@@ -80,7 +80,7 @@ pd_mod22<- pd_mod22[-c(11),]
 pd_mod22$Type <- c("PD") #add column for metric type 
 pd_mod22$Site <- c("Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Middle elevation (3165 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)") #add column for site name 
 pd_mod22$Year <- c("2022")
-pd_mod22$Module <- c("Beginning","Middle1","Middle2","End","Beginning","Middle","End","Beginning","Middle","End")
+pd_mod22$Module <- c("Beginning","Middle","Middle2","End","Beginning","Middle","End","Beginning","Middle","End")
 
 #MPD--------------------------------------------------------------
 ##2021#########
@@ -144,7 +144,7 @@ mpd_mod22<- mpd_mod22[-c(11),]
 mpd_mod22$Type <- c("MPD") #add column for metric type 
 mpd_mod22$Site <- c("Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Middle elevation (3165 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)") #add column for site name 
 mpd_mod22$Year <- c("2022")
-mpd_mod22$Module <- c("Beginning","Middle1","Middle2","End","Beginning","Middle","End","Beginning","Middle","End")
+mpd_mod22$Module <- c("Beginning","Middle","Middle2","End","Beginning","Middle","End","Beginning","Middle","End")
 
 #MNTD------------------------------------------------------------------------
 ##2021###############
@@ -201,6 +201,11 @@ mntd_mod22<- mntd_mod22[-c(11),]
 mntd_mod22$Type <- c("MNTD") #add column for metric type 
 mntd_mod22$Site <- c("Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Middle elevation (3165 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)") #add column for site name 
 mntd_mod22$Year <- c("2022")
-mntd_mod22$Module <- c("Beginning","Middle1","Middle2","End","Beginning","Middle","End","Beginning","Middle","End")
+mntd_mod22$Module <- c("Beginning","Middle","Middle2","End","Beginning","Middle","End","Beginning","Middle","End")
 
+#combine into one big dataset-------------
+all_mod2021 <- rbind(pd_mod21,mpd_mod21,mntd_mod21)
+all_mod2022 <- rbind(pd_mod22, mpd_mod22,mntd_mod22)
+
+all_mod <- rbind(all_mod2021,all_mod2022)
 

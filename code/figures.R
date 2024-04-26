@@ -313,7 +313,20 @@ PBM2022_SES <- ggplot(sub_mod_pbm22, aes(fill=Type, y=SES, x=fct_relevel(Module,
 ##all sites and years together in one faceted figured#####
 #the code to generate the datasets is in the file titled "S&B_phylogenetics_bymodule.R"
 
+#make figure with both years combined-------------
+fig_pd_mod <- ggplot(all_mod, aes(fill = Type, y=SES, x=fct_relevel(Module, c("Beginning","Middle","Middle2","End")))) + 
+  geom_bar(position = "dodge",stat = "identity") +
+  xlab("Module") + 
+  ylab("Standard effect size")+
+  theme_light(base_size = 20) + 
+  guides(fill=guide_legend(title="Phylogenetic metric"))+
+  scale_fill_manual(values=c("#c385b3",
+                             "#cdd870",
+                             "#4ea6c4"))+
+  ylim(-5.2,2.2) +
+  facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
+plot(fig_pd_mod)
 
 
 
