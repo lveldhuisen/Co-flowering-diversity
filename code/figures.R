@@ -122,7 +122,7 @@ ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Mi
   facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
 #Figure 2: phenology and fitness correlations-------------------------------------------
-#i generated a figure for each site and year, and combined them to make Fig 2 in Adobe Illustrator 
+#we generated a figure for each site and year, and combined them to make Fig 2 in Adobe Illustrator 
 
 #bring in data, this file is in the "files_Figures" folder
 df_all <- read_csv("results_ALL.csv")
@@ -139,7 +139,7 @@ ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + the
 
 ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2021") 
 
-###pfeiler 2021##########pfeiler 2021#######geom_point()
+###pfeiler 2021#######
 subDataPf21 <- subset(df_all, 
                       Site %in% c("Pfeiler") & Year == "2021") #subset data by site and year 
 
@@ -201,7 +201,23 @@ df_all %>%
 
 #Figure 3: networks, generated all network figures individually in Gephi, and combined them using Adobe Illustrator------------------------------
 
-#Figure 4: phylogenetic SES values by modules--------------------------------------
+#Figure 4: phylogenetic diversity by week (new for revision)------------------------
+##make figure with both years combined#####
+fig_pd_weeks <- ggplot(all_weeks_pd, aes(fill = Type, y=SES, x=fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) + 
+  geom_bar(position = "dodge",stat = "identity") +
+  xlab("Week") + 
+  ylab("Standard effect size")+
+  theme_light(base_size = 20) + 
+  guides(fill=guide_legend(title="Phylogenetic metric"))+
+  scale_fill_manual(values=c("#c385b3",
+                             "#cdd870",
+                             "#4ea6c4"))+
+  ylim(-5.9,2) +
+  facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
+
+plot(fig_pd_weeks)
+
+#Figure 5: phylogenetic SES values by modules--------------------------------------
 #like other figures, I generated figures for each site and year and combined them to make the final figure 4 in Adobe Illustrator 
 
 #find this file in "files_Figures" folder 
@@ -293,6 +309,11 @@ PBM2022_SES <- ggplot(sub_mod_pbm22, aes(fill=Type, y=SES, x=fct_relevel(Module,
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
                              "#4ea6c4")) + ggtitle("PBM 2022")+ ylim(-5,2) #plot figure
+
+##all sites and years together in one faceted figured#####
+#the code to generate the datasets is in the file titled "S&B_phylogenetics_bymodule.R"
+
+
 
 
 

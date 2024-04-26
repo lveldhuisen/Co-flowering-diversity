@@ -8,6 +8,7 @@ install.packages("picante")
 library(ape)
 library(geiger)
 library(picante)
+library(tidyverse)
 
 
 #import Smith and Brown 2018 tree and check data 
@@ -34,8 +35,21 @@ pruned.tree2021 <- treedata(SBtree, unlist(matrix2021.mod[10,matrix2021.mod[10,]
 plot(pruned.tree2021) #prune tree
 
 #standard effect size using picante 
-ses.pd(matrix2021.mod, pruned.tree2021, null.model = c("sample.pool"),
+pd_mod21 <- ses.pd(matrix2021.mod, pruned.tree2021, null.model = c("sample.pool"),
        runs = 5000, iterations = 5000, include.root=TRUE) #output shows PD and SES for all modules for 2021
+
+#format data table
+pd_mod21 = subset(pd_mod21, select = -c(ntaxa,pd.obs,pd.rand.mean,pd.rand.sd,pd.obs.rank,runs) ) #remove unnecessary columns
+
+names(pd_mod21)[names(pd_mod21) == "pd.obs.z"] <- "SES"
+names(pd_mod21)[names(pd_mod21) == "pd.obs.p"] <- "P_values" #rename columns to match other datasets 
+
+pd_mod21<- pd_mod21[-c(10),]
+
+pd_mod21$Type <- c("PD") #add column for metric type 
+pd_mod21$Site <- c("Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Middle elevation (3165 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)") #add column for site name 
+pd_mod21$Year <- c("2021")
+pd_mod21$Module <- c("Beginning","Middle","End","Beginning","Middle","End","Beginning","Middle","End")
 
 ##2022#####################################
 matrix2022.mod <- read.table("2022_community_matrix_modules.txt", sep = "\t", header = T, row.names = 1)
@@ -53,7 +67,7 @@ print(PD22.mod) #view values
 
 ###SES 2022##########
 
-ses.pd(matrix2022.mod, pruned.tree2022, null.model = c("sample.pool"),
+pd_mod22<- ses.pd(matrix2022.mod, pruned.tree2022, null.model = c("sample.pool"),
        runs = 5000, iterations = 5000, include.root=TRUE) #output shows PD and SES for all modules for 2022
 
 
