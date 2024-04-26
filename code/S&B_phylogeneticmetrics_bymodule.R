@@ -130,8 +130,21 @@ mpd_2022 <- apply(matrix2022.mod, MARGIN = 1, new.mpd.function) #save all MPD va
 print(mpd_2022) #view MPD values
 
 ###SES MPD 2022######
-ses.mpd(matrix2022.mod, dist.mat2022, null.model = c("sample.pool"),
+mpd_mod22<-ses.mpd(matrix2022.mod, dist.mat2022, null.model = c("sample.pool"),
         abundance.weighted = FALSE, runs = 5000, iterations = 5000) #output shows MPD and SES for all modules in all sites for 2022
+
+#format data table
+mpd_mod22 = subset(mpd_mod22, select = -c(ntaxa,mpd.obs,mpd.rand.mean,mpd.rand.sd,mpd.obs.rank,runs) ) #remove unnecessary columns
+
+names(mpd_mod22)[names(mpd_mod22) == "mpd.obs.z"] <- "SES"
+names(mpd_mod22)[names(mpd_mod22) == "mpd.obs.p"] <- "P_values" #rename columns to match other datasets 
+
+mpd_mod22<- mpd_mod22[-c(11),]
+
+mpd_mod22$Type <- c("MPD") #add column for metric type 
+mpd_mod22$Site <- c("Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Middle elevation (3165 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)") #add column for site name 
+mpd_mod22$Year <- c("2022")
+mpd_mod22$Module <- c("Beginning","Middle1","Middle2","End","Beginning","Middle","End","Beginning","Middle","End")
 
 #MNTD------------------------------------------------------------------------
 ##2021###############
@@ -146,8 +159,21 @@ mntd.2021.mod <- apply(matrix2021.mod, MARGIN = 1, new.mntd.function) #save MNTD
 mntd.2021.mod #view values 
 
 ###SES 2021 MNTD###########
-ses.mntd(matrix2021.mod, dist.mat2021, null.model = c("sample.pool"),
+mntd_mod21 <- ses.mntd(matrix2021.mod, dist.mat2021, null.model = c("sample.pool"),
          abundance.weighted=FALSE, runs = 5000, iterations = 5000) #shows MNTD values and SES for all modules in all sites for 2021
+
+#format data table
+mntd_mod21 = subset(mntd_mod21, select = -c(ntaxa,mntd.obs,mntd.rand.mean,mntd.rand.sd,mntd.obs.rank,runs) ) #remove unnecessary columns
+
+names(mntd_mod21)[names(mntd_mod21) == "mntd.obs.z"] <- "SES"
+names(mntd_mod21)[names(mntd_mod21) == "mntd.obs.p"] <- "P_values" #rename columns to match other datasets 
+
+mntd_mod21<- mntd_mod21[-c(10),]
+
+mntd_mod21$Type <- c("MNTD") #add column for metric type 
+mntd_mod21$Site <- c("Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Middle elevation (3165 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)") #add column for site name 
+mntd_mod21$Year <- c("2021")
+mntd_mod21$Module <- c("Beginning","Middle","End","Beginning","Middle","End","Beginning","Middle","End")
 
 ##2022#############
 new.mntd.function <- function(x){
@@ -161,6 +187,20 @@ mntd.2022.mod <- apply(matrix2022.mod, MARGIN = 1, new.mntd.function) #save MNTD
 mntd.2022.mod #view values 
 
 ###SES 2022 MNTD############
-ses.mntd(matrix2022.mod, dist.mat2022, null.model = c("sample.pool"),
+mntd_mod22 <- ses.mntd(matrix2022.mod, dist.mat2022, null.model = c("sample.pool"),
          abundance.weighted=FALSE, runs = 5000, iterations = 5000) #shows MNTD values and SES for all modules in all sites for 2022
+
+#format data table
+mntd_mod22 = subset(mntd_mod22, select = -c(ntaxa,mntd.obs,mntd.rand.mean,mntd.rand.sd,mntd.obs.rank,runs) ) #remove unnecessary columns
+
+names(mntd_mod22)[names(mntd_mod22) == "mntd.obs.z"] <- "SES"
+names(mntd_mod22)[names(mntd_mod22) == "mntd.obs.p"] <- "P_values" #rename columns to match other datasets 
+
+mntd_mod22<- mntd_mod22[-c(11),]
+
+mntd_mod22$Type <- c("MNTD") #add column for metric type 
+mntd_mod22$Site <- c("Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Low elevation (2815 m)","Middle elevation (3165 m)", "Middle elevation (3165 m)","Middle elevation (3165 m)","High elevation (3380 m)","High elevation (3380 m)","High elevation (3380 m)") #add column for site name 
+mntd_mod22$Year <- c("2022")
+mntd_mod22$Module <- c("Beginning","Middle1","Middle2","End","Beginning","Middle","End","Beginning","Middle","End")
+
 
