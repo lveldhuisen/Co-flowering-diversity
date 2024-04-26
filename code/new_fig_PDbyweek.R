@@ -177,6 +177,6 @@ fig_pd_weeks <- ggplot(all_weeks_pd, aes(fill = Type, y=SES, x=fct_relevel(Week,
                              "#cdd870",
                              "#4ea6c4"))+
   ylim(-5.9,2) +
-  facet_grid(Year~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
+  facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
 plot(fig_pd_weeks)
