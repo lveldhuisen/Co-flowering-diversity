@@ -5,6 +5,7 @@ install.packages("ggpubr")
 install.packages("viridis")  
 install.packages("pals")
 install.packages("Polychrome")
+install.packages("patchwork")
 
 library(ggplot2)
 library(dplyr)
@@ -12,15 +13,16 @@ library(ggpubr)
 library(viridis)
 library(pals)
 library(Polychrome)
+library(patchwork)
 
-#dataframes for figures 
-df_site <- read.csv("results_bysite.csv")
-df_mod <- read.csv("results_bymodule.csv")
+#data frames for figures 
+df_site <- read.csv("files_Figures/results_bysite.csv")
+df_mod <- read.csv("files_Figures/results_bymodule.csv")
 
 #Figure 1: histogram of families by module----------------------------
 
 #this data file is in the "files_Figures" folder 
-df_pheno <- read.csv("combined_raw_phenology.csv")
+df_pheno <- read.csv("files_Figures/combined_raw_phenology.csv")
 
 #change site names in data
 df_pheno["Site"][df_pheno["Site"] == "Road"] <- "Low elevation (2815 m)" 
@@ -35,78 +37,117 @@ df_pheno["Family"][df_pheno["Family"] == "Fabaceae\n"] <- "Fabaceae"
 ###road 2021#######
 
 sub_pheno_r21 <- subset(df_pheno, 
-                       Site %in% c("Road") & Year == "2021") #subset data for site and year
+                       Site %in% c("Low elevation (2815 m)") & Year == "2021") #subset data for site and year
 
 manualcolors<-c('cornflowerblue','grey','tomato3','seagreen1',
                 '#7CE3D8','plum3','lightsalmon',
                 'darkgray','cadetblue1','#DDAD4B','seagreen','mediumorchid4','orange') #manually set colors for families 
 
-ggplot(data = sub_pheno_r21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
-  geom_bar(stat="identity") +
-  theme(legend.position = "right") + scale_fill_manual(values=manualcolors) + 
-  ylab("Number of flowering units") + xlab("Flowering module") + theme_light() +ggtitle("Road 2021") + ylim(0,1050) #plot 
+Low2021_fig <- ggplot(data = sub_pheno_r21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+  geom_bar(stat="identity", show.legend = FALSE) +
+  theme(legend.position = "none") + 
+  scale_fill_manual(values=manualcolors) + 
+  ylab("Number of flowering units") + 
+  xlab("Flowering module") + 
+  theme_light(base_size = 24)+ 
+  ylim(0,1050) #plot 
+plot(Low2021_fig)
 
 ###pfeiler 2021#######
 sub_pheno_pf21 <- subset(df_pheno, 
-                        Site %in% c("Pfeiler") & Year == "2021") #subset data for site and year
+                        Site %in% c("Middle elevation (3165 m)") & Year == "2021") #subset data for site and year
 
 manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','seagreen1',
                 'darkolivegreen1','pink3',
                 'yellowgreen','cadetblue1','mediumorchid4','orange','yellow') #manually set colors for families 
 
-ggplot(data = sub_pheno_pf21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
-  geom_bar(stat="identity") +
-  theme(legend.position = "right") + scale_fill_manual(values=manualcolors) + 
-  ylab("Number of flowering units") + xlab("Flowering module") + theme_light() + ggtitle("Pfeiler 2021") + ylim(0,1050)
+Middle2021_fig <- ggplot(data = sub_pheno_pf21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+  geom_bar(stat="identity", show.legend = F) + 
+  scale_fill_manual(values=manualcolors) + 
+  ylab("Number of flowering units") + 
+  xlab("Flowering module") + 
+  theme_light(base_size = 20) + 
+  ylim(0,1050)
+plot(Middle2021_fig)
 
 ###PBM 2021#######
 sub_pheno_pbm21 <- subset(df_pheno, 
-                         Site %in% c("PBM") & Year == "2021") #subset data for site and year
+                         Site %in% c("High elevation (3380 m)") & Year == "2021") #subset data for site and year
 
 manualcolors<-c('cornflowerblue', 'black','wheat4',
                 'moccasin','#7CE3D8','Indianred1','plum3','pink3',
                 'darkblue','#DDAD4B','mediumorchid4','orange','yellow','purple') #manually set colors for families 
 
-ggplot(data = sub_pheno_pbm21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
-  geom_bar(stat="identity") +
-  theme(legend.position = "right") + scale_fill_manual(values=manualcolors) + 
-  ylab("Number of flowering units") + xlab("Flowering module") + theme_light() + ggtitle("PBM 2021") +ylim(0,1050)
+high2021_fig <- ggplot(data = sub_pheno_pbm21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+  geom_bar(stat="identity", show.legend = F) +
+  theme(legend.position = "right") + 
+  scale_fill_manual(values=manualcolors) + 
+  ylab("Number of flowering units") + 
+  xlab("Flowering module") + 
+  theme_light(base_size = 20) + 
+  ylim(0,1050)
+plot(high2021_fig)
 
 ###road 2022##########
 sub_pheno_r22 <- subset(df_pheno, 
-                        Site %in% c("Road") & Year == "2022") #subset data for site and year
+                        Site %in% c("Low elevation (2815 m)") & Year == "2022") #subset data for site and year
 
 manualcolors<-c('cornflowerblue', 'black','wheat4','tomato3','seagreen1',
                 '#7CE3D8','lightsalmon',
                 'cadetblue1','seagreen','mediumorchid4','orange','yellow') #manually set colors for families 
 
-ggplot(data = sub_pheno_r22, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),y=Number_flowering, fill=Family)) + 
-  geom_bar(stat="identity") +
-  theme(legend.position = "right") + scale_fill_manual(values=manualcolors) + 
-  ylab("Number of flowering units") + xlab("Flowering module") + theme_light() + ggtitle("Road 2022") + ylim(0,1050)
+low2022_fig <- ggplot(data = sub_pheno_r22, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),y=Number_flowering, fill=Family)) + 
+  geom_bar(stat="identity", show.legend = F) +
+  theme(legend.position = "right") + 
+  scale_fill_manual(values=manualcolors) + 
+  ylab("Number of flowering units") + 
+  xlab("Flowering module") + 
+  theme_light(base_size = 20) + 
+  ylim(0,1050)
+plot(low2022_fig)
 
 ###pfeiler 2022#######
 sub_pheno_pf22 <- subset(df_pheno, 
-                         Site %in% c("Pfeiler") & Year == "2022") #subset data for site and year
+                         Site %in% c("Middle elevation (3165 m)") & Year == "2022") #subset data for site and year
 
 manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','seagreen1','purple','darkolivegreen1','Indianred1','pink3',
                 'yellowgreen','mediumorchid4','orange','yellow','grey') #manually set colors for families 
 
-ggplot(data = sub_pheno_pf22, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
-  geom_bar(stat="identity") +
-  theme(legend.position = "right") + scale_fill_manual(values=manualcolors) + 
-  ylab("Number of flowering units") + xlab("Flowering module") + theme_light() + ggtitle("Pfeiler 2022")+ylim(0,1050)
+middle2022_fig <- ggplot(data = sub_pheno_pf22, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+  geom_bar(stat="identity", show.legend = F) +
+  theme(legend.position = "right") + 
+  scale_fill_manual(values=manualcolors) + 
+  ylab("Number of flowering units") + 
+  xlab("Flowering module") + 
+  theme_light(base_size = 20) +
+  ylim(0,1050)
+plot(middle2022_fig)
 
 ###PBM 2022#######
 sub_pheno_pbm22 <- subset(df_pheno, 
-                          Site %in% c("PBM") & Year == "2022") #subset data for site and year
+                          Site %in% c("High elevation (3380 m)") & Year == "2022") #subset data for site and year
 
 manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen','mediumorchid4','orange','yellow','grey') #manually set colors for families 
 
-ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
-  geom_bar(stat="identity") +
-  theme(legend.position = "right") + scale_fill_manual(values=manualcolors) + 
-  ylab("Number of flowering units") + xlab("Flowering module") + theme_light() + ggtitle("PBM 2022") + ylim(0,1050)
+high2022_fig <- ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+  geom_bar(stat="identity", show.legend = F) +
+  theme(legend.position = "right") + 
+  scale_fill_manual(values=manualcolors) + 
+  ylab("Number of flowering units") + 
+  xlab("Flowering module") + 
+  theme_light(base_size = 20) + 
+  ylim(0,1050)
+plot(high2022_fig)
+
+###combine each individual plot into one to avoid middle2 blank columns####
+fig1_2021 <- Low2021_fig + Middle2021_fig + high2021_fig + plot_layout(axes = "collect", axis_titles = "collect")
+plot(fig1_2021)
+
+fig1_2022 <- low2022_fig + middle2022_fig + high2022_fig + plot_layout(axes = "collect", axis_titles = "collect")
+plot(fig1_2022)
+
+fig1 <- fig1_2021 / fig1_2022 + plot_layout(axis_titles = "collect", axes = "collect")
+plot(fig1)
 
 ###do all sites and years together#####
 manualcolors_test<-c('mediumvioletred','cornflowerblue', 'black','wheat4','#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen','mediumorchid4','darksalmon','yellow','grey','moccasin','yellow1','purple','brown','turquoise','turquoise4','brown1','deeppink','darkgoldenrod1','darkolivegreen3') #manually set colors for families
