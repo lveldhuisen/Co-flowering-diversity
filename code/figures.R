@@ -6,6 +6,7 @@ install.packages("viridis")
 install.packages("pals")
 install.packages("Polychrome")
 install.packages("patchwork")
+install.packages("forcats")
 
 library(ggplot2)
 library(dplyr)
@@ -14,6 +15,7 @@ library(viridis)
 library(pals)
 library(Polychrome)
 library(patchwork)
+library(forcats)
 
 #data frames for figures 
 df_site <- read.csv("files_Figures/results_bysite.csv")
@@ -162,7 +164,8 @@ ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Mi
   ylim(0,1050)+
   facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
-#Figure 2: phenology and fitness correlations-------------------------------------------
+#Figure: phenology and fitness correlations-------------------------------------------
+#not used in revisions for May 2024---------------
 #we generated a figure for each site and year, and combined them to make Fig 2 in Adobe Illustrator 
 
 #bring in data, this file is in the "files_Figures" folder
@@ -242,7 +245,7 @@ df_all %>%
 
 #Figure 3: networks, generated all network figures individually in Gephi, and combined them using Adobe Illustrator------------------------------
 
-#Figure 4: phylogenetic diversity by week (new for revision)------------------------
+#Figure 4: phylogenetic diversity by week (new for revision May 2024)------------------------
 ##make figure with both years combined#####
 fig_pd_weeks <- ggplot(all_weeks_pd, aes(fill = Type, y=SES, x=fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) + 
   geom_bar(position = "dodge",stat = "identity") +
@@ -259,97 +262,115 @@ fig_pd_weeks <- ggplot(all_weeks_pd, aes(fill = Type, y=SES, x=fct_relevel(Week,
 plot(fig_pd_weeks)
 
 #Figure 5: phylogenetic SES values by modules--------------------------------------
-#like other figures, I generated figures for each site and year and combined them to make the final figure 4 in Adobe Illustrator 
+#like other figures, we generated figures for each site and year and combined them to make the final figure 4 in Adobe Illustrator 
 
 #find this file in "files_Figures" folder 
-df_mod_figs <- read.csv("results_modules_combined.csv")
+df_mod_figs <- read.csv("files_Figures/results_modules_combined.csv")
 
 ##road 2021#######
 sub_mod_r21 <- subset(df_mod_figs, 
                         Site %in% c("Road") & Year == "2021") #subset data by site and year 
 
-road21_SES <- ggplot(sub_mod_r21, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
-         geom_bar(position = "dodge",stat = "identity") +
+road21_mod_fig <- ggplot(sub_mod_r21, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
+         geom_bar(position = "dodge",stat = "identity", show.legend = F) +
   xlab("Module") + 
   theme_light() + 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("Road 2021") + ylim(-5,2) #plot figure 
+                             "#4ea6c4")) +
+  ylim(-5,2) #plot figure 
+plot(road21_mod_fig)
 
-print(road21_SES)
 ##pfeiler 2021#######
 sub_mod_pf21 <- subset(df_mod_figs, 
                       Site %in% c("Pfeiler") & Year == "2021") #subset data by site and year 
 
 pfeiler21_SES <- ggplot(sub_mod_pf21, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
-  geom_bar(position = "dodge",stat = "identity") +
+  geom_bar(position = "dodge",stat = "identity", show.legend = F) +
   xlab("Module") + 
   theme_light() + 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("Pfeiler 2021")+ ylim(-5,2) #plot figure
+                             "#4ea6c4")) +
+  ylim(-5,2) #plot figure
+
+plot(pfeiler21_SES)
+
 ##PBM 2021#######
 sub_mod_pbm21 <- subset(df_mod_figs, 
                        Site %in% c("PBM") & Year == "2021") #subset data by site and year 
 
 PBM2021_SES <- ggplot(sub_mod_pbm21, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
-  geom_bar(position = "dodge",stat = "identity") +
+  geom_bar(position = "dodge",stat = "identity", show.legend = F) +
   xlab("Module") + 
   theme_light() + 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("PBM 2021")+ ylim(-5,2) #plot figure
+                             "#4ea6c4")) +
+  ylim(-5,2.2) #plot figure
 
-print(PBM2021_SES)
+plot(PBM2021_SES)
 
-p<-ggplot(data=sub_mod_pbm21, aes(x=Module, y=SES, fill=Type)) +
-  geom_bar(stat="identity", position = "dodge")+
-  theme_light()+
-  scale_fill_manual(values=c("#c385b3",
-                             "#cdd870",
-                             "#4ea6c4")) + ggtitle("PBM 2021")+ ylim(-5,2) #plot figure
-  
-p
 ##road 2022#######
 sub_mod_r22 <- subset(df_mod_figs, 
                       Site %in% c("Road") & Year == "2022") #subset data by site and year 
 
 road2022_SES <- ggplot(sub_mod_r22, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle",
                                                                   "middle2", "end")))) + 
-  geom_bar(position = "dodge",stat = "identity") +
+  geom_bar(position = "dodge",stat = "identity", show.legend = F) +
   xlab("Module") + 
   theme_light() + 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("Road 2022")+ ylim(-5,2) #plot figure
+                             "#4ea6c4")) +
+  ylim(-5,2) #plot figure
+plot(road2022_SES)
+
 ##pfeiler 2022#######
 sub_mod_pf22 <- subset(df_mod_figs, 
                        Site %in% c("Pfeiler") & Year == "2022") #subset data by site and year 
 
 pfeiler2022 <- ggplot(sub_mod_pf22, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
-  geom_bar(position = "dodge",stat = "identity") +
+  geom_bar(position = "dodge",stat = "identity", show.legend = F) +
   xlab("Module") + 
   theme_light() + 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("Pfeiler 2022")+ ylim(-5,2) #plot figure
+                             "#4ea6c4")) +
+  ylim(-5,2) #plot figure
+
+plot(pfeiler2022)
+
 ##PBM 2022#######
 sub_mod_pbm22 <- subset(df_mod_figs, 
                         Site %in% c("PBM") & Year == "2022") #subset data by site and year 
 
 PBM2022_SES <- ggplot(sub_mod_pbm22, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
-  geom_bar(position = "dodge",stat = "identity") +
+  geom_bar(position = "dodge",stat = "identity", show.legend = F) +
   xlab("Module") + 
   theme_light() + 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
   scale_fill_manual(values=c("#c385b3",
                              "#cdd870",
-                             "#4ea6c4")) + ggtitle("PBM 2022")+ ylim(-5,2) #plot figure
+                             "#4ea6c4")) +
+  ylim(-5,2) #plot figure
+
+plot(PBM2022_SES)
+
+##combine individual figures with patchwork######
+mod_2021 <- road21_mod_fig + pfeiler21_SES + PBM2021_SES + plot_layout(axes = "collect", axis_titles = "collect")
+plot(mod_2021)
+
+mod_2022 <- road2022_SES + pfeiler2022 + PBM2022_SES + plot_layout(axes = "collect", axis_titles = "collect")
+plot(mod_2022)
+
+pd_mod_all <- mod_2021 / mod_2022 +  plot_layout(axes = "collect", axis_titles = "collect")
+plot(pd_mod_all)
 
 ##all sites and years together in one faceted figured#####
 #the code to generate the datasets is in the file titled "S&B_phylogenetics_bymodule.R"
