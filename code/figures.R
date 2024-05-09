@@ -66,7 +66,7 @@ Middle2021_fig <- ggplot(data = sub_pheno_pf21, aes(x=factor(Module, levels = c(
   scale_fill_manual(values=manualcolors) + 
   ylab("Number of flowering units") + 
   xlab("Flowering module") + 
-  theme_light(base_size = 20) + 
+  theme_light(base_size = 24) + 
   ylim(0,1050)
 plot(Middle2021_fig)
 
@@ -84,7 +84,7 @@ high2021_fig <- ggplot(data = sub_pheno_pbm21, aes(x=factor(Module, levels = c('
   scale_fill_manual(values=manualcolors) + 
   ylab("Number of flowering units") + 
   xlab("Flowering module") + 
-  theme_light(base_size = 20) + 
+  theme_light(base_size = 24) + 
   ylim(0,1050)
 plot(high2021_fig)
 
@@ -102,7 +102,7 @@ low2022_fig <- ggplot(data = sub_pheno_r22, aes(x=factor(Module, levels = c('Beg
   scale_fill_manual(values=manualcolors) + 
   ylab("Number of flowering units") + 
   xlab("Flowering module") + 
-  theme_light(base_size = 20) + 
+  theme_light(base_size = 24) + 
   ylim(0,1050)
 plot(low2022_fig)
 
@@ -119,7 +119,7 @@ middle2022_fig <- ggplot(data = sub_pheno_pf22, aes(x=factor(Module, levels = c(
   scale_fill_manual(values=manualcolors) + 
   ylab("Number of flowering units") + 
   xlab("Flowering module") + 
-  theme_light(base_size = 20) +
+  theme_light(base_size = 24) +
   ylim(0,1050)
 plot(middle2022_fig)
 
@@ -135,7 +135,7 @@ high2022_fig <- ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('
   scale_fill_manual(values=manualcolors) + 
   ylab("Number of flowering units") + 
   xlab("Flowering module") + 
-  theme_light(base_size = 20) + 
+  theme_light(base_size = 24) + 
   ylim(0,1050)
 plot(high2022_fig)
 
@@ -158,7 +158,7 @@ ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Mi
   scale_fill_manual(values=manualcolors_test) + 
   ylab("Number of flowering units") + 
   xlab("Flowering module") + 
-  theme_light(base_size = 20) + 
+  theme_light(base_size = 24) + 
   ylim(0,1050)+
   facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
