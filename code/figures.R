@@ -47,7 +47,8 @@ manualcolors<-c('cornflowerblue','grey','tomato3','seagreen1',
                 '#7CE3D8','plum3','lightsalmon',
                 'darkgray','cadetblue1','#DDAD4B','seagreen','mediumorchid4','orange') #manually set colors for families 
 
-Low2021_fig <- ggplot(data = sub_pheno_r21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+Low2021_fig <- ggplot(data = sub_pheno_r21, 
+                      aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity", show.legend = FALSE) +
   theme(legend.position = "none") + 
   scale_fill_manual(values=manualcolors) + 
@@ -59,30 +60,39 @@ plot(Low2021_fig)
 
 ###pfeiler 2021#######
 sub_pheno_pf21 <- subset(df_pheno, 
-                        Site %in% c("Middle elevation (3165 m)") & Year == "2021") #subset data for site and year
+                        Site %in% c("Middle elevation (3165 m)") & Year == "2021") 
+#subset data for site and year
 
 manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','seagreen1',
                 'darkolivegreen1','pink3',
-                'yellowgreen','cadetblue1','mediumorchid4','orange','yellow') #manually set colors for families 
+                'yellowgreen','cadetblue1','mediumorchid4','orange','yellow') 
+#manually set colors for families 
 
-Middle2021_fig <- ggplot(data = sub_pheno_pf21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+Middle2021_fig <- ggplot(data = sub_pheno_pf21, 
+                         aes(x=factor(Module, levels = c('Beginning','Middle','End')),
+                             y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity", show.legend = F) + 
   scale_fill_manual(values=manualcolors) + 
   ylab("Number of flowering units") + 
   xlab("Flowering module") + 
   theme_light(base_size = 24) + 
   ylim(0,1050)
+
 plot(Middle2021_fig)
 
 ###PBM 2021#######
 sub_pheno_pbm21 <- subset(df_pheno, 
-                         Site %in% c("High elevation (3380 m)") & Year == "2021") #subset data for site and year
+                         Site %in% c("High elevation (3380 m)") & Year == "2021") 
+#subset data for site and year
 
 manualcolors<-c('cornflowerblue', 'black','wheat4',
                 'moccasin','#7CE3D8','Indianred1','plum3','pink3',
-                'darkblue','#DDAD4B','mediumorchid4','orange','yellow','purple') #manually set colors for families 
+                'darkblue','#DDAD4B','mediumorchid4','orange','yellow','purple')
+#manually set colors for families 
 
-high2021_fig <- ggplot(data = sub_pheno_pbm21, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+high2021_fig <- ggplot(data = sub_pheno_pbm21, 
+                       aes(x=factor(Module, levels = c('Beginning','Middle','End')),
+                           y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity", show.legend = F) +
   theme(legend.position = "right") + 
   scale_fill_manual(values=manualcolors) + 
@@ -90,17 +100,22 @@ high2021_fig <- ggplot(data = sub_pheno_pbm21, aes(x=factor(Module, levels = c('
   xlab("Flowering module") + 
   theme_light(base_size = 24) + 
   ylim(0,1050)
+
 plot(high2021_fig)
 
 ###road 2022##########
 sub_pheno_r22 <- subset(df_pheno, 
-                        Site %in% c("Low elevation (2815 m)") & Year == "2022") #subset data for site and year
+                        Site %in% c("Low elevation (2815 m)") & Year == "2022") 
+#subset data for site and year
 
 manualcolors<-c('cornflowerblue', 'black','wheat4','tomato3','seagreen1',
                 '#7CE3D8','lightsalmon',
-                'cadetblue1','seagreen','mediumorchid4','orange','yellow') #manually set colors for families 
+                'cadetblue1','seagreen','mediumorchid4','orange','yellow') 
+#manually set colors for families 
 
-low2022_fig <- ggplot(data = sub_pheno_r22, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),y=Number_flowering, fill=Family)) + 
+low2022_fig <- ggplot(data = sub_pheno_r22, 
+                      aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),
+                          y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity", show.legend = F) +
   theme(legend.position = "right") + 
   scale_fill_manual(values=manualcolors) + 
@@ -108,16 +123,22 @@ low2022_fig <- ggplot(data = sub_pheno_r22, aes(x=factor(Module, levels = c('Beg
   xlab("Flowering module") + 
   theme_light(base_size = 24) + 
   ylim(0,1050)
+
 plot(low2022_fig)
 
 ###pfeiler 2022#######
 sub_pheno_pf22 <- subset(df_pheno, 
-                         Site %in% c("Middle elevation (3165 m)") & Year == "2022") #subset data for site and year
+                         Site %in% c("Middle elevation (3165 m)") & Year == "2022") 
+#subset data for site and year
 
-manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','seagreen1','purple','darkolivegreen1','Indianred1','pink3',
-                'yellowgreen','mediumorchid4','orange','yellow','grey') #manually set colors for families 
+manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','seagreen1',
+                'purple','darkolivegreen1','Indianred1','pink3',
+                'yellowgreen','mediumorchid4','orange','yellow','grey') 
+#manually set colors for families 
 
-middle2022_fig <- ggplot(data = sub_pheno_pf22, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+middle2022_fig <- ggplot(data = sub_pheno_pf22, 
+                         aes(x=factor(Module, levels = c('Beginning','Middle','End')),
+                             y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity", show.legend = F) +
   theme(legend.position = "right") + 
   scale_fill_manual(values=manualcolors) + 
@@ -125,15 +146,21 @@ middle2022_fig <- ggplot(data = sub_pheno_pf22, aes(x=factor(Module, levels = c(
   xlab("Flowering module") + 
   theme_light(base_size = 24) +
   ylim(0,1050)
+
 plot(middle2022_fig)
 
 ###PBM 2022#######
 sub_pheno_pbm22 <- subset(df_pheno, 
-                          Site %in% c("High elevation (3380 m)") & Year == "2022") #subset data for site and year
+                          Site %in% c("High elevation (3380 m)") & Year == "2022") 
+#subset data for site and year
 
-manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4','#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen','mediumorchid4','orange','yellow','grey') #manually set colors for families 
+manualcolors<-c('mediumvioletred','cornflowerblue', 'black','wheat4',
+                '#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen',
+                'mediumorchid4','orange','yellow','grey') #manually set colors for families 
 
-high2022_fig <- ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('Beginning','Middle','End')),y=Number_flowering, fill=Family)) + 
+high2022_fig <- ggplot(data = sub_pheno_pbm22, 
+                       aes(x=factor(Module, levels = c('Beginning','Middle','End')),
+                           y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity", show.legend = F) +
   theme(legend.position = "right") + 
   scale_fill_manual(values=manualcolors) + 
@@ -141,24 +168,33 @@ high2022_fig <- ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('
   xlab("Flowering module") + 
   theme_light(base_size = 24) + 
   ylim(0,1050)
+
 plot(high2022_fig)
 
 ###combine each individual plot into one to avoid middle2 blank columns####
 ###this is the figure used in manuscript revision May 2024#########
-fig1_2021 <- Low2021_fig + Middle2021_fig + high2021_fig + plot_layout(axes = "collect", axis_titles = "collect")
+fig1_2021 <- Low2021_fig + Middle2021_fig + high2021_fig + 
+  plot_layout(axes = "collect", axis_titles = "collect")
 plot(fig1_2021)
 
-fig1_2022 <- low2022_fig + middle2022_fig + high2022_fig + plot_layout(axes = "collect", axis_titles = "collect")
+fig1_2022 <- low2022_fig + middle2022_fig + high2022_fig + 
+  plot_layout(axes = "collect", axis_titles = "collect")
 plot(fig1_2022)
 
-fig1 <- fig1_2021 / fig1_2022 + plot_layout(axis_titles = "collect", axes = "collect")
+fig1 <- fig1_2021 / fig1_2022 + 
+  plot_layout(axis_titles = "collect", axes = "collect")
 plot(fig1)
 
 ###all sites and years together#####
 ###this fig is the same as above, but has blanks spots for middle2 module####
-manualcolors_test<-c('mediumvioletred','cornflowerblue', 'black','wheat4','#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen','mediumorchid4','darksalmon','yellow','grey','moccasin','yellow1','purple','brown','turquoise','turquoise4','brown1','deeppink','darkgoldenrod1','darkolivegreen3') #manually set colors for families
+manualcolors_test<-c('mediumvioletred','cornflowerblue', 'black','wheat4',
+                     '#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen',
+                     'mediumorchid4','darksalmon','yellow','grey','moccasin',
+                     'yellow1','purple','brown','turquoise','turquoise4','brown1',
+                     'deeppink','darkgoldenrod1','darkolivegreen3') #manually set colors for families
 
-ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),y=Number_flowering, fill=Family)) + 
+ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),
+                            y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity") +
   theme(legend.position = "right") + 
   scale_fill_manual(values=manualcolors_test) + 
@@ -183,9 +219,16 @@ R21_reg <- lm(SI_fitness ~ SI, data = subDataR21) #linear regression
 summary(R21_reg)  
 plot(R21_reg$residuals) #check residuals 
 
-ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + geom_point(shape=20, size=5) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2021") #plot regression 
+ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + 
+  geom_point(shape=20, size=5) +
+  theme_light()+ geom_smooth(method = "lm") + 
+  ggtitle("road 2021") #plot regression 
 
-ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2021") 
+ggplot(subDataR21, aes(x=SI, y=SI_fitness)) + 
+  geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + 
+  theme_light()+ 
+  geom_smooth(method = "lm") + 
+  ggtitle("road 2021") 
 
 ###pfeiler 2021#######
 subDataPf21 <- subset(df_all, 
@@ -195,7 +238,10 @@ Pf21_reg <- lm(SI_fitness ~ SI, data = subDataPf21) #linear regression
 summary(Pf21_reg)
 plot(Pf21_reg$residuals)
 
-ggplot(subDataPf21, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20,size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2021") #plot regression 
+ggplot(subDataPf21, aes(x=SI, y=SI_fitness)) + 
+  geom_jitter(shape=20,size=5, width = 0.015, height = 0.015) + 
+  theme_light()+ geom_smooth(method = "lm") + 
+  ggtitle("pfeiler 2021") #plot regression 
 
 ###PBM 2021#######
 subDataPBM21 <- subset(df_all, 
@@ -205,7 +251,11 @@ PBM21_reg <- lm(SI_fitness ~ SI, data = subDataPBM21) #linear regression
 summary(PBM21_reg)
 plot(PBM21_reg$residuals)
 
-ggplot(subDataPBM21, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2021") #plot regression 
+ggplot(subDataPBM21, aes(x=SI, y=SI_fitness)) + 
+  geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + 
+  theme_light()+ 
+  geom_smooth(method = "lm") + 
+  ggtitle("pbm 2021") #plot regression 
 
 ###road 2022#######
 subDataR22 <- subset(df_all, 
@@ -215,7 +265,11 @@ R22_reg <- lm(SI_fitness ~ SI, data = subDataR22) #linear regression
 summary(R22_reg)
 plot(R22_reg$residuals)
 
-ggplot(subDataR22, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("road 2022") #plot regression 
+ggplot(subDataR22, aes(x=SI, y=SI_fitness)) + 
+  geom_jitter(shape=20, size=5, width = 0.015, height = 0.015) + 
+  theme_light()+ 
+  geom_smooth(method = "lm") + 
+  ggtitle("road 2022") #plot regression 
 
 ###pfeiler 2022#######
 subDataPf22 <- subset(df_all, 
@@ -225,7 +279,11 @@ Pf22_reg <- lm(SI_fitness ~ SI, data = subDataPf22) #linear regression
 summary(Pf22_reg)
 plot(Pf22_reg$residuals)
 
-ggplot(subDataPf22, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20,size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pfeiler 2022") #plot regression 
+ggplot(subDataPf22, aes(x=SI, y=SI_fitness)) + 
+  geom_jitter(shape=20,size=5, width = 0.015, height = 0.015) + 
+  theme_light()+ 
+  geom_smooth(method = "lm") + 
+  ggtitle("pfeiler 2022") #plot regression 
 
 ###PBM 2022#######
 subDataPBM22 <- subset(df_all, 
@@ -235,7 +293,11 @@ PBM22_reg <- lm(SI_fitness ~ SI, data = subDataPBM22) #linear regression
 summary(PBM22_reg)
 plot(PBM22_reg$residuals)
 
-ggplot(subDataPBM22, aes(x=SI, y=SI_fitness)) + geom_jitter(shape=20,size=5, width = 0.015, height = 0.015) + theme_light()+ geom_smooth(method = "lm") + ggtitle("pbm 2022") #plot regression 
+ggplot(subDataPBM22, aes(x=SI, y=SI_fitness)) + 
+  geom_jitter(shape=20,size=5, width = 0.015, height = 0.015) + 
+  theme_light()+ 
+  geom_smooth(method = "lm") + 
+  ggtitle("pbm 2022") #plot regression 
 
 ###test big faceted graph with regression lines########## 
 df_all %>%
@@ -279,12 +341,20 @@ new_fig<- ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing =
 
 plot(new_fig)
 
-
-#Figure 3: networks, generated all network figures individually in Gephi, and combined them using Adobe Illustrator------------------------------
+#Figure 3: networks, generated all network figures individually in Gephi, 
+#and combined them using Adobe Illustrator------------------------------
 
 #Figure 4: phylogenetic diversity by week (new for revision May 2024)------------------------
 ##make figure with both years combined#####
-fig_pd_weeks <- ggplot(all_weeks_pd, aes(fill = Type, y=SES, x=fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) + 
+
+#bring in data 
+all_weeks_pd <- read.csv("files_Figures/results_byweek.csv")
+all_weeks_pd$Week <- as.factor(all_weeks_pd$Week)
+
+#make figure
+fig_pd_weeks <- ggplot(all_weeks_pd, 
+                       aes(fill = Type, y=SES, 
+                           x=fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) + 
   geom_bar(position = "dodge",stat = "identity") +
   xlab("Week") + 
   ylab("Standard effect size")+
