@@ -400,14 +400,8 @@ df_all %>% filter(Site == "PBM") %>% summarise(n = n_distinct(species1))
 median(df_all$SI)
 hist(df_all$SI)
 
-portion0.1<- nrow(df_all[df_all$SI < '0.1', ])/length(df_all$SI)
-portionzero <- nrow(df_all[df_all$SI == '0', ])/length(df_all$SI)
-portionhigh <- nrow(df_all[df_all$SI > '0.7', ])/length(df_all$SI)
-
 quantile(df_all$SI)
 
-nrow(df_all[df_all$SI_fitness < '0.1', ])/length(df_all$SI_fitness)
-nrow(df_all[df_all$SI_fitness > '0.70', ])
 length(df_all$SI)
 
 sum(df_pheno[which(df_pheno$Site=='PBM'), 4])
