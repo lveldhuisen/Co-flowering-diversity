@@ -34,7 +34,7 @@ df_pheno["Family"][df_pheno["Family"] == "Fabaceae\n"] <- "Fabaceae"
 
 
 ##make individual histograms by site -------------------------------------
-#I combined each individual histogram to make Figure 1 in Adobe Illustrator
+#combined each individual histogram to make Figure 1 in Adobe Illustrator
 
 ###road 2021#######
 
@@ -142,6 +142,7 @@ high2022_fig <- ggplot(data = sub_pheno_pbm22, aes(x=factor(Module, levels = c('
 plot(high2022_fig)
 
 ###combine each individual plot into one to avoid middle2 blank columns####
+###this is the figure used in manuscript revision May 2024#########
 fig1_2021 <- Low2021_fig + Middle2021_fig + high2021_fig + plot_layout(axes = "collect", axis_titles = "collect")
 plot(fig1_2021)
 
@@ -151,7 +152,8 @@ plot(fig1_2022)
 fig1 <- fig1_2021 / fig1_2022 + plot_layout(axis_titles = "collect", axes = "collect")
 plot(fig1)
 
-###do all sites and years together#####
+###all sites and years together#####
+###this fig is the same as above, but has blanks spots for middle2 module####
 manualcolors_test<-c('mediumvioletred','cornflowerblue', 'black','wheat4','#7CE3D8','darkolivegreen1','darkblue','#DDAD4B','seagreen','mediumorchid4','darksalmon','yellow','grey','moccasin','yellow1','purple','brown','turquoise','turquoise4','brown1','deeppink','darkgoldenrod1','darkolivegreen3') #manually set colors for families
 
 ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),y=Number_flowering, fill=Family)) + 
@@ -169,7 +171,7 @@ ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Mi
 #we generated a figure for each site and year, and combined them to make Fig 2 in Adobe Illustrator 
 
 #bring in data, this file is in the "files_Figures" folder
-df_all <- read_csv("results_ALL.csv")
+df_all <- read.csv("files_Figures/results_ALL.csv")
 
 ###road 2021#######
 subDataR21 <- subset(df_all, 
@@ -402,8 +404,10 @@ portion0.1<- nrow(df_all[df_all$SI < '0.1', ])/length(df_all$SI)
 portionzero <- nrow(df_all[df_all$SI == '0', ])/length(df_all$SI)
 portionhigh <- nrow(df_all[df_all$SI > '0.7', ])/length(df_all$SI)
 
+quantile(df_all$SI)
+
 nrow(df_all[df_all$SI_fitness < '0.1', ])/length(df_all$SI_fitness)
 nrow(df_all[df_all$SI_fitness > '0.70', ])
-length(df_all$SI_fitness)
+length(df_all$SI)
 
 sum(df_pheno[which(df_pheno$Site=='PBM'), 4])
