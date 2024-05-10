@@ -16,6 +16,8 @@ library(pals)
 library(Polychrome)
 library(patchwork)
 library(forcats)
+library(ggridges)
+library(hrbrthemes)
 
 #data frames for figures 
 df_site <- read.csv("files_Figures/results_bysite.csv")
@@ -168,7 +170,7 @@ ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Mi
 
 #Figure: phenology and fitness correlations-------------------------------------------
 #not used in revisions for May 2024---------------
-#we generated a figure for each site and year, and combined them to make Fig 2 in Adobe Illustrator 
+#we generated a figure for each site and year, and combined them to make fig in Adobe Illustrator 
 
 #bring in data, this file is in the "files_Figures" folder
 df_all <- read.csv("files_Figures/results_ALL.csv")
@@ -244,6 +246,39 @@ df_all %>%
   facet_grid(Year ~ Site) +
   theme_light() +
   stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label") #same data but different layout from final Fig 2
+
+#new Figure 2 for May 2024 revisions: distributions of all species flowering color coded by module-----------
+#bring in data
+data_days <- read.csv("files_Figures/combined_raw_phenology_days_updates.csv")
+
+#create object to rename sites with elevations
+site_names <- c(
+  `Road` = "Low (2815 m)",
+  `Pfeiler` = "Middle (3165 m)",
+  `PBM` = "High (3380 m)"
+)
+
+#reorder site names
+data_days$Site <- factor(data_days$Site, levels = c("Road","Pfeiler","PBM"))
+data_days$Year <- as.factor(data_days$Year)
+
+#reorder modules
+data_days$Module <- factor(data_days$Module, levels = c("Beginning", "Middle", "Middle2", "End"))
+
+#plot
+new_fig<- ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing = T),
+                                Group = Species,linetype = Year, color = factor(Module))) +
+  geom_density_ridges(scale = 1, show.legend = TRUE, alpha = 0.2, rel_min_height = 0.005) +
+  scale_y_discrete(expand = c(0, 0), name = "Species") +
+  facet_wrap(~Site, labeller = as_labeller(site_names)) +
+  theme_bw() +
+  theme(axis.text.y = element_text(face = "italic"))+
+  scale_fill_manual( values = c("grey"))+
+  scale_colour_manual(values = c("magenta4", "orange", "turquoise2","forestgreen"), name ="Module")+
+  scale_x_continuous(limits = c(0,75),breaks = c(0,35,70),labels = c("1", "5", "10"), name = 'Week')
+
+plot(new_fig)
+
 
 #Figure 3: networks, generated all network figures individually in Gephi, and combined them using Adobe Illustrator------------------------------
 
