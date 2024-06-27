@@ -366,7 +366,22 @@ fig_pd_weeks <- ggplot(all_weeks_pd,
   ylim(-5.9,2) +
   facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
+
 plot(fig_pd_weeks)
+
+ggplot(all_weeks_pd, 
+       aes(fill = Type, y=SES, 
+           x=fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) + 
+  geom_line() +
+  xlab("Week") + 
+  ylab("Standard effect size")+
+  theme_light(base_size = 20) + 
+  guides(fill=guide_legend(title="Phylogenetic metric"))+
+  scale_fill_manual(values=c("#c385b3",
+                             "#cdd870",
+                             "#4ea6c4"))+
+  ylim(-5.9,2) +
+  facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
 #Figure 5: phylogenetic SES values by modules--------------------------------------
 #like other figures, we generated figures for each site and year and combined them to make the final figure 4 in Adobe Illustrator 
