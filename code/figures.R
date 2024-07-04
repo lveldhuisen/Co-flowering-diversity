@@ -550,3 +550,5 @@ ggplot(SI_df, aes(x=SI)) +
   theme_bw(base_size = 18)+
   xlab("Schoener's index") +
   ylab("Number of species pairs")
+
+SI_df %>% count(Site, Year)
