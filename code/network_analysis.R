@@ -69,6 +69,9 @@ R21mod <- modularity(communitiesRoad) #make object with modularity score
 
 class(road21_igraph)
 
+###betweenness centrality####
+betweenness(road21_igraph, v = V(road21_igraph), directed = F)
+
 ##Pfeiler 2021##############################
 
 p21data <- read.csv("cleanpfeiler21.csv", header = TRUE)
