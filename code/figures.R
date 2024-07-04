@@ -19,6 +19,8 @@ library(forcats)
 library(ggridges)
 library(hrbrthemes)
 
+
+#Main text figures----------------
 #data frames for figures 
 df_site <- read.csv("files_Figures/results_bysite.csv")
 df_mod <- read.csv("files_Figures/results_bymodule.csv")
@@ -35,7 +37,7 @@ df_pheno["Site"][df_pheno["Site"] == "PBM"] <- "High elevation (3380 m)"
 df_pheno["Family"][df_pheno["Family"] == "Fabaceae\n"] <- "Fabaceae"
 
 
-##make individual histograms by site -------------------------------------
+##make individual histograms by site######
 #combined each individual histogram to make Figure 1 in Adobe Illustrator
 
 ###road 2021#######
@@ -204,8 +206,7 @@ ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Mi
   ylim(0,1050)+
   facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
-#Figure: phenology and fitness correlations-------------------------------------------
-#not used in revisions for May 2024---------------
+#Figure: phenology and fitness correlations (not used in revision)--------------
 #we generated a figure for each site and year, and combined them to make fig in Adobe Illustrator 
 
 #bring in data, this file is in the "files_Figures" folder
@@ -538,3 +539,14 @@ quantile(df_all$SI)
 length(df_all$SI)
 
 sum(df_pheno[which(df_pheno$Site=='PBM'), 4])
+
+#Supplemental figures-------------
+setwd("/Users/leahvedlhuisen/Library/CloudStorage/OneDrive-UniversityofArizona/Arizona PhD/Research/Chapter 1/AllData_AmNat/files_SchoenersIndex")
+
+SI_df <- read.csv("Schoeners_all.csv")
+
+ggplot(SI_df, aes(x=SI)) + 
+  geom_histogram(binwidth=0.1)+
+  theme_bw(base_size = 18)+
+  xlab("Schoener's index") +
+  ylab("Number of species pairs")
