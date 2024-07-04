@@ -23,7 +23,7 @@ library(hrbrthemes)
 df_site <- read.csv("files_Figures/results_bysite.csv")
 df_mod <- read.csv("files_Figures/results_bymodule.csv")
 
-#Figure 1: histogram of families by module----------------------------
+#Figure: histogram of families by module----------------------------
 
 #this data file is in the "files_Figures" folder 
 df_pheno <- read.csv("files_Figures/combined_raw_phenology.csv")
@@ -299,7 +299,7 @@ ggplot(subDataPBM22, aes(x=SI, y=SI_fitness)) +
   geom_smooth(method = "lm") + 
   ggtitle("pbm 2022") #plot regression 
 
-###test big faceted graph with regression lines########## 
+###test big faceted graph with regression lines
 df_all %>%
   mutate(Site = factor(Site, labels = c("PBM", "Pfeiler", "Road"))) %>%
   ggplot(aes(x = SI, y = SI_fitness)) +
@@ -309,7 +309,7 @@ df_all %>%
   theme_light() +
   stat_cor(aes(label = after_stat(rr.label)), color = "red", geom = "label") #same data but different layout from final Fig 2
 
-#new Figure 2 for May 2024 revisions: distributions of all species flowering color coded by module-----------
+#new Figure for May 2024 revisions: distributions of all species flowering color coded by module-----------
 #bring in data
 data_days <- read.csv("files_Figures/combined_raw_phenology_days_updates.csv")
 
@@ -324,8 +324,14 @@ site_names <- c(
 data_days$Site <- factor(data_days$Site, levels = c("Road","Pfeiler","PBM"))
 data_days$Year <- as.factor(data_days$Year)
 
+#rename modules
+data_days$Module <- gsub("Beginning","Early", data_days$Module)
+data_days$Module <- gsub("Middle","Mid", data_days$Module)
+data_days$Module <- gsub("Middle2","Mid2", data_days$Module)
+data_days$Module <- gsub("End","Late", data_days$Module)
+
 #reorder modules
-data_days$Module <- factor(data_days$Module, levels = c("Beginning", "Middle", "Middle2", "End"))
+data_days$Module <- factor(data_days$Module, levels = c("Early", "Mid", "Mid2", "Late"))
 
 #plot
 new_fig<- ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing = T),
@@ -333,7 +339,7 @@ new_fig<- ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing =
   geom_density_ridges(scale = 1, show.legend = TRUE, alpha = 0.2, rel_min_height = 0.005) +
   scale_y_discrete(expand = c(0, 0), name = "Species") +
   facet_wrap(~Site, labeller = as_labeller(site_names)) +
-  theme_bw() +
+  theme_bw(base_size = 18) +
   theme(axis.text.y = element_text(face = "italic"))+
   scale_fill_manual( values = c("grey"))+
   scale_colour_manual(values = c("magenta4", "orange", "turquoise2","forestgreen"), name ="Module")+
@@ -341,10 +347,10 @@ new_fig<- ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing =
 
 plot(new_fig)
 
-#Figure 3: networks, generated all network figures individually in Gephi, 
+#Figure: networks, generated all network figures individually in Gephi, 
 #and combined them using Adobe Illustrator------------------------------
 
-#Figure 4: phylogenetic diversity by week (new for revision May 2024)------------------------
+#Figure: phylogenetic diversity by week (new for revision May 2024)------------------------
 ##make figure with both years combined#####
 
 #bring in data 
@@ -383,7 +389,7 @@ ggplot(all_weeks_pd,aes(fill = Type, y=SES, group = Type,color=Type,
   ylim(-5.9,2) +
   facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
-#Figure 5: phylogenetic SES values by modules--------------------------------------
+#Figure: phylogenetic SES values by modules--------------------------------------
 #like other figures, we generated figures for each site and year and combined them to make the final figure 4 in Adobe Illustrator 
 
 #find this file in "files_Figures" folder 
