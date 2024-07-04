@@ -357,6 +357,12 @@ plot(new_fig)
 all_weeks_pd <- read.csv("files_Figures/results_byweek.csv")
 all_weeks_pd$Week <- as.factor(all_weeks_pd$Week)
 
+#rename pd metrics for no acronyms
+
+all_weeks_pd$Type <- gsub("MPD","Mean phylogenetic distance", all_weeks_pd$Type)
+all_weeks_pd$Type <- gsub("MNTD","Mean nearest taxon distance", all_weeks_pd$Type)
+all_weeks_pd$Type <- gsub("PD","Faith's phylogenetic diversity", all_weeks_pd$Type)
+
 #make figure
 fig_pd_weeks <- ggplot(all_weeks_pd, 
                        aes(fill = Type, y=SES, 
@@ -375,18 +381,19 @@ fig_pd_weeks <- ggplot(all_weeks_pd,
 
 plot(fig_pd_weeks)
 
-ggplot(all_weeks_pd,aes(fill = Type, y=SES, group = Type,color=Type, 
+###line plot for diversity by weeks#######
+ggplot(all_weeks_pd,aes(fill = Type, y=SES,group=Type, color = Type,
            x=fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) +
   geom_point()+
-  geom_line()+
-  scale_fill_manual(values=c("#c385b3",
-                             "#cdd870",
-                             "#4ea6c4"))+
+  geom_line(size=1.5)+
+  scale_color_manual(values=c("Mean nearest taxon distance"="#c385b3",
+                             "Mean phylogenetic distance"="#cdd870",
+                             "Faith's phylogenetic diversity"="#4ea6c4"))+
   xlab("Week") + 
   ylab("Standard effect size")+
   theme_light(base_size = 20) + 
-  guides(fill=guide_legend(title="Phylogenetic metric"))+
-  ylim(-5.9,2) +
+  guides(fill = "none",color=guide_legend(title="Phylogenetic metric"))+
+  ylim(-5.9,2.3) +
   facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
 #Figure: phylogenetic SES values by modules--------------------------------------
