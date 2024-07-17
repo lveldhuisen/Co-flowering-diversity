@@ -39,9 +39,10 @@ colnames(road21data)[3] ="weight"
 road21data1 <- road21data %>% filter(species1 != "Mertensia.ciliata")
 road21data1 <- na.omit(road21data)
 fivenum(road21data1$weight)
-
-graph_from_data_frame(d=road21data1, directed = FALSE)
 head(road21data1)
+
+road21test <- graph_from_data_frame(d=road21data1, directed = FALSE)
+edge.attributes(road21test)
 
 
 #make igraph object
@@ -52,6 +53,7 @@ print(road21_igraph)
 summary(road21_igraph)
 
 as_data_frame(road21_igraph) #turn into dataframe 
+road21test <- graph_from_data_frame(data_positive)
 
 #test plotting network analysis 
 plot(road21_igraph,edge.arrow.size=.5, vertex.color=communitiesRoad, vertex.size=3,
@@ -70,7 +72,8 @@ R21mod <- modularity(communitiesRoad) #make object with modularity score
 class(road21_igraph)
 
 ###betweenness centrality####
-betweenness(road21_igraph, v = V(road21_igraph), directed = F)
+strength <- strength(road21_igraph, mode="in", weights=E(road21_igraph)$weight)
+edge_betweenness()
 
 ##Pfeiler 2021##############################
 
