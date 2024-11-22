@@ -1,7 +1,15 @@
+OVERVIEW
+
+Citation to the preprint: https://doi.org/10.1101/2023.11.06.565878
+
+Author names, contact details: will include after doubleblind review
+
+This code is for a study about how phylogenetic diversity changes across the growing season in a subalpine plant community. First author is repsonsible for data collection and code. 
+
+
 ACCESS INFORMATION
 1. MIT License
 2. Data derived from other sources: phylogeny from Smith & Brown 2018
-3. Recommended citation for this data/code archive
 
 
 DATA & CODE FILE OVERVIEW
