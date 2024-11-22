@@ -20,8 +20,6 @@ This data repository consists of 14 data files (divided by year of data collecti
 Data files and variables - all files are formatted to calculate Schoener's Index with the spaa R package. 
 
     1. sitename_phenology_matrix_year: one column for each species, rows for the number of open flowering units by week.  
-    
-    2. sitename_fitness_matrix_year: one column for each species, rows for the number of flowering units with fruit from the original flowering week
 
 
 Code scripts and workflow - code should be run in order listed here. 
@@ -38,7 +36,6 @@ Code scripts and workflow - code should be run in order listed here.
     
     6. figures.R: contains code for all individual figures. Final figure editing and putting all sites and years together was done in Adobe Illustrator. Files for this code are in the "files_Figures" fodler.
     
-    7. fitnessinfo_supplemental.R: contains all the fitness data and calculations for Supplemental Materials Table S1.
 
 
 
