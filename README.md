@@ -14,7 +14,7 @@ ACCESS INFORMATION
 
 DATA & CODE FILE OVERVIEW
 
-This data repository consists of 14 data files (divided by year of data collection, 1 folder for 2021 and 1 for 2022), 7 code scripts, and this README document, with the following data and code filenames and variables:
+This data repository consists of 14 data files (divided by year of data collection, 1 folder for 2021 and 1 for 2022), 6 code scripts, and this README document, with the following data and code filenames and variables:
 
 
 Data files and variables - all files are formatted to calculate Schoener's Index with the spaa R package. 
