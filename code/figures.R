@@ -1,13 +1,4 @@
 #Contains: code for all figures. All files for this code are in "files_Figures" folder.
-install.packages("ggplot2")
-install.packages("dplyr")
-install.packages("ggpubr")
-install.packages("viridis")  
-install.packages("pals")
-install.packages("Polychrome")
-install.packages("patchwork")
-install.packages("forcats")
-
 library(ggplot2)
 library(dplyr)
 library(ggpubr)
