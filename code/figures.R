@@ -186,7 +186,8 @@ manualcolors_test<-c('mediumvioletred','cornflowerblue', 'black','wheat4',
                      'yellow1','purple','brown','turquoise','turquoise4','brown1',
                      'deeppink','darkgoldenrod1','darkolivegreen3') #manually set colors for families
 
-ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),
+
+fig2 <- ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),
                             y=Number_flowering, fill=Family)) + 
   geom_bar(stat="identity") +
   theme(legend.position = "right") + 
@@ -196,6 +197,7 @@ ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Mi
   theme_light(base_size = 24) + 
   ylim(0,1050)+
   facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
+
 
 ggsave("Co-flowering-diversity/figures/fig3.jpeg", dpi = 600, height = 10, width = 20)
 
@@ -399,6 +401,28 @@ ggsave("Co-flowering-diversity/figures/fig4.jpeg", dpi = 600, height = 9, width 
 
 #find this file in "files_Figures" folder 
 df_mod_figs <- read.csv("files_Figures/results_bymodule.csv")
+#change site names in data
+df_mod_figs["Site"][df_mod_figs["Site"] == "Road"] <- "Low elevation (2815 m)" 
+df_mod_figs["Site"][df_mod_figs["Site"] == "Pfeiler"] <- "Middle elevation (3165 m)" 
+df_mod_figs["Site"][df_mod_figs["Site"] == "PBM"] <- "High elevation (3380 m)" 
+
+df_mod_figs$Site <- factor(df_mod_figs$Site,
+                            levels  = c("Low elevation (2815 m)",
+                                        "Middle elevation (3165 m)",
+                                        "High elevation (3380 m)"))
+
+df_mod_figs$Module <- factor(df_mod_figs$Module,
+                             levels = c("beginning",
+                                        "middle",
+                                        "middle2",
+                                        "end"))
+
+#rename pd metrics for no acronyms
+
+df_mod_figs$Type <- gsub("MPD","Mean phylogenetic distance", df_mod_figs$Type)
+df_mod_figs$Type <- gsub("MNTD","Mean nearest taxon distance", df_mod_figs$Type)
+df_mod_figs$Type <- gsub("PD","Faith's phylogenetic diversity", df_mod_figs$Type)
+
 
 ##road 2021#######
 sub_mod_r21 <- subset(df_mod_figs, 
@@ -495,6 +519,23 @@ PBM2022_SES <- ggplot(sub_mod_pbm22, aes(fill=Type, y=SES, x=fct_relevel(Module,
 
 plot(PBM2022_SES)
 
+### all faceted #####
+df_mod_figs <- df_mod_figs %>% filter(!Module %in% "middle2")
+
+ggplot(df_mod_figs, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
+  geom_bar(position = "dodge",stat = "identity", show.legend = T) +
+  xlab("Module") +
+  ylab("Standard effect size")+
+  theme_light(base_size = 18) + 
+  guides(fill=guide_legend(title="Phylogenetic metric"))+
+  scale_fill_manual(values=c("#4ea6c4",
+                             "#c385b3",
+                             "#cdd870")) +
+  ylim(-5,2) +
+  facet_grid(Year ~Site)
+
+ggsave("Co-flowering-diversity/figures/fig5.jpeg", dpi = 600, width = 13, height = 7)
+
 ##combine individual figures with patchwork######
 mod_2021 <- road21_mod_fig + pfeiler21_SES + PBM2021_SES + plot_layout(axes = "collect", axis_titles = "collect")
 plot(mod_2021)
@@ -515,9 +556,10 @@ fig_pd_mod <- ggplot(all_mod, aes(fill = Type, y=SES, x=fct_relevel(Module, c("B
   ylab("Standard effect size")+
   theme_light(base_size = 20) + 
   guides(fill=guide_legend(title="Phylogenetic metric"))+
-  scale_fill_manual(values=c("#c385b3",
+  scale_fill_manual(values=c("#4ea6c4",
+                             "#c385b3",
                              "#cdd870",
-                             "#4ea6c4"))+
+                             ))+
   ylim(-5.2,2.2) +
   facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
