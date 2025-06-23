@@ -197,6 +197,8 @@ ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Mi
   ylim(0,1050)+
   facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
+ggsave("Co-flowering-diversity/figures/fig3.jpeg", dpi = 600, height = 10, width = 20)
+
 #Figure: phenology and fitness correlations (not used in revision)--------------
 #we generated a figure for each site and year, and combined them to make fig in Adobe Illustrator 
 
@@ -338,6 +340,7 @@ new_fig<- ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing =
   scale_x_continuous(limits = c(0,75),breaks = c(0,35,70),labels = c("1", "5", "10"), name = 'Week')
 
 plot(new_fig)
+ggsave("Co-flowering-diversity/figures/fig1.jpeg", dpi = 600, height = 9, width = 12)
 
 #Figure: networks, generated all network figures individually in Gephi, 
 #and combined them using Adobe Illustrator------------------------------
@@ -373,6 +376,7 @@ fig_pd_weeks <- ggplot(all_weeks_pd,
 
 plot(fig_pd_weeks)
 
+
 ###line plot for diversity by weeks#######
 ggplot(all_weeks_pd,aes(fill = Type, y=SES,group=Type, color = Type,
            x=fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) +
@@ -388,11 +392,13 @@ ggplot(all_weeks_pd,aes(fill = Type, y=SES,group=Type, color = Type,
   ylim(-5.9,2.3) +
   facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
+ggsave("Co-flowering-diversity/figures/fig4.jpeg", dpi = 600, height = 9, width = 15)
+
 #Figure: phylogenetic SES values by modules--------------------------------------
 #like other figures, we generated figures for each site and year and combined them to make the final figure 4 in Adobe Illustrator 
 
 #find this file in "files_Figures" folder 
-df_mod_figs <- read.csv("files_Figures/results_modules_combined.csv")
+df_mod_figs <- read.csv("files_Figures/results_bymodule.csv")
 
 ##road 2021#######
 sub_mod_r21 <- subset(df_mod_figs, 
