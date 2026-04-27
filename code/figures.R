@@ -187,19 +187,33 @@ manualcolors_test<-c('mediumvioletred','cornflowerblue', 'black','wheat4',
                      'deeppink','darkgoldenrod1','darkolivegreen3') #manually set colors for families
 
 
-fig2 <- ggplot(data = df_pheno, aes(x=factor(Module, levels = c('Beginning','Middle','Middle2','End')),
-                            y=Number_flowering, fill=Family)) + 
-  geom_bar(stat="identity") +
+facet_labels <- data.frame(
+  Year = rep(sort(unique(df_pheno$Year)), each = 3),
+  Site = rep(c("Low elevation (2815 m)", "Middle elevation (3165 m)", "High elevation (3380 m)"), 
+             times = length(unique(df_pheno$Year))),
+  label = paste0(LETTERS[1:6], ")"),
+  Module = factor("Beginning", levels = c('Beginning','Middle','Middle2','End')),  # leftmost x position
+  Number_flowering = 1050  # top of y-axis
+)
+
+ggplot(data = df_pheno, aes(x = factor(Module, levels = c('Beginning','Middle','Middle2','End')),
+                            y = Number_flowering, fill = Family)) + 
+  geom_bar(stat = "identity") +
+  geom_text(data = facet_labels, aes(x = Module, y = Number_flowering, label = label),
+            inherit.aes = FALSE,
+            hjust = -0.1, vjust = 1.5,
+            size = 8, fontface = "bold") +
   theme(legend.position = "right") + 
-  scale_fill_manual(values=manualcolors_test) + 
+  scale_fill_manual(values = manualcolors_test) + 
   ylab("Number of flowering units") + 
   xlab("Flowering module") + 
-  theme_light(base_size = 24) + 
-  ylim(0,1050)+
-  facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
+  theme_bw(base_size = 24) + 
+  ylim(0, 1050) +
+  facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)",
+                                            "Middle elevation (3165 m)",
+                                            "High elevation (3380 m)")))
 
-
-ggsave("Co-flowering-diversity/figures/fig3.jpeg", dpi = 600, height = 10, width = 20)
+ggsave("Co-flowering-diversity/figures/fig3_2026.jpeg", dpi = 600, height = 10, width = 20)
 
 #Figure: phenology and fitness correlations (not used in revision)--------------
 #we generated a figure for each site and year, and combined them to make fig in Adobe Illustrator 
@@ -332,17 +346,17 @@ data_days$Module <- factor(data_days$Module, levels = c("Early", "Mid", "Mid2", 
 #plot
 new_fig<- ggplot(data_days, aes(x = Day, y = reorder(Species, Week, decreasing = T),
                                 Group = Species,linetype = Year, color = factor(Module))) +
-  geom_density_ridges(scale = 1, show.legend = TRUE, alpha = 0.2, rel_min_height = 0.005) +
+  geom_density_ridges(scale = 1, show.legend = TRUE, alpha = 0.2, rel_min_height = 0.005, linewidth = 1.75) +
   scale_y_discrete(expand = c(0, 0), name = "Species") +
   facet_wrap(~Site, labeller = as_labeller(site_names)) +
-  theme_bw(base_size = 18) +
+  theme_bw(base_size = 28) +
   theme(axis.text.y = element_text(face = "italic"))+
   scale_fill_manual( values = c("grey"))+
   scale_colour_manual(values = c("magenta4", "orange", "turquoise2","forestgreen"), name ="Module")+
   scale_x_continuous(limits = c(0,75),breaks = c(0,35,70),labels = c("1", "5", "10"), name = 'Week')
 
 plot(new_fig)
-ggsave("Co-flowering-diversity/figures/fig1.jpeg", dpi = 600, height = 9, width = 12)
+ggsave("Co-flowering-diversity/figures/fig1_2026.jpeg", dpi = 600, height = 15, width = 22)
 
 #Figure: networks, generated all network figures individually in Gephi, 
 #and combined them using Adobe Illustrator------------------------------
@@ -373,28 +387,48 @@ fig_pd_weeks <- ggplot(all_weeks_pd,
                              "#cdd870",
                              "#4ea6c4"))+
   ylim(-5.9,2) +
-  facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
+  facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)",
+                                           "Middle elevation (3165 m)",
+                                           "High elevation (3380 m)")))
 
 
 plot(fig_pd_weeks)
 
 
 ###line plot for diversity by weeks#######
-ggplot(all_weeks_pd,aes(fill = Type, y=SES,group=Type, color = Type,
-           x=fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) +
-  geom_point()+
-  geom_line(size=1.5)+
-  scale_color_manual(values=c("Mean nearest taxon distance"="#c385b3",
-                             "Mean phylogenetic distance"="#cdd870",
-                             "Faith's phylogenetic diversity"="#4ea6c4"))+
-  xlab("Week") + 
-  ylab("Standard effect size")+
-  theme_light(base_size = 20) + 
-  guides(fill = "none",color=guide_legend(title="Phylogenetic metric"))+
-  ylim(-5.9,2.3) +
-  facet_grid(Year ~factor(Site, levels = c("Low elevation (2815 m)","Middle elevation (3165 m)","High elevation (3380 m)")))
 
-ggsave("Co-flowering-diversity/figures/fig4.jpeg", dpi = 600, height = 9, width = 15)
+facet_labels2 <- data.frame(
+  Year = rep(sort(unique(all_weeks_pd$Year)), each = 3),
+  Site = rep(c("Low elevation (2815 m)", "Middle elevation (3165 m)", "High elevation (3380 m)"),
+             times = length(unique(all_weeks_pd$Year))),
+  label = paste0(LETTERS[1:6], ")"),
+  Week = "1",       # leftmost x position
+  SES = 2.3         # top of y-axis
+)
+
+ggplot(all_weeks_pd, aes(fill = Type, y = SES, group = Type, color = Type,
+                         x = fct_relevel(Week, c("1","2","3","4","5","6","7","8","9","10")))) +
+  geom_point() +
+  geom_line(size = 1.5) +
+  geom_text(data = facet_labels2, aes(x = Week, y = SES, label = label),
+            inherit.aes = FALSE,
+            hjust = -0.4, vjust = 0.3,
+            size = 8, fontface = "bold") +
+  scale_color_manual(values = c("Mean nearest taxon distance" = "#c385b3",
+                                "Mean phylogenetic distance" = "#cdd870",
+                                "Faith's phylogenetic diversity" = "#4ea6c4")) +
+  xlab("Week") +
+  ylab("Standard effect size") +
+  theme_bw(base_size = 22) +
+  guides(fill = "none", color = guide_legend(title = "Phylogenetic metric")) +
+  ylim(-5.9, 2.3) +
+  facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)",
+                                            "Middle elevation (3165 m)",
+                                            "High elevation (3380 m)"))) +
+  geom_hline(yintercept = 1.96, color = "grey", linetype = "dashed") +
+  geom_hline(yintercept = -1.96, color = "grey", linetype = "dashed")
+
+ggsave("Co-flowering-diversity/figures/fig4_2026.jpeg", dpi = 600, height = 10, width = 15)
 
 #Figure: phylogenetic SES values by modules--------------------------------------
 #like other figures, we generated figures for each site and year and combined them to make the final figure 4 in Adobe Illustrator 
@@ -522,19 +556,31 @@ plot(PBM2022_SES)
 ### all faceted #####
 df_mod_figs <- df_mod_figs %>% filter(!Module %in% "middle2")
 
-ggplot(df_mod_figs, aes(fill=Type, y=SES, x=fct_relevel(Module, c("beginning","middle","end")))) + 
-  geom_bar(position = "dodge",stat = "identity", show.legend = T) +
-  xlab("Module") +
-  ylab("Standard effect size")+
-  theme_light(base_size = 18) + 
-  guides(fill=guide_legend(title="Phylogenetic metric"))+
-  scale_fill_manual(values=c("#4ea6c4",
-                             "#c385b3",
-                             "#cdd870")) +
-  ylim(-5,2) +
-  facet_grid(Year ~Site)
+facet_labels3 <- data.frame(
+  Year = rep(sort(unique(df_mod_figs$Year)), each = 3),
+  Site = rep(sort(unique(df_mod_figs$Site)), times = length(unique(df_mod_figs$Year))),
+  label = paste0(LETTERS[1:6], ")"),
+  Module = "beginning",  # leftmost x position
+  SES = 2               # top of y-axis
+)
 
-ggsave("Co-flowering-diversity/figures/fig5.jpeg", dpi = 600, width = 13, height = 7)
+ggplot(df_mod_figs, aes(fill = Type, y = SES, x = fct_relevel(Module, c("beginning","middle","end")))) + 
+  geom_bar(position = "dodge", stat = "identity", show.legend = T) +
+ineom_text(data = facet_labels3, aes(x = Module, y = SES, label = label),
+            inherit.aes = FALSE,
+            hjust = 0.5, vjust = 22,
+            size = 8, fontface = "bold") +
+  xlab("Module") +
+  ylab("Standard effect size") +
+  theme_bw(base_size = 22) + 
+  guides(fill = guide_legend(title = "Phylogenetic metric")) +
+  scale_fill_manual(values = c("#4ea6c4", "#c385b3", "#cdd870")) +
+  ylim(-5, 2) +
+  facet_grid(Year ~ Site) +
+  geom_hline(yintercept = 1.96, color = "grey", linetype = "dashed") +
+  geom_hline(yintercept = -1.96, color = "grey", linetype = "dashed")
+
+ggsave("Co-flowering-diversity/figures/fig5_2026.jpeg", dpi = 600, width = 15, height = 9)
 
 ##combine individual figures with patchwork######
 mod_2021 <- road21_mod_fig + pfeiler21_SES + PBM2021_SES + plot_layout(axes = "collect", axis_titles = "collect")
