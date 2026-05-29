@@ -637,3 +637,5 @@ ggplot(SI_df, aes(x=SI)) +
   ylab("Number of species pairs")
 
 SI_df %>% count(Site, Year)
+
+
