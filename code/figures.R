@@ -425,8 +425,8 @@ ggplot(all_weeks_pd, aes(fill = Type, y = SES, group = Type, color = Type,
   facet_grid(Year ~ factor(Site, levels = c("Low elevation (2815 m)",
                                             "Middle elevation (3165 m)",
                                             "High elevation (3380 m)"))) +
-  geom_hline(yintercept = 1.96, color = "grey", linetype = "dashed") +
-  geom_hline(yintercept = -1.96, color = "grey", linetype = "dashed")
+  geom_hline(yintercept = 1.96, color = "grey", linetype = "dashed", linewidth = 2) +
+  geom_hline(yintercept = -1.96, color = "grey", linetype = "dashed", linewidth = 2)
 
 ggsave("Co-flowering-diversity/figures/fig4_2026.jpeg", dpi = 600, height = 10, width = 15)
 
@@ -635,7 +635,7 @@ ggplot(SI_df, aes(x=SI)) +
   theme_bw(base_size = 18)+
   xlab("Schoener's index") +
   ylab("Number of species pairs")
-
+   
 SI_df %>% count(Site, Year)
 
 
